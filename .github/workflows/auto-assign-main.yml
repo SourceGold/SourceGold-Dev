@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Auto Assignb Main
+name: Auto Assign Main
 on:
   pull_request:
     types: [opened, ready_for_review]
