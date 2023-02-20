@@ -1,20 +1,15 @@
 # This is a basic workflow that is manually triggered
 
-name: 'Auto Assign'
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
+name: Auto Assignb Main
 on:
   pull_request:
     types: [opened, ready_for_review]
     branches: [main]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  add-reviews:
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: kentaro-m/auto-assign-action@v1.2.5
         with:
-          configuration-path: '.github/auto_assign_main.yml'
+          repo-token: ${{ secrets.PAT_ACCESS_TOKEN }}
+          configuration-path: '.github/auto-assign-main.yml'
