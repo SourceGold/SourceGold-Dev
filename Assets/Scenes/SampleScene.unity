@@ -305,7 +305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   smoothTime: 0.05
-  gravityMultiplier: 3
+  gravityMultiplier: 1
+  jumpPower: 4
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,9 +484,25 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c10589de-f11c-4b87-9d1f-6f3005c78cf8
     m_ActionName: New action map/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 407066778}
+        m_TargetAssemblyTypeName: BasicMoving, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 267095d3-7cab-4777-9159-2343ffcf954d
+    m_ActionName: BasicControlMap/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: New action map
+  m_DefaultActionMap: BasicControlMap
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!4 &467854588
