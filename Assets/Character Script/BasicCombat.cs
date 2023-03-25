@@ -16,34 +16,35 @@ public class BasicCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(mode) {
-            case 1:
-                anim.Play("MeleeAttack_OneHanded");
-                break;
-            case 2:
-                anim.Play("MeleeAttack_TwoHanded");
-                break;
-            case 3:
-                anim.Play("PunchLeft");
-                break;
-            case 4:
-                anim.Play("PunchRight");
-                break;
-            case 5:
-                anim.Play("Buff");
-                break;
-            default:
-                break;
+        //switch(mode) {
+        //    case 1:
+        //        anim.Play("MeleeAttack_OneHanded");
+        //        break;
+        //    case 2:
+        //        anim.Play("MeleeAttack_TwoHanded");
+        //        break;
+        //    case 3:
+        //        anim.Play("PunchLeft");
+        //        break;
+        //    case 4:
+        //        anim.Play("PunchRight");
+        //        break;
+        //    case 5:
+        //        anim.Play("Buff");
+        //        break;
+        //    default:
+        //        break;
 
-        }
-        mode = 0;
+        //}
+        //mode = 0;
     }
 
     public void MeeleOneHanded()
     {
-        //Debug.Log("Attack!!");
+        Debug.Log("Attack!!");
         //anim.SetTrigger("hit");
         mode = 1;
+        anim.SetTrigger("meeleOne");
 
     }
 

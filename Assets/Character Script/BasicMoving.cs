@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class BasicMoving : MonoBehaviour
 {
     #region Variables: Movement
+    public Animator anim;
 
     private Vector2 _input;
     private CharacterController _characterController;
@@ -32,6 +33,7 @@ public class BasicMoving : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -67,6 +69,7 @@ public class BasicMoving : MonoBehaviour
     private void ApplyMovement()
     {
         _characterController.Move(_direction * speed * Time.deltaTime);
+         
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -74,5 +77,6 @@ public class BasicMoving : MonoBehaviour
         _input = context.ReadValue<Vector2>();
         print(_input);
         _direction = new Vector3(_input.x, 0.0f, _input.y);
+        //anim.Play("RunForward");
     }
 }
