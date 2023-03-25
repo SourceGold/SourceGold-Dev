@@ -2,7 +2,7 @@
     "name": "PlayerControl",
     "maps": [
         {
-            "name": "New action map",
+            "name": "BasicControllMap",
             "id": "d6ff2370-cc03-4d9a-b0aa-1dfb991ea915",
             "actions": [
                 {
@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "e5f16d0e-59c3-469b-acac-1d78fceb1706",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -70,6 +79,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "040fafad-f21d-40c1-a0dd-acc6cbbaa89e",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

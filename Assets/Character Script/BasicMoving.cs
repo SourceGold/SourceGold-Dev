@@ -28,10 +28,17 @@ public class BasicMoving : MonoBehaviour
     private float _velocity;
 
     #endregion
+    #region Variables: Jump
+    [SerializeField] private float jumpPower;
+    #endregion
+    #region Variables: Animation
+    private Animator _animator;
+    #endregion
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -43,7 +50,7 @@ public class BasicMoving : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (_characterController.isGrounded && _velocity < 0.0f)
+        if (IsGrounded() && _velocity < 0.0f)
         {
             _velocity = -1.0f;
         }
@@ -72,7 +79,18 @@ public class BasicMoving : MonoBehaviour
     public void Move(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
-        print(_input);
+        Debug.Log(_input);
         _direction = new Vector3(_input.x, 0.0f, _input.y);
     }
+
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        if (!IsGrounded()) return;
+
+        _animator.SetTrigger("isJumping");
+        _velocity += jumpPower;
+    }
+
+    private bool IsGrounded() => _characterController.isGrounded;
 }
