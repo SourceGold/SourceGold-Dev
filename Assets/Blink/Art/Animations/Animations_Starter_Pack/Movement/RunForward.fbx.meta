@@ -42,11 +42,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: human_male_run_01
-      takeName: human_male_run_01
+      name: tpose
+      takeName: tpose
       internalID: 0
-      firstFrame: 2
-      lastFrame: 42
+      firstFrame: 0
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

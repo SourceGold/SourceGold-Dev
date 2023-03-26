@@ -7,11 +7,11 @@ using UnityEngine.InputSystem;
 public class BasicMoving : MonoBehaviour
 {
     #region Variables: Movement
-    public Animator anim;
+    public Animator _anim;
 
     private Vector2 _input;
     private CharacterController _characterController;
-    private Vector3 _direction;
+    private Vector3 _direction, _direction_temp;
 
     [SerializeField] private float speed;
 
@@ -33,7 +33,7 @@ public class BasicMoving : MonoBehaviour
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -69,14 +69,37 @@ public class BasicMoving : MonoBehaviour
     private void ApplyMovement()
     {
         _characterController.Move(_direction * speed * Time.deltaTime);
+        
+            //anim.SetTrigger("stop");
+            
          
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
-        print(_input);
+        //print(_input);
         _direction = new Vector3(_input.x, 0.0f, _input.y);
-        //anim.Play("RunForward");
+        _direction_temp = _direction;
+        //anim.SetTrigger("run");
+        //if (anim.GetCurrentAnimatorStateInfo(0))
+        //if (context.started)
+        if (_input.x == 0 && _input.y == 0)
+            _anim.SetBool("run", false);
+        else
+            _anim.SetBool("run", true);
+    }
+
+    public void Combat(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("stop movement");
+            _direction.x = 0.0f;
+            _direction.z = 0.0f;
+            _input.x = 0;
+            _input.y = 0;
+        }
+        
     }
 }

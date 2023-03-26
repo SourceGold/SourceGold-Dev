@@ -303,24 +303,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27896665626bd5a499926dc0b87cd73a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  _anim: {fileID: 0}
   speed: 10
   smoothTime: 0.05
   gravityMultiplier: 3
 --- !u!114 &407066781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407066772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ccf2128021a14ed88d2633aba546ffe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
---- !u!114 &407066782
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -524,6 +511,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 407066778}
+        m_TargetAssemblyTypeName: BasicMoving, Assembly-CSharp
+        m_MethodName: Combat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a937b8a9-b4a2-4dcd-8b44-4bfe27813f44
     m_ActionName: New action map/Combat[/Keyboard/j]
   - m_PersistentCalls:
@@ -532,6 +531,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: BasicCombat, Assembly-CSharp
         m_MethodName: MeeletwoHanded
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 407066778}
+        m_TargetAssemblyTypeName: BasicMoving, Assembly-CSharp
+        m_MethodName: Combat
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -556,6 +567,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 407066778}
+        m_TargetAssemblyTypeName: BasicMoving, Assembly-CSharp
+        m_MethodName: Combat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 8286c68c-79ac-4206-93de-97fb9aa4f9b0
     m_ActionName: Player/PunchLeft[/Keyboard/u]
   - m_PersistentCalls:
@@ -572,6 +595,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 407066778}
+        m_TargetAssemblyTypeName: BasicMoving, Assembly-CSharp
+        m_MethodName: Combat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 49ef6696-644c-4315-99c9-e02fa6dfef3f
     m_ActionName: Player/PunchRight[/Keyboard/i]
   - m_PersistentCalls:
@@ -580,6 +615,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: BasicCombat, Assembly-CSharp
         m_MethodName: Buff
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 407066778}
+        m_TargetAssemblyTypeName: BasicMoving, Assembly-CSharp
+        m_MethodName: Combat
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -832,6 +879,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1438546959266459337, guid: 60770bdb4dc667c45bea53db0339dc05,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05,
         type: 3}
       propertyPath: m_Name
@@ -853,10 +905,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 407066778}
-    - targetCorrespondingSourceObject: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 407066782}
     - targetCorrespondingSourceObject: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05,
         type: 3}
       insertIndex: -1
