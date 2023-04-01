@@ -11,7 +11,7 @@ public class BasicMoving : MonoBehaviour
 
     private Vector2 _input;
     private CharacterController _characterController;
-    private Vector3 _direction, _direction_temp;
+    private Vector3 _direction;
 
     [SerializeField] private float speed;
 
@@ -72,9 +72,6 @@ public class BasicMoving : MonoBehaviour
     private void ApplyMovement()
     {
         _characterController.Move(_direction * speed * Time.deltaTime);
-        
-            //anim.SetTrigger("stop");
-            
          
     }
 
@@ -83,10 +80,6 @@ public class BasicMoving : MonoBehaviour
         _input = context.ReadValue<Vector2>();
         //Debug.Log(_input);
         _direction = new Vector3(_input.x, 0.0f, _input.y);
-        _direction_temp = _direction;
-        //anim.SetTrigger("run");
-        //if (anim.GetCurrentAnimatorStateInfo(0))
-        //if (context.started)
         if (_input.x == 0 && _input.y == 0)
             _anim.SetBool("run", false);
         else

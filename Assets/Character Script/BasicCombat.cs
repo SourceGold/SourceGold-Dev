@@ -34,7 +34,6 @@ public class BasicCombat : MonoBehaviour
                 _anim.Play("Buff");
                 break;
             default:
-                //anim.Play("Idle");
                 break;
 
         }
@@ -44,31 +43,25 @@ public class BasicCombat : MonoBehaviour
     public void MeeleOneHanded()
     {
         mode = 1;
-        //_anim.SetBool("combat", true);
-
     }
 
     public void MeeletwoHanded()
     {
         mode = 2;
-        //_anim.SetBool("combat", true);
     }
 
     public void PunchLeft()
     {
         mode = 3;
-        //_anim.SetBool("combat", true);
     }
 
     public void PunchRight()
     {
         mode = 4;
-        //_anim.SetBool("combat", true);
     }
 
     public void Buff()
     {
         mode = 5;
-        //_anim.SetBool("combat", true);
     }
 }
