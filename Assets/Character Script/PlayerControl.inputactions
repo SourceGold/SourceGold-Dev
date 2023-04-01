@@ -2,7 +2,7 @@
     "name": "PlayerControl",
     "maps": [
         {
-            "name": "BasicControllMap",
+            "name": "Player",
             "id": "d6ff2370-cc03-4d9a-b0aa-1dfb991ea915",
             "actions": [
                 {
@@ -18,6 +18,51 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "e5f16d0e-59c3-469b-acac-1d78fceb1706",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MeeleOneHanded",
+                    "type": "Button",
+                    "id": "a937b8a9-b4a2-4dcd-8b44-4bfe27813f44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MeeleTwoHanded",
+                    "type": "Button",
+                    "id": "cee60d36-2695-4710-ac61-da919605750b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PunchLeft",
+                    "type": "Button",
+                    "id": "8286c68c-79ac-4206-93de-97fb9aa4f9b0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PunchRight",
+                    "type": "Button",
+                    "id": "49ef6696-644c-4315-99c9-e02fa6dfef3f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Buff",
+                    "type": "Button",
+                    "id": "0e356a4e-f75d-403e-b80f-35744e8c9ac9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -88,6 +133,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4f161b4-35ed-4143-864a-32d5765350bc",
+                    "path": "<Keyboard>/j",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MeeleOneHanded",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
+                    "path": "<Keyboard>/k",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MeeleTwoHanded",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7629cd6d-77c5-433c-a1f8-7dd3eb5a4629",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PunchLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f331f3f8-646f-4663-9232-5b5c0be893ea",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PunchRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57ebc9ce-106f-45f5-bb3c-7d9684106052",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Buff",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

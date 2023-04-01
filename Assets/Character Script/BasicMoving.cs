@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class BasicMoving : MonoBehaviour
 {
     #region Variables: Movement
+    public Animator _anim;
 
     private Vector2 _input;
     private CharacterController _characterController;
@@ -31,14 +32,11 @@ public class BasicMoving : MonoBehaviour
     #region Variables: Jump
     [SerializeField] private float jumpPower;
     #endregion
-    #region Variables: Animation
-    private Animator _animator;
-    #endregion
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -74,13 +72,32 @@ public class BasicMoving : MonoBehaviour
     private void ApplyMovement()
     {
         _characterController.Move(_direction * speed * Time.deltaTime);
+         
     }
 
     public void Move(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
-        Debug.Log(_input);
+        //Debug.Log(_input);
         _direction = new Vector3(_input.x, 0.0f, _input.y);
+        if (_input.x == 0 && _input.y == 0)
+            _anim.SetBool("run", false);
+        else
+            _anim.SetBool("run", true);
+    }
+
+    public void Combat(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("stop movement");
+            _direction.x = 0.0f;
+            _direction.z = 0.0f;
+            _input.x = 0;
+            _input.y = 0;
+            _anim.SetBool("run", false);
+        }
+        
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -88,7 +105,6 @@ public class BasicMoving : MonoBehaviour
         if (!context.started) return;
         if (!IsGrounded()) return;
 
-        _animator.SetTrigger("isJumping");
         _velocity += jumpPower;
     }
 
