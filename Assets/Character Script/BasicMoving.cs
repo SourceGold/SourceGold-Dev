@@ -56,7 +56,7 @@ public class BasicMoving : MonoBehaviour
         {
             _verticalVelocity += _gravity * _gravityMultiplier * Time.deltaTime;
             Debug.Log("isFalling ...");
-            _animator.SetBool("isFalling", true);
+            _animatorator.SetBool("isFalling", true);
             if (!IsJumping())
             {
                 _moveSpeedMultiplier = 0.2f;
@@ -67,7 +67,7 @@ public class BasicMoving : MonoBehaviour
             _verticalVelocity = -1f;
             Debug.Log("Grounded ...");
             SetMovement();
-            _animator.SetBool("isFalling", false);
+            _animatorator.SetBool("isFalling", false);
         }
 
         _direction.y = _verticalVelocity;
@@ -100,6 +100,19 @@ public class BasicMoving : MonoBehaviour
         SetMovement();
     }
 
+    public void Combat(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("stop movement");
+            _direction.x = 0.0f;
+            _direction.z = 0.0f;
+            _input.x = 0;
+            _input.y = 0;
+            _anim.SetBool("run", false);
+        }
+    }
+
     public void Jump(InputAction.CallbackContext context)
     {
         if (!context.started) return;
@@ -114,10 +127,14 @@ public class BasicMoving : MonoBehaviour
         {
             _moveSpeedMultiplier = 1.0f;
             _direction = new Vector3(_input.x, 0.0f, _input.y);
+            if (_input.x == 0 && _input.y == 0)
+                _anim.SetBool("run", false);
+            else
+                _anim.SetBool("run", true);
         }
     }
 
     private bool IsGrounded() => _characterController.isGrounded;
 
-    private bool IsJumping() => _animator.GetCurrentAnimatorStateInfo(0).IsName("Jump");
+    private bool IsJumping() => _animatorator.GetCurrentAnimatorStateInfo(0).IsName("Jump");
 }
