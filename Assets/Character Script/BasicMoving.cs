@@ -37,6 +37,8 @@ public class BasicMoving : MonoBehaviour
     private Animator _animator;
     #endregion
 
+    public Transform cam;
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -77,19 +79,23 @@ public class BasicMoving : MonoBehaviour
     {
         if (_input.sqrMagnitude == 0) return;
 
-        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
+        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, smoothTime);
         transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
     }
 
     private void ApplyMovement()
     {
-        var vec = new Vector3(0, _direction.y);
+        var vec = new Vector3(0, _direction.y, 0);
+        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+        Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        var movementSpeed = _input.magnitude;
+        moveDir = moveDir.normalized * movementSpeed;
+        vec.x = moveDir.x * _moveSpeed * _moveSpeedMultiplier;
+        vec.z = moveDir.z * _moveSpeed * _moveSpeedMultiplier;
 
-        vec.x = _direction.x * _moveSpeed * _moveSpeedMultiplier;
-        vec.z = _direction.z * _moveSpeed * _moveSpeedMultiplier;
-
-        //Debug.Log($"x {vec.x}, y {y}, z {vec.z}");
+        // Debug.Log($"moveDir Movement {moveDir.x}, y {moveDir.y}, z {moveDir.z}");
+        // Debug.Log($"Real Movement {vec.x}, y {vec.y}, z {vec.z}");
         _characterController.Move(vec * Time.deltaTime);
     }
 
