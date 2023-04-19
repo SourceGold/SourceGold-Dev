@@ -24,7 +24,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MeeleOneHanded",
+                    "name": "EquipWeapon",
+                    "type": "Button",
+                    "id": "219fbc5e-df4d-49f3-bf00-da854cbe50dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StandMeleeAttack1",
                     "type": "Button",
                     "id": "a937b8a9-b4a2-4dcd-8b44-4bfe27813f44",
                     "expectedControlType": "Button",
@@ -33,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MeeleTwoHanded",
+                    "name": "StandMeleeAttack2",
                     "type": "Button",
                     "id": "cee60d36-2695-4710-ac61-da919605750b",
                     "expectedControlType": "Button",
@@ -42,27 +51,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PunchLeft",
+                    "name": "RunJumpMeleeAttack",
                     "type": "Button",
-                    "id": "8286c68c-79ac-4206-93de-97fb9aa4f9b0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "PunchRight",
-                    "type": "Button",
-                    "id": "49ef6696-644c-4315-99c9-e02fa6dfef3f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Buff",
-                    "type": "Button",
-                    "id": "0e356a4e-f75d-403e-b80f-35744e8c9ac9",
+                    "id": "7db8ba8d-fe83-470d-aa95-4c7e5558655c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -140,10 +131,10 @@
                     "name": "",
                     "id": "d4f161b4-35ed-4143-864a-32d5765350bc",
                     "path": "<Keyboard>/j",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "MeeleOneHanded",
+                    "action": "StandMeleeAttack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -151,43 +142,32 @@
                     "name": "",
                     "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
                     "path": "<Keyboard>/k",
-                    "interactions": "Press(behavior=2)",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "MeeleTwoHanded",
+                    "action": "StandMeleeAttack2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7629cd6d-77c5-433c-a1f8-7dd3eb5a4629",
+                    "id": "0a4b82b7-d37a-4e5f-8648-9dfc15d507a8",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EquipWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b40f1a52-226f-4244-b6a1-6d49e72220cb",
                     "path": "<Keyboard>/u",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "PunchLeft",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f331f3f8-646f-4663-9232-5b5c0be893ea",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PunchRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "57ebc9ce-106f-45f5-bb3c-7d9684106052",
-                    "path": "<Keyboard>/b",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Buff",
+                    "action": "RunJumpMeleeAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

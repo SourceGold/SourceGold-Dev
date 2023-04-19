@@ -57,8 +57,8 @@ public class BasicMoving : MonoBehaviour
         if(!IsGrounded())
         {
             _verticalVelocity += _gravity * _gravityMultiplier * Time.deltaTime;
-            Debug.Log("isFalling ...");
-            _animator.SetBool("isFalling", true);
+            //Debug.Log("isFalling ...");
+            //_animator.SetBool("isFalling", true);
             if (!IsJumping())
             {
                 _moveSpeedMultiplier = 0.2f;
@@ -67,9 +67,9 @@ public class BasicMoving : MonoBehaviour
         else if (_verticalVelocity < 0.0f)
         {
             _verticalVelocity = -1f;
-            Debug.Log("Grounded ...");
+            //Debug.Log("Grounded ...");
             SetMovement();
-            _animator.SetBool("isFalling", false);
+            //_animator.SetBool("isFalling", false);
         }
 
         _direction.y = _verticalVelocity;
@@ -110,7 +110,7 @@ public class BasicMoving : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("stop movement");
+            //Debug.Log("stop movement");
             _direction.x = 0.0f;
             _direction.z = 0.0f;
             _input.x = 0;

@@ -29,10 +29,10 @@ public class animationStateController : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
         if (!context.started) return;
-        if (!IsGrounded()) return;
+        //if (!IsGrounded()) return;
 
         _animator.SetTrigger("isJumping");
     }
 
-    private bool IsGrounded() => _characterController.isGrounded;
+    //private bool IsGrounded() => _characterController.isGrounded;
 }
