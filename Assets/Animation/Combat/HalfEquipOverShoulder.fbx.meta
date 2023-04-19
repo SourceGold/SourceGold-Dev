@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 73c54cfab6a18466db6980bd34204b79
+guid: 0e4f1cc41123940d1b24540497137cfb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,10 +33,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Equip Over Shoulder
+      name: HalfEquipOverShoulder
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
+      firstFrame: 32
       lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0

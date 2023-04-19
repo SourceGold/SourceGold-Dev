@@ -6,7 +6,7 @@ public class collision : MonoBehaviour
 {
     public WeaponHandler WeaponHandlerRef;
     private Animator _anim;
-    private bool _hit = false;
+    //private bool _hit = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class collision : MonoBehaviour
         
         if (_anim.GetBool("IsDamageOn") && other.gameObject.tag == "Enemy")
         {
-            int weaponType = this.gameObject.GetComponentInParent<Animator>().GetInteger("WeaponType");
+            int weaponType = WeaponHandlerRef.GetWeaponType();
             if (GetWeaponName(weaponType) == this.gameObject.name)
             {
                 Debug.Log("HIT");

@@ -400,6 +400,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7db8ba8d-fe83-470d-aa95-4c7e5558655c
     m_ActionName: Player/RunJumpMeleeAttack[/Keyboard/u]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1151723622}
+        m_TargetAssemblyTypeName: MeleeHandler, Assembly-CSharp
+        m_MethodName: SwitchWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 15cc9e0c-e954-4420-85e4-2a5f2873acfd
+    m_ActionName: Player/SwitchWeapon[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -994,10 +1010,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3694854
+  m_Radius: 0.16541848
   m_Height: 1.9899029
   m_Direction: 1
-  m_Center: {x: -0.025458723, y: 0.8540576, z: 0}
+  m_Center: {x: -0.0006931424, y: 0.8540576, z: -0.0016477556}
 --- !u!54 &1013153884
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1043,7 +1059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cdebce2895a441cb21f8483825b7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponHandlerRef: {fileID: 0}
+  WeaponHandlerRef: {fileID: 1151723624}
 --- !u!65 &1119097285
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1521,7 +1537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45cdebce2895a441cb21f8483825b7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponHandlerRef: {fileID: 0}
+  WeaponHandlerRef: {fileID: 1151723624}
 --- !u!1001 &1753213826
 PrefabInstance:
   m_ObjectHideFlags: 0

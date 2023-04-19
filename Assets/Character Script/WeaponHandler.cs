@@ -19,7 +19,7 @@ public class WeaponHandler : MonoBehaviour
         MeleeHandlerRef.setCollider(Weapon[0].GetComponent<BoxCollider>());
     }
 
-    public void ResetWeapon(Action action)
+    public void ResetWeapon(Action action, bool switchWeapon)
     {
         if (action == Action.Equip)
         {
@@ -32,10 +32,22 @@ public class WeaponHandler : MonoBehaviour
 
         Weapon[_weaponType].localRotation = Quaternion.identity;
         Weapon[_weaponType].localPosition = Vector3.zero;
+
+        if (switchWeapon)
+        {
+            _weaponType = (_weaponType + 1) % 2;
+            MeleeHandlerRef.setCollider(Weapon[_weaponType].GetComponent<BoxCollider>());
+        }
+            
     }
 
-    public Collider getCollider()
+    public Collider GetCollider()
     {
         return Weapon[_weaponType].GetComponent<Collider>();
+    }
+
+    public int GetWeaponType()
+    {
+        return _weaponType;
     }
 }

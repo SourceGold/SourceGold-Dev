@@ -6,6 +6,7 @@ public class WeaponHandlerBehavior : StateMachineBehaviour
 {
     public WeaponHandler.Action Action;
     public float EventTime;
+    public bool switchWeapon;
 
     private bool _eventTriggered;
 
@@ -20,7 +21,7 @@ public class WeaponHandlerBehavior : StateMachineBehaviour
         if (stateInfo.normalizedTime >= EventTime && !_eventTriggered)
         {
             _eventTriggered = true;
-            animator.GetComponentInParent<WeaponHandler>().ResetWeapon(Action);
+            animator.GetComponentInParent<WeaponHandler>().ResetWeapon(Action, switchWeapon);
         }
     }
 }

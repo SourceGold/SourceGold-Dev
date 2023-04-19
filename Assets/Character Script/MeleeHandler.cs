@@ -101,6 +101,17 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
+    public void SwitchWeapon(InputAction.CallbackContext context)
+    {
+        if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
+        {
+            _anim.SetBool("IsWeaponEquipped", false);
+            _anim.SetBool("Switch", true);
+            _anim.SetBool("IsSwitching", true);
+        }
+    }
+
+
     public void StandingMeleeAttack1(InputAction.CallbackContext context)
     {
         if (context.performed && _anim.GetBool("CanAttack"))
@@ -130,8 +141,8 @@ public class MeleeHandler : MonoBehaviour
 
     public void HitVFX(BufferObj bo)
     {
-        GameObject hit = Instantiate(hitVFX, bo.position, bo.rotation);
-        Destroy(hit, 0.4f);
+        GameObject hit = Instantiate(hitVFX, bo.position, Quaternion.identity);
+        Destroy(hit, 0.2f);
     }
 
     public void setCollider(BoxCollider collider)
