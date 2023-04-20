@@ -95,7 +95,7 @@ public class MeleeHandler : MonoBehaviour
 
     public void EquipWeapon(InputAction.CallbackContext context)
     {
-        if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
+        if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && !_anim.GetBool("run"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
         }
@@ -141,8 +141,8 @@ public class MeleeHandler : MonoBehaviour
 
     public void HitVFX(BufferObj bo)
     {
-        GameObject hit = Instantiate(hitVFX, bo.position, Quaternion.identity);
-        Destroy(hit, 0.2f);
+        GameObject hit = Instantiate(hitVFX, bo.position, bo.rotation);
+        Destroy(hit, 0.7f);
     }
 
     public void setCollider(BoxCollider collider)

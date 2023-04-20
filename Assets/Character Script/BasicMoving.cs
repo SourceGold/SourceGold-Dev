@@ -47,9 +47,15 @@ public class BasicMoving : MonoBehaviour
 
     private void Update()
     {
+        if (_animator.GetBool("IsAttacking"))
+        {
+            _input.x = 0;
+            _input.y = 0;
+        }
         ApplyGravity();
         ApplyRotation();
         ApplyMovement();
+        //Debug.Log(_input);
     }
 
     private void ApplyGravity()
@@ -73,6 +79,7 @@ public class BasicMoving : MonoBehaviour
         }
 
         _direction.y = _verticalVelocity;
+        //_characterController.Move(_direction * Time.deltaTime);
     }
 
     private void ApplyRotation()
@@ -87,6 +94,7 @@ public class BasicMoving : MonoBehaviour
     private void ApplyMovement()
     {
         var vec = new Vector3(0, _direction.y, 0);
+        
         var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
         Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         var movementSpeed = _input.magnitude;
@@ -96,13 +104,23 @@ public class BasicMoving : MonoBehaviour
 
         // Debug.Log($"moveDir Movement {moveDir.x}, y {moveDir.y}, z {moveDir.z}");
         // Debug.Log($"Real Movement {vec.x}, y {vec.y}, z {vec.z}");
+        //Debug.Log(vec);
         _characterController.Move(vec * Time.deltaTime);
     }
 
     public void Move(InputAction.CallbackContext context)
     {
-        _input = context.ReadValue<Vector2>();
-        //Debug.Log(_input);
+        if (!_animator.GetBool("IsAttacking") && !_animator.GetBool("IsEquipting"))
+        {
+            _input = context.ReadValue<Vector2>();
+        }
+        else if (_animator.GetBool("IsEquipting") && _animator.GetBool("IsSwitching"))
+        {
+            _input = context.ReadValue<Vector2>();
+        }
+        
+
+        Debug.Log("Trigger");
         SetMovement();
     }
 
