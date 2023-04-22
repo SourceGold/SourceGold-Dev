@@ -108,6 +108,12 @@ public class BasicMoving : MonoBehaviour
         _characterController.Move(vec * Time.deltaTime);
     }
 
+    private void OnAnimatorMove()
+    {
+        Vector3 velocity = _animator.deltaPosition;
+
+    }
+
     public void Move(InputAction.CallbackContext context)
     {
         if (!_animator.GetBool("IsAttacking"))

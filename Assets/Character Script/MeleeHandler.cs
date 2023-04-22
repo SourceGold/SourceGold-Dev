@@ -137,6 +137,15 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
+    public void Test(InputAction.CallbackContext context)
+    {
+        if (context.performed && _anim.GetBool("CanAttack"))
+        {
+            _anim.SetTrigger("Attack");
+            _anim.SetInteger("AttackType", 4);
+        }
+    }
+
     public void HitVFX(BufferObj bo)
     {
         GameObject hit = Instantiate(hitVFX, bo.position, bo.rotation);

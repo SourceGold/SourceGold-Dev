@@ -502,6 +502,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 15cc9e0c-e954-4420-85e4-2a5f2873acfd
     m_ActionName: Player/SwitchWeapon[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1151723622}
+        m_TargetAssemblyTypeName: MeleeHandler, Assembly-CSharp
+        m_MethodName: Test
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f7893ace-4b1d-441d-af7f-a9e1f90ef05d
+    m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1183,7 +1199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponHandlerRef: {fileID: 1151723624}
-  Health: 10
+  Health: 40
 --- !u!1 &1119097277 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 541ce79e03d914baa8de745da1e61128,
