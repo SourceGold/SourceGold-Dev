@@ -7,10 +7,11 @@ public class Collision : MonoBehaviour
     public WeaponHandler WeaponHandlerRef;
     private Animator _anim;
     //private bool _hit = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        _anim = this.GetComponentInParent<Animator>();
+        _anim = WeaponHandlerRef.GetComponent<Animator>();
     }
      
     // Update is called once per frame
@@ -22,33 +23,14 @@ public class Collision : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        if (_anim.GetBool("IsDamageOn") && other.gameObject.tag == "Enemy")
+        if (_anim.GetBool("IsDamageOn"))
         {
-            int weaponType = WeaponHandlerRef.GetWeaponType();
-            if (GetWeaponName(weaponType) == this.gameObject.name)
+            WeaponHandler.WeaponInfo weaponInfo = WeaponHandlerRef.GetWeaponInfo();
+            if (weaponInfo.name == this.gameObject.name)
             {
                 Debug.Log("HIT");
                 //_hit = true;
             }
         }
-    }
-
-    private string GetWeaponName(int weaponType)
-    {
-        string name;
-        switch (weaponType)
-        {
-            case 0:
-                name = "Greatsword";
-                break;
-            case 1:
-                name = "Godsword";
-                break;
-            default:
-                name = "Greatsword";
-                break;
-        }
-
-        return name;
     }
 }

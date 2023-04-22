@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RunJumpMeleeAttack",
+                    "name": "SkillMeleeAttack1",
                     "type": "Button",
                     "id": "7db8ba8d-fe83-470d-aa95-4c7e5558655c",
                     "expectedControlType": "Button",
@@ -149,8 +149,30 @@
                 },
                 {
                     "name": "",
+                    "id": "3dbb2a88-3c26-46ff-a47b-eef6fff15f80",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandMeleeAttack1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
                     "path": "<Keyboard>/k",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandMeleeAttack2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f67935af-67bb-4cea-baad-4672eb6a24bc",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -176,7 +198,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "RunJumpMeleeAttack",
+                    "action": "SkillMeleeAttack1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -10,6 +10,7 @@ public class MeleeHandler : MonoBehaviour
 
     public bool DebugTrail = false;
     public LayerMask hitLayers;
+    public WeaponHandler WeaponHandlerRef;
 
     [SerializeField] GameObject hitVFX;
 
@@ -21,11 +22,9 @@ public class MeleeHandler : MonoBehaviour
     }
 
     private LinkedList<BufferObj> _trailList = new LinkedList<BufferObj>();
-
-    public WeaponHandler WeaponHandlerRef;
     private BoxCollider _weaponCollider;
     private int _maxFrameBuffer = 10;
-    Animator _anim;
+    private Animator _anim;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +39,6 @@ public class MeleeHandler : MonoBehaviour
         {
             //Debug.Log("Debug");
             CheckTrail();
-            //OnDramGizmos();
         }
         
     }
@@ -95,7 +93,7 @@ public class MeleeHandler : MonoBehaviour
 
     public void EquipWeapon(InputAction.CallbackContext context)
     {
-        if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && !_anim.GetBool("run"))
+        if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
         }
@@ -130,7 +128,7 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-    public void RunJumpMeleeAttack(InputAction.CallbackContext context)
+    public void SkillMeleeAttack1(InputAction.CallbackContext context)
     {
         if (context.performed && _anim.GetBool("CanAttack"))
         {

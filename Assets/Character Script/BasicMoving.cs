@@ -110,7 +110,7 @@ public class BasicMoving : MonoBehaviour
 
     public void Move(InputAction.CallbackContext context)
     {
-        if (!_animator.GetBool("IsAttacking") && !_animator.GetBool("IsEquipting"))
+        if (!_animator.GetBool("IsAttacking"))
         {
             _input = context.ReadValue<Vector2>();
         }
@@ -120,7 +120,7 @@ public class BasicMoving : MonoBehaviour
         }
         
 
-        Debug.Log("Trigger");
+        //Debug.Log(_input);
         SetMovement();
     }
 

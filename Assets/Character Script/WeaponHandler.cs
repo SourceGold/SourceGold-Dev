@@ -6,20 +6,41 @@ public class WeaponHandler : MonoBehaviour
 {
     public enum Action { Equip, Unequip };
 
-    
+
+    public string[] Name;
+    public float[] Damage;
     public Transform []Weapon;
     public Transform []WeaponHandle;
     public Transform []WeaponRestPose;
     public MeleeHandler MeleeHandlerRef;
-    private Animator _anim;
 
+    public struct WeaponInfo
+    {
+        public string name;
+        public float damge;
+    }
+
+    private Animator _anim;
     private int _weaponType = 0;
+    private WeaponInfo[] _weaponInfo;
 
     void Start()
     {
         MeleeHandlerRef.setCollider(Weapon[0].GetComponent<BoxCollider>());
         _anim = GetComponent<Animator>();
         _anim.SetInteger("WeaponType", 0);
+        _weaponInfo = new WeaponInfo[Weapon.Length];
+        for (int i = 0; i < Weapon.Length; i++)
+        {
+            //_weaponInfo[i] = new WeaponInfo();
+            _weaponInfo[i].name = Name[i];
+            _weaponInfo[i].damge = Damage[i];
+
+            Weapon[i].SetParent(WeaponRestPose[i]);
+            Weapon[i].localRotation = Quaternion.identity;
+            Weapon[i].localPosition = Vector3.zero;
+        }
+        Weapon[1].gameObject.SetActive(false);
     }
 
     public void ResetWeapon(Action action, bool switchWeapon)
@@ -38,9 +59,11 @@ public class WeaponHandler : MonoBehaviour
 
         if (switchWeapon)
         {
+            Weapon[_weaponType].gameObject.SetActive(false);
             _weaponType = (_weaponType + 1) % Weapon.Length;
             MeleeHandlerRef.setCollider(Weapon[_weaponType].GetComponent<BoxCollider>());
             _anim.SetInteger("WeaponType", _weaponType);
+            Weapon[_weaponType].gameObject.SetActive(true);
         }
             
     }
@@ -50,8 +73,8 @@ public class WeaponHandler : MonoBehaviour
         return Weapon[_weaponType].GetComponent<Collider>();
     }
 
-    public int GetWeaponType()
+    public WeaponInfo GetWeaponInfo()
     {
-        return _weaponType;
+        return _weaponInfo[_weaponType];
     }
 }
