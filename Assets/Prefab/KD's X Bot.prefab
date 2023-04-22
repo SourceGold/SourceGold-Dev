@@ -233,14 +233,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201426989029949280}
-  m_LocalRotation: {x: 0.22879206, y: -0.47251546, z: 0.12849295, w: 0.84135187}
-  m_LocalPosition: {x: 8.210041, y: 7.809575, z: -3.1904485}
+  m_LocalRotation: {x: 0.30400163, y: -0.4589466, z: 0.17073174, w: 0.81719136}
+  m_LocalPosition: {x: 8.210041, y: 7.809575, z: -3.2104487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7757532839264973271}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 39.37, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40.811, y: 0, z: 0}
 --- !u!20 &5502462774496625449
 Camera:
   m_ObjectHideFlags: 0
@@ -609,7 +609,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4315154172815153236}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.7900414, y: 4.889575, z: -2.9194486}
+  m_LocalPosition: {x: 4.7900414, y: 4.889575, z: -2.9394486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1020,7 +1020,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1d492ce0cd37bbf429a2f6d2295cc2c1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d492ce0cd37bbf429a2f6d2295cc2c1,
         type: 3}
@@ -1127,10 +1127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498cb204aef694e4898deba03d7a5572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cam: {fileID: 4100261826633734046}
   _moveSpeed: 1
-  _rotateSpeed: 1000
   _walkSpeed: 1.5
-  _runSpeed: 1000
+  _runSpeed: 3.5
+  _rotateSpeed: 0.05
 --- !u!114 &7174971207546334450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,6 +1190,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f91ef76b-82eb-46a6-86d4-12c77ba95341
     m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5669977259028365415}
+        m_TargetAssemblyTypeName: KD_Controller, Assembly-CSharp
+        m_MethodName: TriggerJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ba53b3d4-a638-4db0-831e-ec9f118f3b27
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
