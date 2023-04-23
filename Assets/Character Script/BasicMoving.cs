@@ -54,7 +54,7 @@ public class BasicMoving : MonoBehaviour
         }
         ApplyGravity();
         ApplyRotation();
-        ApplyMovement();
+        //ApplyMovement();
         //Debug.Log(_input);
     }
 
@@ -108,11 +108,11 @@ public class BasicMoving : MonoBehaviour
         _characterController.Move(vec * Time.deltaTime);
     }
 
-    private void OnAnimatorMove()
-    {
-        Vector3 velocity = _animator.deltaPosition;
+    //private void OnAnimatorMove()
+    //{
+    //    Vector3 velocity = _animator.deltaPosition;
 
-    }
+    //}
 
     public void Move(InputAction.CallbackContext context)
     {

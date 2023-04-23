@@ -112,10 +112,17 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack1(InputAction.CallbackContext context)
     {
-        if (context.performed && _anim.GetBool("CanAttack"))
+        if (context.performed)
         {
-            _anim.SetTrigger("Attack");
             _anim.SetInteger("AttackType", 1);
+            if (_anim.GetBool("CanAttack"))
+            {
+                _anim.SetTrigger("Attack");
+            }
+            if (_anim.GetBool("IsAttacking"))
+            {
+                _anim.SetBool("Combo", true);
+            }
         }
     }
 
@@ -139,10 +146,19 @@ public class MeleeHandler : MonoBehaviour
 
     public void Test(InputAction.CallbackContext context)
     {
-        if (context.performed && _anim.GetBool("CanAttack"))
+        if (context.performed)
         {
-            _anim.SetTrigger("Attack");
-            _anim.SetInteger("AttackType", 4);
+
+        }
+    }
+
+    public void Test1(InputAction.CallbackContext context)
+    {
+        if (context.performed && _anim.GetBool("IsAttacking"))
+        {
+            //_anim.SetTrigger("Attack");
+            //_anim.SetInteger("AttackType", 5);
+            _anim.SetBool("Combo", true);
         }
     }
 
