@@ -73,10 +73,10 @@ public class KD_Controller : MonoBehaviour
     [SerializeField] private float _jumpPower = 5.0f;
     [SerializeField] private float _gravityMultiplier = 2.0f;
     [SerializeField] private float _fallingMultiplier = 1.5f;
-    [SerializeField] private float _leftRightRunningCoef = 3.0f;
+    [SerializeField] private float _leftRightRunningCoef = 3.5f;
     [SerializeField] private float _leftRightWalkingCoef = 2.0f;
     [SerializeField] private float _jumpCoolDown = 0.15f;
-
+    [SerializeField] private bool _runMode = true;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -105,7 +105,10 @@ public class KD_Controller : MonoBehaviour
 
     public void ToggleRunning(InputAction.CallbackContext context)
     {
-        _isRunning = context.performed ? !_isRunning : _isRunning;
+        if (_runMode)
+            _isRunning = context.performed ? !_isRunning : _isRunning;
+        else
+            _isRunning = context.ReadValueAsButton();
     }
     public void TriggerJump(InputAction.CallbackContext context)
     {
