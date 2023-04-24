@@ -233,8 +233,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201426989029949280}
-  m_LocalRotation: {x: 0.34061062, y: 0.000000008560339, z: -0.000000003101179, w: 0.94020444}
-  m_LocalPosition: {x: 2.6578271, y: 7.7167997, z: -5.795872}
+  m_LocalRotation: {x: 0.34061062, y: -0.000000008560339, z: 0.000000003101179, w: 0.94020444}
+  m_LocalPosition: {x: -0.7621729, y: 4.7967997, z: -5.524872}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -401,7 +401,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552102730005622854}
-  m_LocalRotation: {x: 0.34402892, y: 3e-45, z: -1e-45, w: 0.93895906}
+  m_LocalRotation: {x: 0.34402892, y: -1e-45, z: 1e-45, w: 0.93895906}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -778,7 +778,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4418885304602121918}
-  m_LocalRotation: {x: 0.3268928, y: 0.000000016261085, z: -0.0000000056246408, w: 0.94506145}
+  m_LocalRotation: {x: 0.3268928, y: -0.00000001626109, z: 0.000000005624643, w: 0.94506145}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1060,7 +1060,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b0160d392512dde4da2aed1f9986e6b6,
         type: 3}
       propertyPath: m_Name
-      value: X Bot@T-Pose
+      value: KD's X Bot
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: b0160d392512dde4da2aed1f9986e6b6,
         type: 3}
@@ -1117,6 +1117,9 @@ MonoBehaviour:
   _jumpPower: 5
   _gravityMultiplier: 2
   _fallingMultiplier: 1.5
+  _leftRightRunningCoef: 3
+  _leftRightWalkingCoef: 2
+  _jumpCoolDown: 0.15
 --- !u!114 &6536881188893549242
 MonoBehaviour:
   m_ObjectHideFlags: 0
