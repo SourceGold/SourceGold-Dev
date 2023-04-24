@@ -20,32 +20,62 @@ public class KD_Controller : MonoBehaviour
     #endregion
     #region Variables: Movement
 
-    private Vector2 _input;
-    private bool _isRunning;
-    private bool _isGrounded;
-    private float _groundCheckOffset = 0.5f;
-    private bool _isJumping;
-    private bool _isFalling;
-    private Vector3 _direction;
-    private Vector3 _averageVelocity;
-    private float _speed;
-    private float _verticalVelocity;
-    private float _targetSpeed;
     private Transform _transform;
     private CharacterController _characterController;
+    public enum PlayerPosture
+    {
+        Crouch,
+        Stand,
+        Falling,
+        Jumping,
+        Landing
+    };
+    [HideInInspector] public PlayerPosture _playerPosture = PlayerPosture.Stand;
+
+    public enum LocomotionState
+    {
+        Idle,
+        Walking,
+        Running
+    };
+    [HideInInspector] public LocomotionState _locomotionState = LocomotionState.Idle;
+
+    private float _standThreshold = 0.0f;
+    private float _midAirThreshold = 1.1f;
+
+    [SerializeField] private float _moveSpeed = 1.0f;
+    [SerializeField] private float _walkSpeed = 1.75f;
+    [SerializeField] private float _runSpeed = 3.5f;
+
+    private Vector2 _input;
+    private bool _isRunning;
+    private bool _isJumping;
+    private bool _isGrounded;
+    private bool _isLanding;
+    private bool _canFall;
+
+    private Vector3 _direction;
+    private float _HorizontalVelocity;
+    private float _verticalVelocity;
     private float _currentVelocity;
-    private float _gravity = -9.8f;
+    private float _leftRight;
+    private float _distanceToGround;
+
+    private float _groundCheckOffset = 0.5f;
+    private float _fallHeight = 0.5f;
 
     static readonly int CACHE_SIZE = 3;
     Vector3[] _velocityCache = new Vector3[CACHE_SIZE];
     int _velocityCacheIndex = 0;
 
-    [SerializeField] private float _moveSpeed = 1.0f;
-    [SerializeField] private float _walkSpeed = 1.75f;
-    [SerializeField] private float _runSpeed = 3.5f;
+    private float _gravity = -9.8f;
     [SerializeField] private float _rotateSpeed = 0.05f;
     [SerializeField] private float _jumpPower = 5.0f;
-    [SerializeField] private float _gravityMultiplier = 1.0f;
+    [SerializeField] private float _gravityMultiplier = 2.0f;
+    [SerializeField] private float _fallingMultiplier = 1.5f;
+    [SerializeField] private float _leftRightRunningCoef = 3.0f;
+    [SerializeField] private float _leftRightWalkingCoef = 2.0f;
+    [SerializeField] private float _jumpCoolDown = 0.15f;
 
     #endregion
     // Start is called before the first frame update
@@ -61,11 +91,13 @@ public class KD_Controller : MonoBehaviour
     void Update()
     {
         CheckGround();
+        SwitchPosture();
         ApplyGravity();
+        Jump();
         Rotate();
-        Move();
+        SetupAnimator();
     }
-
+    #region Functions: Inputs
     public void GetMoveInput(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
@@ -74,6 +106,64 @@ public class KD_Controller : MonoBehaviour
     public void ToggleRunning(InputAction.CallbackContext context)
     {
         _isRunning = context.performed ? !_isRunning : _isRunning;
+    }
+    public void TriggerJump(InputAction.CallbackContext context)
+    {
+        _isJumping = context.ReadValueAsButton();
+    }
+    #endregion
+    private void SwitchPosture()
+    {
+        if (!_isGrounded)
+        {
+            if (_verticalVelocity > 0.0f)
+            {
+                _playerPosture = PlayerPosture.Jumping;
+            } 
+            else if (_playerPosture != PlayerPosture.Jumping)
+            {
+                if (_canFall)
+                {
+                    _playerPosture = PlayerPosture.Falling;
+                }
+            }
+        } else if (_playerPosture == PlayerPosture.Jumping)
+        {
+            StartCoroutine(CoolDownJump());
+        } else if (_isLanding)
+        {
+            _playerPosture = PlayerPosture.Landing;
+        }
+        else
+        {
+            _playerPosture = PlayerPosture.Stand;
+        }
+        if (_input.Equals(Vector2.zero))
+        {
+            _locomotionState = LocomotionState.Idle;
+        } else if (!_isRunning)
+        {
+            _locomotionState = LocomotionState.Walking;
+        } else
+        {
+            _locomotionState = LocomotionState.Running;
+        }
+
+    }
+    private void SetupAnimator()
+    {
+        if (_playerPosture == PlayerPosture.Stand || _playerPosture == PlayerPosture.Landing)
+        {
+            _animator.SetFloat("Posture", _standThreshold, 0.1f, Time.deltaTime);
+            Move();
+        }
+        else if (_playerPosture == PlayerPosture.Jumping || _playerPosture == PlayerPosture.Falling)
+        {
+            _animator.SetFloat("Posture", _midAirThreshold);
+            _animator.SetFloat("VerticalVelocity", _verticalVelocity);
+            if (_playerPosture == PlayerPosture.Jumping)
+                _animator.SetFloat("LeftRight", _leftRight);
+        }
     }
     private void Rotate()
     {
@@ -89,51 +179,63 @@ public class KD_Controller : MonoBehaviour
     }
     private void Move()
     {
-        _targetSpeed = _isRunning ? _runSpeed : _walkSpeed;
-        _targetSpeed *= _input.magnitude;
-        _speed = Mathf.Lerp(_speed, _targetSpeed, 0.5f);
-        _animator.SetFloat("HorizontalSpeed", _speed);
+        float targetSpeed = _isRunning ? _runSpeed : _walkSpeed;
+        targetSpeed *= _input.magnitude;
+        _HorizontalVelocity = Mathf.Lerp(_HorizontalVelocity, targetSpeed, 0.5f);
+        _animator.SetFloat("HorizontalVelocity", _HorizontalVelocity);
     }
-
-    public void TriggerJump(InputAction.CallbackContext context)
+    private void Jump()
     {
-        _isJumping = context.ReadValueAsButton();
-        if (_isJumping ) { 
-            _animator.SetTrigger("Jump");
-            _averageVelocity = AverageVelocity();
+        if ((_playerPosture == PlayerPosture.Stand) && _isJumping)
+        {
+            _verticalVelocity = _jumpPower;
+            _leftRight = Mathf.Repeat(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1.0f);
+            _leftRight = _leftRight < 0.5f ? -1.0f : 1.0f;
+            if (_locomotionState == LocomotionState.Running)
+            {
+                _leftRight *= _leftRightRunningCoef;
+            } else if (_locomotionState == LocomotionState.Walking)
+            {
+                _leftRight *= _leftRightWalkingCoef;
+            } else
+            {
+                _leftRight = Random.Range(-1.0f, 1.0f);
+            }
         }
     }
+    IEnumerator CoolDownJump()
+    {
+        _isLanding = true;
+        _playerPosture = PlayerPosture.Landing;
+        yield return new WaitForSeconds(_jumpCoolDown);
+        _isLanding = false;
+    }
+
     private void ApplyGravity()
     {
-        if (!_isGrounded)
+        if (_playerPosture != PlayerPosture.Jumping && _playerPosture != PlayerPosture.Falling)
         {
-            _verticalVelocity += _gravity * _gravityMultiplier * Time.deltaTime;
-            _isFalling = true;
-            _animator.SetBool("Falling", true);
+            if (!_isGrounded)
+            {
+                _verticalVelocity += _gravity * _fallingMultiplier * _gravityMultiplier * Time.deltaTime;
+            } else
+            {
+                _verticalVelocity = _gravity * _gravityMultiplier * Time.deltaTime;
+            }
         }
         else
         {
-            _verticalVelocity = _gravity * _gravityMultiplier * Time.deltaTime;
+            if (_verticalVelocity <= 0.0f)
+            {
+                _verticalVelocity += _gravity * _fallingMultiplier * _gravityMultiplier * Time.deltaTime;
+            }
+            else
+            {
+                _verticalVelocity += _gravity * _gravityMultiplier * Time.deltaTime;
+            }
         }
     }
-    private void OnAnimatorMove()
-    {
-        Vector3 playerDelterMovement = _animator.deltaPosition;
-        if (playerDelterMovement.y != 0.0f)
-        {
-            playerDelterMovement.x = _averageVelocity.x * Time.deltaTime;
-            playerDelterMovement.y = playerDelterMovement.y * _jumpPower;
-            playerDelterMovement.z = _averageVelocity.z * Time.deltaTime;  
-        } else
-        {
-            playerDelterMovement.y = _verticalVelocity * Time.deltaTime;
-            _isFalling = false;
-            _animator.SetBool("Falling", false);
-        }
-
-        CacheVelocity(_animator.velocity);
-        _characterController.Move(playerDelterMovement);
-    }
+    #region Functions: Velocity Cache
     private Vector3 AverageVelocity() 
     {
         Vector3 average = Vector3.zero;
@@ -149,16 +251,32 @@ public class KD_Controller : MonoBehaviour
         _velocityCache[_velocityCacheIndex] = velocity;
         _velocityCacheIndex = (_velocityCacheIndex + 1) % CACHE_SIZE;
     }
+    #endregion
     private void CheckGround()
     {
         if (Physics.SphereCast(_transform.position + (Vector3.up * _groundCheckOffset), _characterController.radius, Vector3.down, out RaycastHit hit, _groundCheckOffset - _characterController.radius + 2 * _characterController.skinWidth))
         {
             _isGrounded = true;
-            _animator.SetBool("Grounding", true);
         } else
         {
             _isGrounded = false;
-            _animator.SetBool("Grounding", false);
+            _canFall = !Physics.Raycast(_transform.position, Vector3.down, _fallHeight);
+        }
+    }
+    private void OnAnimatorMove()
+    {
+        if (_playerPosture != PlayerPosture.Jumping && _playerPosture != PlayerPosture.Falling)
+        {
+            Vector3 playerDelterMovement = _animator.deltaPosition;
+            playerDelterMovement.y = _verticalVelocity * Time.deltaTime;
+            _characterController.Move(playerDelterMovement);
+            CacheVelocity(_animator.velocity);
+        } else
+        {
+            Vector3 playerDelterMovement = AverageVelocity();
+            playerDelterMovement.y = _verticalVelocity;
+            playerDelterMovement *= Time.deltaTime;
+            _characterController.Move(playerDelterMovement);
         }
     }
 }
