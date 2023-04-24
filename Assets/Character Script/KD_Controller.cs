@@ -190,7 +190,9 @@ public class KD_Controller : MonoBehaviour
         {
             _verticalVelocity = _jumpPower;
             _leftRight = Mathf.Repeat(_animator.GetCurrentAnimatorStateInfo(0).normalizedTime, 1.0f);
-            _leftRight = _leftRight < 0.5f ? -1.0f : 1.0f;
+            
+            // Jump from the back leg
+            _leftRight = _leftRight < 0.5f ? 1.0f : -1.0f;
             if (_locomotionState == LocomotionState.Running)
             {
                 _leftRight *= _leftRightRunningCoef;
