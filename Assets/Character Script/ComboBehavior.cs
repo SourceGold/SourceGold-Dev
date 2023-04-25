@@ -31,23 +31,23 @@ public class ComboBehavior : StateMachineBehaviour
     {
         if (stateInfo.normalizedTime >= Start && stateInfo.normalizedTime < End)
         {
-            if (animator.GetBool("Combo"))
+            if (animator.GetBool("IsCombo"))
             {
-                animator.SetBool("Combo", false);
+                animator.SetBool("IsCombo", false);
                 transition = true;
             }
         }
         else if (stateInfo.normalizedTime < Start)
         {
-            if (animator.GetBool("Combo"))
-                animator.SetBool("Combo", false);
+            if (animator.GetBool("IsCombo"))
+                animator.SetBool("IsCombo", false);
         }
         else
         {
             if (transition)
             {
                 transition = false;
-                animator.SetTrigger("Test");
+                animator.SetTrigger("Combo");
             }
         }
     }

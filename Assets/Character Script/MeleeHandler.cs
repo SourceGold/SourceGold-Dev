@@ -121,7 +121,7 @@ public class MeleeHandler : MonoBehaviour
             }
             if (_anim.GetBool("IsAttacking"))
             {
-                _anim.SetBool("Combo", true);
+                _anim.SetBool("IsCombo", true);
             }
         }
     }
