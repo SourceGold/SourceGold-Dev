@@ -127,12 +127,28 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-    public void StandingMeleeAttack2(InputAction.CallbackContext context)
+    public void StandingMeleeAttack2Press(InputAction.CallbackContext context)
     {
         if (context.performed && _anim.GetBool("CanAttack"))
         {
             _anim.SetTrigger("Attack");
             _anim.SetInteger("AttackType", 2);
+            _anim.SetBool("Release", false);
+        }
+    }
+
+    public void StandingMeleeAttack2Release(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _anim.SetBool("Release", true);
+    }
+
+    public void StandingMeleeAttack3(InputAction.CallbackContext context)
+    {
+        if (context.performed && _anim.GetBool("CanAttack"))
+        {
+            _anim.SetTrigger("Attack");
+            _anim.SetInteger("AttackType", 3);
         }
     }
 

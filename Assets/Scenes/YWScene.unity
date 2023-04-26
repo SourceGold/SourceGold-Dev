@@ -390,7 +390,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1151723622}
         m_TargetAssemblyTypeName: MeleeHandler, Assembly-CSharp
-        m_MethodName: StandingMeleeAttack2
+        m_MethodName: StandingMeleeAttack2Press
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -498,6 +498,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: da422409-2484-453b-bc19-09b2bd3d101a
     m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1151723622}
+        m_TargetAssemblyTypeName: MeleeHandler, Assembly-CSharp
+        m_MethodName: StandingMeleeAttack2Release
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e747a9b9-f3cf-4894-b74b-4069c15e9edd
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1151723622}
+        m_TargetAssemblyTypeName: MeleeHandler, Assembly-CSharp
+        m_MethodName: StandingMeleeAttack3
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f83b8cc6-a409-4bc8-903a-261124947c22
+    m_ActionName: Player/MeleeAttack3[/Keyboard/l]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1417,11 +1449,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.0000000033510912
-      objectReference: {fileID: 0}
-    - target: {fileID: 7799732340916939615, guid: ac8e4cf3311444446a57c2fdb63e0d47,
-        type: 3}
-      propertyPath: _jumpPower
-      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1545,7 +1545,7 @@ MonoBehaviour:
   _walkSpeed: 1.75
   _runSpeed: 3.5
   _rotateSpeed: 0.05
-  _jumpPower: 6
+  _jumpPower: 7
   _gravityMultiplier: 2
   _fallingMultiplier: 1.5
   _leftRightRunningCoef: 3.5

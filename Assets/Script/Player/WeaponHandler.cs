@@ -28,7 +28,7 @@ public class WeaponHandler : MonoBehaviour
     {
         MeleeHandlerRef.setCollider(Weapon[0].GetComponent<BoxCollider>());
         _anim = GetComponent<Animator>();
-        _anim.SetInteger("WeaponType", 0);
+        _anim.SetInteger("WeaponType", 1);
         _weaponInfo = new WeaponInfo[Weapon.Length];
         for (int i = 0; i < Weapon.Length; i++)
         {
@@ -64,7 +64,7 @@ public class WeaponHandler : MonoBehaviour
             Weapon[_weaponType].gameObject.SetActive(false);
             _weaponType = (_weaponType + 1) % Weapon.Length;
             MeleeHandlerRef.setCollider(Weapon[_weaponType].GetComponent<BoxCollider>());
-            _anim.SetInteger("WeaponType", _weaponType);
+            _anim.SetInteger("WeaponType", _weaponType+1);
             Weapon[_weaponType].gameObject.SetActive(true);
         }
             
