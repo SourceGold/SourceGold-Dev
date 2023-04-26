@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a1f8b4be694dd4c03b9db6a411c9036e
+guid: 2982c9d517d4041958f019b46151c0b0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: SlowRun
+      name: StandRun
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
