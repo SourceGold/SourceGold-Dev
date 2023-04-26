@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 65288d966868b45c292b462174cfe40e
+guid: 0f4a26361c70f4599a97fa6f0fd32c7f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: LightSwordCasting
+      name: MeleeHeavy1_3
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 73
+      lastFrame: 140
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
