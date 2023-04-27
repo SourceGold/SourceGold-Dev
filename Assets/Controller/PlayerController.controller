@@ -187,7 +187,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.1
+  m_TransitionDuration: 0.2
   m_TransitionOffset: 0.6
   m_ExitTime: 0.72727275
   m_HasExitTime: 0
@@ -203,7 +203,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MeleeLight3
-  m_Speed: 1.4
+  m_Speed: 1.45
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5982961706276570028}
@@ -233,7 +233,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MeleeLight2_1
-  m_Speed: 1.2
+  m_Speed: 1.1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -775346030275533150}
@@ -382,7 +382,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MeleeLight2_2
-  m_Speed: 1.4
+  m_Speed: 1.3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 5069274774693070995}
@@ -1544,7 +1544,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.1
+  m_TransitionDuration: 0.2
   m_TransitionOffset: 0.4
   m_ExitTime: 0.82558143
   m_HasExitTime: 0
@@ -2568,7 +2568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Start: 0.1
-  End: 0.9
+  End: 0.85
 --- !u!114 &6997646328062307022
 MonoBehaviour:
   m_ObjectHideFlags: 1

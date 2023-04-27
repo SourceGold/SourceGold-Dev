@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WeaponHandlerRef: {fileID: 1151723624}
-  Health: 40
+  Health: 40000
 --- !u!114 &1151723622 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4371385299305579103, guid: ac8e4cf3311444446a57c2fdb63e0d47,
@@ -1378,12 +1378,12 @@ PrefabInstance:
     - target: {fileID: 6614586869083066529, guid: ac8e4cf3311444446a57c2fdb63e0d47,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000004271425
+      value: -0.000000004271424
       objectReference: {fileID: 0}
     - target: {fileID: 6614586869083066529, guid: ac8e4cf3311444446a57c2fdb63e0d47,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -5.085785e-10
+      value: 5.085784e-10
       objectReference: {fileID: 0}
     - target: {fileID: 6694425935367109968, guid: ac8e4cf3311444446a57c2fdb63e0d47,
         type: 3}
@@ -1443,12 +1443,12 @@ PrefabInstance:
     - target: {fileID: 6981991541288640202, guid: ac8e4cf3311444446a57c2fdb63e0d47,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000002771546
+      value: -0.00000002771546
       objectReference: {fileID: 0}
     - target: {fileID: 6981991541288640202, guid: ac8e4cf3311444446a57c2fdb63e0d47,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000033510912
+      value: 0.0000000033510912
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
