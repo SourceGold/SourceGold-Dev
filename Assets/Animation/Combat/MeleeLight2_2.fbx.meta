@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ed72aa67fa25e491083a0d34aa8a86d3
+guid: a2da1b8425ea143d9be4df50f4e8594b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: MeleeLight1_2
+      name: MeleeLight2_2
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 86
+      firstFrame: 30
+      lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -156,8 +156,8 @@ public class MeleeHandler : MonoBehaviour
     {
         if (context.performed && _anim.GetBool("CanAttack"))
         {
-            _anim.SetTrigger("Attack");
-            _anim.SetInteger("AttackType", 3);
+            //_anim.SetTrigger("Attack");
+            //_anim.SetInteger("AttackType", 3);
         }
     }
 
