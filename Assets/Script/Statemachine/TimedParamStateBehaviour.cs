@@ -32,6 +32,4 @@ public class TimedParamStateBehavior : StateMachineBehaviour
         animator.SetBool(paramName, !setDefaultState);
 
     }
-
-
 }

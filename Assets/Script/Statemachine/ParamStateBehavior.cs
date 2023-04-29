@@ -7,7 +7,6 @@ public class ParamStateBehavior : StateMachineBehaviour
 {
 
     public SetParamStateData[] ParamStateData;
-    //public float Start, End;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
