@@ -1315,8 +1315,8 @@ MonoBehaviour:
   setDefaultState: 1
   Start1: 0.35
   End1: 0.45
-  Start2: 0.57
-  End2: 0.65
+  Start2: 0.55
+  End2: 0.66
 --- !u!1107 &-2395168660220763218
 AnimatorStateMachine:
   serializedVersion: 6
