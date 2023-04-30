@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animation/Combat/Melee.meta
 guid: cf92a6731710d40d1970a186145fd553
+========
+guid: 573c2a020495544008c64f766d210f35
+>>>>>>>> dev:Assets/Script/Player.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
