@@ -1664,9 +1664,7 @@ MonoBehaviour:
     setDefaultState: 0
   - paramName: IsAttacking
     setDefaultState: 1
-  - paramName: Release
-    setDefaultState: 0
-  - paramName: Hold
+  - paramName: AttackRelease
     setDefaultState: 0
 --- !u!91 &9100000
 AnimatorController:
@@ -2794,9 +2792,7 @@ MonoBehaviour:
     setDefaultState: 0
   - paramName: IsAttacking
     setDefaultState: 1
-  - paramName: Release
-    setDefaultState: 0
-  - paramName: Hold
+  - paramName: AttackRelease
     setDefaultState: 0
 --- !u!114 &8174169618825994231
 MonoBehaviour:
