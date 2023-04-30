@@ -31,14 +31,16 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponentInParent<Animator>().GetBool("IsDamageOn"))
+        Animator anim_other = other.GetComponentInParent<Animator>();
+        if (anim_other.GetBool("IsDamageOn"))
         {
             WeaponHandler.WeaponInfo weaponInfo = WeaponHandlerRef.GetWeaponInfo();
             if (weaponInfo.name == other.gameObject.name)
             {
+                //if (_anim.GetCurrentAnimatorStateInfo(1).IsName("Idle"))
                 _anim.SetTrigger("Hit");
                 Health -= weaponInfo.damge;
-                //Debug.Log("Hit By Sword");
+                Debug.Log("Hit By Sword");
 
             } 
         }

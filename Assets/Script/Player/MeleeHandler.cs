@@ -9,11 +9,10 @@ public class MeleeHandler : MonoBehaviour
 
 
     public bool DebugTrail = false;
-    public LayerMask hitLayers;
+    //public LayerMask hitLayers;
     public WeaponHandler WeaponHandlerRef;
-    //public MovementHandler MovementHanderRef;
 
-    [SerializeField] GameObject hitVFX;
+    //[SerializeField] GameObject hitVFX;
 
     public struct BufferObj
     {
@@ -22,74 +21,25 @@ public class MeleeHandler : MonoBehaviour
         public Vector3 size;
     }
 
-    private LinkedList<BufferObj> _trailList = new LinkedList<BufferObj>();
-    private BoxCollider _weaponCollider;
-    private int _maxFrameBuffer = 10;
     private Animator _anim;
 
-    // Start is called before the first frame update
+    //private LinkedList<BufferObj> _trailList = new LinkedList<BufferObj>();
+    //private BoxCollider _weaponCollider;
+    //private int _maxFrameBuffer = 10;
+
+
     void Start()
     {
         _anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (_anim.GetBool("IsDamageOn"))
-        {
-            //Debug.Log("Debug");
-            CheckTrail();
-        }
-        
-    }
-
-    private void CheckTrail()
-    {
-        BufferObj bo = new BufferObj();
-        bo.size = _weaponCollider.size;
-        bo.rotation = _weaponCollider.transform.rotation;
-        bo.position = _weaponCollider.transform.position + _weaponCollider.transform.TransformDirection(_weaponCollider.center);
-        _trailList.AddFirst(bo);
-        if (_trailList.Count > _maxFrameBuffer)
-        {
-            _trailList.RemoveLast();
-        }
-        //Debug.Log("Trail");
-
-        Collider[] hits = Physics.OverlapBox(bo.position, bo.size / 2, bo.rotation,
-            hitLayers, QueryTriggerInteraction.Ignore);
-
-        //Debug.Log(hits.Length);
-
-        //Dictionary<long, Collider> colliderList = new Dictionary<long, Collider>();
-        //for (int i = 0; i < hits.Length; i++)
+        //if (_anim.GetBool("IsDamageOn"))
         //{
-        //    colliderList.Add(hits[i].GetInstanceID(), hits[i]);
+            //CheckTrail();
         //}
 
-        if (hits.Length > 0)
-        {
-            //Debug.Log(hits[0].tag);
-            HitVFX(bo);
-        }
-
-
-    }
-
-    private void OnDrawGizmos()
-    {
-        //Debug.Log("Draw");
-        if (DebugTrail)
-        {
-            foreach (BufferObj bo in _trailList)
-            {
-                Gizmos.color = Color.black;
-                Gizmos.matrix = Matrix4x4.TRS(bo.position, bo.rotation, Vector3.one);
-                Gizmos.DrawWireCube(Vector3.zero, bo.size);
-
-            }
-        }
     }
 
     public void EquipWeapon(InputAction.CallbackContext context)
@@ -127,16 +77,23 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-    public void StandingMeleeAttack2(InputAction.CallbackContext context)
+    public void StandingMeleeAttack2Press(InputAction.CallbackContext context)
     {
         if (context.performed && _anim.GetBool("CanAttack"))
         {
             _anim.SetTrigger("Attack");
             _anim.SetInteger("AttackType", 2);
+            _anim.SetBool("AttackRelease", false);
         }
     }
 
-    public void SkillMeleeAttack1(InputAction.CallbackContext context)
+    public void StandingMeleeAttack2Release(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _anim.SetBool("AttackRelease", true);
+    }
+
+    public void StandingMeleeAttack3(InputAction.CallbackContext context)
     {
         if (context.performed && _anim.GetBool("CanAttack"))
         {
@@ -145,32 +102,70 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-    public void Test(InputAction.CallbackContext context)
+    // Debug
+    public void SkillMeleeAttack1(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _anim.GetBool("CanAttack"))
         {
-
         }
     }
 
+
+    // Debug
+    public void Test(InputAction.CallbackContext context)
+    {
+        if (context.performed && _anim.GetBool("CanAttack"))
+        {
+        }
+    }
+
+    // Debug
     public void Test1(InputAction.CallbackContext context)
     {
         if (context.performed && _anim.GetBool("IsAttacking"))
         {
-            //_anim.SetTrigger("Attack");
-            //_anim.SetInteger("AttackType", 5);
-            _anim.SetBool("Combo", true);
         }
     }
 
-    public void HitVFX(BufferObj bo)
-    {
-        GameObject hit = Instantiate(hitVFX, bo.position, bo.rotation);
-        Destroy(hit, 0.7f);
-    }
+    //private void CheckTrail()
+    //{
+    //    BufferObj bo = new BufferObj();
+    //    bo.size = _weaponCollider.size;
+    //    bo.rotation = _weaponCollider.transform.rotation;
+    //    bo.position = _weaponCollider.transform.position + _weaponCollider.transform.TransformDirection(_weaponCollider.center);
+    //    _trailList.AddFirst(bo);
+    //    if (_trailList.Count > _maxFrameBuffer)
+    //    {
+    //        _trailList.RemoveLast();
+    //    }
 
-    public void setCollider(BoxCollider collider)
+    //    Collider[] hits = Physics.OverlapBox(bo.position, bo.size / 2, bo.rotation,
+    //        hitLayers, QueryTriggerInteraction.Ignore);
+
+    //    if (hits.Length > 0)
+    //    {
+    //        //Debug.Log(hits[0].tag);
+    //        HitVFX(bo);
+    //    }
+    //}
+
+    private void OnDrawGizmos()
     {
-        _weaponCollider = collider;
+        //Debug.Log("Draw");
+        if (DebugTrail)
+        {
+            //foreach (BufferObj bo in _trailList)
+            //{
+            //    Gizmos.color = Color.black;
+            //    Gizmos.matrix = Matrix4x4.TRS(bo.position, bo.rotation, Vector3.one);
+            //    Gizmos.DrawWireCube(Vector3.zero, bo.size);
+
+            //}
+        }
     }
+    //public void HitVFX(BufferObj bo)
+    //{
+    //    GameObject hit = Instantiate(hitVFX, bo.position, bo.rotation);
+    //    Destroy(hit, 0.7f);
+    //}
 }

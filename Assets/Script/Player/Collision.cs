@@ -28,7 +28,7 @@ public class Collision : MonoBehaviour
             WeaponHandler.WeaponInfo weaponInfo = WeaponHandlerRef.GetWeaponInfo();
             if (weaponInfo.name == this.gameObject.name)
             {
-                Debug.Log("HIT");
+                //Debug.Log("HIT");
                 //_hit = true;
             }
         }

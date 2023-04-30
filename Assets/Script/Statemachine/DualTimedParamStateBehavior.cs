@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class TimedParamStateBehavior : StateMachineBehaviour
+public class DualTimedParamStateBehavior : StateMachineBehaviour
 {
-
     public string paramName;
     public bool setDefaultState;
-    public float Start, End;
+    public float Start1, End1, Start2, End2;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -17,7 +15,11 @@ public class TimedParamStateBehavior : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (stateInfo.normalizedTime >= Start && stateInfo.normalizedTime <= End)
+        if (stateInfo.normalizedTime >= Start1 && stateInfo.normalizedTime <= End1)
+        {
+            animator.SetBool(paramName, setDefaultState);
+        }
+        else if (stateInfo.normalizedTime >= Start2 && stateInfo.normalizedTime <= End2)
         {
             animator.SetBool(paramName, setDefaultState);
         }
@@ -27,11 +29,9 @@ public class TimedParamStateBehavior : StateMachineBehaviour
         }
     }
 
-     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool(paramName, !setDefaultState);
 
     }
-
-
 }
