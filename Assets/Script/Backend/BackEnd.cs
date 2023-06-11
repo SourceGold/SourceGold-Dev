@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Script.Backend
 {
-    public class BackEnd : MonoBehaviour
+    public class Backend : MonoBehaviour
     {
         public static GameStageBase GameLoop;
 
