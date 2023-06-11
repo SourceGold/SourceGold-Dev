@@ -24,6 +24,10 @@ namespace Assets.Script.Backend
         public virtual void GotHit(int incomingDmg)
         {
             HittableObjectStats.GotHit(incomingDmg);
+            if (!this.HittableObjectStats.IsAlive)
+            {
+                EventManager.TriggerEvent($"{Name}Death");
+            }
         }
 
         public bool IsAlive => HittableObjectStats.IsAlive;

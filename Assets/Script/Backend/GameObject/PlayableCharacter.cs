@@ -15,13 +15,9 @@ namespace Assets.Script.Backend
         {
         }
 
-        public void GotHit(int incomingDmg)
+        public override void GotHit(int incomingDmg)
         {
-            this.HittableObjectStats.GotHit(incomingDmg);
-            if (!this.HittableObjectStats.IsAlive)
-            {
-                EventManager.TriggerEvent("PlayerDead");
-            }
+            base.GotHit(incomingDmg);
         }
     }
 
