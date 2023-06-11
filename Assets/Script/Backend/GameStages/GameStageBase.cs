@@ -42,10 +42,10 @@ namespace Assets.Script.Backend
             AddHittableObject("Player", new PlayableCharacter("Player", LoadCharacterStats()));
         }
 
-        public virtual void ProcessDamage(DamangeSource srcObjectName, DamageTarget targetObjectName)
+        public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
         {
-            var targetObj = HittableObjectCollection[targetObjectName.TgtObjectName];
-            targetObj.GotHit(CalculateDamage(srcObjectName, targetObjectName));
+            var targetObj = HittableObjectCollection[damageTarget.TgtObjectName];
+            targetObj.GotHit(CalculateDamage(damangeSource, damageTarget));
 
             if (!targetObj.IsAlive)
             {
@@ -53,9 +53,10 @@ namespace Assets.Script.Backend
             }
         }
 
-        public virtual int CalculateDamage(DamangeSource srcObjectName, DamageTarget targetObjectName)
+        public virtual int CalculateDamage(DamangeSource damangeSource, DamageTarget damageTarget)
         {
-            return 100;
+            var srcObject = HittableObjectCollection[damangeSource.SrcObjectName];
+            return srcObject.HittableObjectStats.AttackDmg;
         }
     }
 }

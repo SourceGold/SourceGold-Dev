@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace Assets.Script.Backend
 {
-    public class main : MonoBehaviour
+    public class Backend : MonoBehaviour
     {
         public static GameStageBase GameLoop;
 
         public void Start()
         {
-            GameLoop = new GameStageBase();
+            GameLoop = new GameStageTest();
             GameLoop.InitializeStage();
         }
     }
