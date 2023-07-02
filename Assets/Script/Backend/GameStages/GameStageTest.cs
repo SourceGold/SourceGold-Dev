@@ -10,7 +10,7 @@ namespace Assets.Script.Backend
     {
         public override void InitializeCharacters()
         {
-            AddHittableObject("Enemy1", new HittableObject("Enemy1", LoadEnemyStats(), HittableObjectType.Enemy));
+            AddHittableObject("Enemy1", new Enemy("Enemy1", LoadEnemyStats(), LoadDefaultEnvironmentalStats()));
             base.InitializeCharacters();
         }
     }

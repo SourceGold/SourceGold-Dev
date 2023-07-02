@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Assets.Script.Backend
 {
@@ -20,7 +21,7 @@ namespace Assets.Script.Backend
 
         public virtual void InitializeCharacters()
         {
-            AddHittableObject("Player", new PlayableCharacter("Player", LoadCharacterStats()));
+            AddHittableObject("Player", new PlayableCharacter("Player", LoadCharacterStats(), LoadDefaultEnvironmentalStats()));
         }
 
         public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
@@ -34,6 +35,11 @@ namespace Assets.Script.Backend
             }
         }
 
+        public virtual List<HittableObject> GetHittableObjects()
+        {
+            return new List<HittableObject>(HittableObjectCollection.Values);
+        }
+
         protected void AddHittableObject(string objectName, HittableObject hittableObjects)
         {
             if (HittableObjectCollection.ContainsKey(objectName))
@@ -43,14 +49,30 @@ namespace Assets.Script.Backend
             HittableObjectCollection[objectName] = hittableObjects;
         }
 
-        protected virtual HittableObjectStats LoadEnemyStats()
+        protected virtual EnemyStats LoadEnemyStats()
         {
-            return new HittableObjectStats(maxHitPoint: 100, attackDmg: 30, defense: 10);
+            return new EnemyStats(maxHitPoint: 100, attackDmg: 30, defense: 10);
         }
 
         protected virtual PlayableCharacterStats LoadCharacterStats()
         {
             return new PlayableCharacterStats(maxHitPoint: 100, attackDmg: 30, defense: 10);
+        }
+
+        protected virtual GameObjectEnvironmentalStats LoadDefaultEnvironmentalStats()
+        {
+            return new GameObjectEnvironmentalStats(
+                spawnLocation: new Vector3()
+                {
+                    X = 0,
+                    Y = 0,
+                    Z = 0
+                },
+                spawnRotation: new Vector2()
+                {
+                    X = 1,
+                    Y = 0
+                });
         }
 
         protected virtual int CalculateDamage(DamangeSource damangeSource, DamageTarget damageTarget)

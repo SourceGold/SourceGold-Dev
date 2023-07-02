@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 
 namespace Assets.Script.Backend
 {
-    public class PlayableCharacter: HittableObject
+    public class PlayableCharacter : HittableObject
     {
-        public PlayableCharacter(string name, PlayableCharacterStats characterStats) 
-            : base(name, characterStats, HittableObjectType.PlayableCharacter)
+        public PlayableCharacter(string name, PlayableCharacterStats characterStats, GameObjectEnvironmentalStats environmentalStats)
+            : base(name, characterStats, HittableObjectType.PlayableCharacter, environmentalStats)
         {
         }
 
@@ -21,7 +15,7 @@ namespace Assets.Script.Backend
         }
     }
 
-    public class PlayableCharacterStats: HittableObjectStats
+    public class PlayableCharacterStats : HittableObjectStats
     {
         public int Level { get; set; }
 

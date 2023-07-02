@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 
 namespace Assets.Script.Backend
 {
@@ -15,10 +10,14 @@ namespace Assets.Script.Backend
 
         public HittableObjectStats HittableObjectStats { get; set; }
 
-        public HittableObject(string name, HittableObjectStats hittableObjectStats, HittableObjectType hittableObjectType) : base(name, GameObjectType.HittableObject)
+        public GameObjectEnvironmentalStats EnvironmentalStats { get; set; }
+
+        public HittableObject(string name, HittableObjectStats hittableObjectStats, HittableObjectType hittableObjectType, GameObjectEnvironmentalStats environmentalStats)
+            : base(name, GameObjectType.HittableObject)
         {
             HittableObjectStats = hittableObjectStats;
             HittableObjectType = hittableObjectType;
+            EnvironmentalStats = environmentalStats;
         }
 
         public virtual void GotHit(int incomingDmg)
@@ -54,7 +53,7 @@ namespace Assets.Script.Backend
         public virtual void GotHit(int incomingDmg)
         {
             int dmg = Math.Max(incomingDmg - Defense, 1);
-            
+
             Interlocked.Add(ref CurrentHp, -dmg);
         }
 
