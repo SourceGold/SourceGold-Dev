@@ -18,6 +18,22 @@ namespace Assets.Script.Backend
             InitializeCharacters();
         }
 
+        public virtual void InitializeCharacters()
+        {
+            AddHittableObject("Player", new PlayableCharacter("Player", LoadCharacterStats()));
+        }
+
+        public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
+        {
+            var targetObj = HittableObjectCollection[damageTarget.TgtObjectName];
+            targetObj.GotHit(CalculateDamage(damangeSource, damageTarget));
+
+            if (!targetObj.IsAlive)
+            {
+                HittableObjectCollection.Remove(targetObj.Name, out _);
+            }
+        }
+
         protected void AddHittableObject(string objectName, HittableObject hittableObjects)
         {
             if (HittableObjectCollection.ContainsKey(objectName))
@@ -37,23 +53,7 @@ namespace Assets.Script.Backend
             return new PlayableCharacterStats(maxHitPoint: 100, attackDmg: 30, defense: 10);
         }
 
-        public virtual void InitializeCharacters()
-        {
-            AddHittableObject("Player", new PlayableCharacter("Player", LoadCharacterStats()));
-        }
-
-        public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
-        {
-            var targetObj = HittableObjectCollection[damageTarget.TgtObjectName];
-            targetObj.GotHit(CalculateDamage(damangeSource, damageTarget));
-
-            if (!targetObj.IsAlive)
-            {
-                HittableObjectCollection.Remove(targetObj.Name, out _);
-            }
-        }
-
-        public virtual int CalculateDamage(DamangeSource damangeSource, DamageTarget damageTarget)
+        protected virtual int CalculateDamage(DamangeSource damangeSource, DamageTarget damageTarget)
         {
             var srcObject = HittableObjectCollection[damangeSource.SrcObjectName];
             return srcObject.HittableObjectStats.AttackDmg;
