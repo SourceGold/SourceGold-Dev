@@ -11,7 +11,7 @@ namespace Assets.Script.Backend
     {
         public static GameStageBase GameLoop;
 
-        public void Start()
+        public void Awake()
         {
             GameLoop = new GameStageTest();
             GameLoop.InitializeStage();
