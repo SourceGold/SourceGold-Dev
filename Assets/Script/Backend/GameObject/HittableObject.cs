@@ -53,9 +53,9 @@ namespace Assets.Script.Backend
 
         public virtual void GotHit(int incomingDmg)
         {
-            int dmg = Math.Min(incomingDmg - Defense, 1);
+            int dmg = Math.Max(incomingDmg - Defense, 1);
             
-            Interlocked.Add(ref CurrentHp, dmg);
+            Interlocked.Add(ref CurrentHp, -dmg);
         }
 
         public bool IsAlive => CurrentHp > 0;

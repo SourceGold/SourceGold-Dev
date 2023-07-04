@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Script.Backend;
 
 public class Enemy : MonoBehaviour
 {
-
     public WeaponHandler WeaponHandlerRef;
     [SerializeField] private float Health;
     private Animator _anim;
@@ -13,7 +13,9 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
+        EventManager.StartListening("Enemy1Death", DeathHandler);
     }
+
 
     // Update is called once per frame
     void Update()
@@ -29,6 +31,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void DeathHandler()
+    {
+        this.gameObject.SetActive(false);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Animator anim_other = other.GetComponentInParent<Animator>();
@@ -41,8 +48,11 @@ public class Enemy : MonoBehaviour
                 _anim.SetTrigger("Hit");
                 Health -= weaponInfo.damge;
                 Debug.Log("Hit By Sword");
-
+                
+                Backend.GameLoop.ProcessDamage(new DamangeSource(){SrcObjectName="Player"}, new DamageTarget() { TgtObjectName = "Enemy1" });
             } 
         }
     }
+
+
 }
