@@ -200,6 +200,11 @@ public class MovementHandler : MonoBehaviour
             if (_playerPosture == PlayerPosture.Jumping)
                 _animator.SetFloat("LeftRight", _leftRight);
         }
+        else if (_playerPosture == PlayerPosture.LockedOn)
+        {
+            _animator.SetFloat();
+        }
+
         if (_weaponStatus == WeaponStatus.Equipped)
         {
             _animator.SetFloat("WeaponStatus", 1.0f, 0.1f, Time.deltaTime);
