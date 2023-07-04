@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using System.Text;
 
 public class MovementHandler : MonoBehaviour
 {
@@ -72,6 +73,8 @@ public class MovementHandler : MonoBehaviour
     private float _currentVelocity;
     private float _leftRight;
     private float _distanceToGround;
+    private float _lockedHorizontalVelocity;
+    private float _lockedVerticalVelocity;
 
     private float _groundCheckOffset = 0.5f;
     private float _fallHeight = 0.5f;
@@ -106,10 +109,10 @@ public class MovementHandler : MonoBehaviour
     void Update()
     {
         CheckGround();
+        LockOnTarget();
         SwitchPosture();
         ApplyGravity();
         Jump();
-        LockOnTarget();
         Rotate();
         SetupAnimator();
         
@@ -135,7 +138,7 @@ public class MovementHandler : MonoBehaviour
 
     public void ToggleLockOn(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _weaponStatus == WeaponStatus.Equipped)
             _isLockedOn = !_isLockedOn; 
     }
 
@@ -164,7 +167,7 @@ public class MovementHandler : MonoBehaviour
         {
             _playerPosture = PlayerPosture.Landing;
         }
-        else if (_isLockedOn)
+        else if (_currentLockOnTarget != null)
         {
             _playerPosture = PlayerPosture.LockedOn;
         }
@@ -193,6 +196,11 @@ public class MovementHandler : MonoBehaviour
             _animator.SetFloat("Posture", _standThreshold, 0.1f, Time.deltaTime);
             Move();
         }
+        else if (_playerPosture == PlayerPosture.LockedOn)
+        {
+            _animator.SetFloat("Posture", 0.5f, 0.1f, Time.deltaTime);
+            MoveLocked();
+        }
         else if (_playerPosture == PlayerPosture.Jumping || _playerPosture == PlayerPosture.Falling)
         {
             _animator.SetFloat("Posture", _midAirThreshold);
@@ -200,10 +208,7 @@ public class MovementHandler : MonoBehaviour
             if (_playerPosture == PlayerPosture.Jumping)
                 _animator.SetFloat("LeftRight", _leftRight);
         }
-        else if (_playerPosture == PlayerPosture.LockedOn)
-        {
-            _animator.SetFloat();
-        }
+        
 
         if (_weaponStatus == WeaponStatus.Equipped)
         {
@@ -220,13 +225,6 @@ public class MovementHandler : MonoBehaviour
         if (_isLockedOn)
         {
             _currentLockOnTarget = _cameraManager.HandleLockOn();
-            //Vector3 dir = _currentLockOnTarget.position - _transform.position;
-            //dir.Normalize();
-            //dir.y = 0;
-
-            //Quaternion targetRotation = Quaternion.LookRotation(dir);
-            //transform.rotation = targetRotation;
-            //Cam.rotation = targetRotation;
         }
         else
         {
@@ -237,19 +235,7 @@ public class MovementHandler : MonoBehaviour
 
     private void Rotate()
     {
-        if (_input.Equals(Vector2.zero))
-            return;
-
-        if (!_isLockedOn)
-        {
-            _direction.x = _input.x;
-            _direction.z = _input.y;
-
-            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
-            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, _rotateSpeed);
-            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
-        }
-        else
+        if (_playerPosture == PlayerPosture.LockedOn)
         {
             Vector3 dir = _currentLockOnTarget.position - _transform.position;
             dir.Normalize();
@@ -257,8 +243,17 @@ public class MovementHandler : MonoBehaviour
 
             Quaternion targetRotation = Quaternion.LookRotation(dir);
             transform.rotation = targetRotation;
+        }
+        else if (_input.Equals(Vector2.zero))
+            return;
+        else
+        {
+            _direction.x = _input.x;
+            _direction.z = _input.y;
 
-            //dir = _currentLockOnTarget.position - 
+            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, _rotateSpeed);
+            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
         }
 
     }
@@ -268,6 +263,23 @@ public class MovementHandler : MonoBehaviour
         targetSpeed *= _input.magnitude;
         _HorizontalVelocity = Mathf.Lerp(_HorizontalVelocity, targetSpeed, 0.5f);
         _animator.SetFloat("HorizontalVelocity", _HorizontalVelocity);
+        //var sb = new StringBuilder();
+        //sb.Append(_input.x.ToString()).Append("  ").Append(_input.y.ToString());
+        //Debug.Log(sb.ToString());
+    }
+    private void MoveLocked()
+    {
+        float h, v;
+        float targetSpeed = _isRunning ? _runSpeed : _walkSpeed;
+        h = _input.x * targetSpeed;
+        v = _input.y * targetSpeed;
+
+        _lockedHorizontalVelocity = Mathf.Lerp(_lockedHorizontalVelocity, h, 0.5f);
+        _lockedVerticalVelocity = Mathf.Lerp(_lockedVerticalVelocity, v, 0.5f);
+        //if (_lockedHorizontalVelocity != 0)
+            //_lockedVerticalVelocity = 0;
+        _animator.SetFloat("LockedH", _lockedHorizontalVelocity);
+        _animator.SetFloat("LockedV", _lockedVerticalVelocity);
     }
     private void Jump()
     {
