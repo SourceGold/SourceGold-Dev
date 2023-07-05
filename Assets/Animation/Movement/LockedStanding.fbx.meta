@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 84f2e78d6025843cd94f22c0a570d9dd
+guid: 2c4fea0f81ec74f8f92cad1d623b6c91
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: LcokedStanding
+      name: LockedStanding
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 55
+      lastFrame: 305
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -53,7 +53,7 @@ ModelImporter:
       keepOriginalPositionY: 0
       keepOriginalPositionXZ: 1
       heightFromFeet: 1
-      mirror: 0
+      mirror: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []

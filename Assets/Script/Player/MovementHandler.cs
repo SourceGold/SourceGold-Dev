@@ -79,7 +79,8 @@ public class MovementHandler : MonoBehaviour
     private float _groundCheckOffset = 0.5f;
     private float _fallHeight = 0.5f;
 
-    private bool _isLockedOn = false;
+    private bool _toggleLock = false;
+    private bool _isLocked = false;
 
     static readonly int CACHE_SIZE = 3;
     Vector3[] _velocityCache = new Vector3[CACHE_SIZE];
@@ -139,7 +140,7 @@ public class MovementHandler : MonoBehaviour
     public void ToggleLockOn(InputAction.CallbackContext context)
     {
         if (context.performed && _weaponStatus == WeaponStatus.Equipped)
-            _isLockedOn = !_isLockedOn; 
+            _toggleLock = true; 
     }
 
     #endregion
@@ -222,14 +223,24 @@ public class MovementHandler : MonoBehaviour
 
     private void LockOnTarget()
     {
-        if (_isLockedOn)
+
+        if (_toggleLock && !_isLocked)
         {
+            _toggleLock = false;
+            _isLocked = true;
             _currentLockOnTarget = _cameraManager.HandleLockOn();
         }
-        else
+        else if (_toggleLock)
         {
+            _toggleLock = false;
+            _isLocked = false;
             _cameraManager.ClearLockOnTargets();
             _currentLockOnTarget = null;
+        }
+
+        if (_isLocked)
+        {
+            
         }
     }
 
@@ -273,6 +284,13 @@ public class MovementHandler : MonoBehaviour
         float targetSpeed = _isRunning ? _runSpeed : _walkSpeed;
         h = _input.x * targetSpeed;
         v = _input.y * targetSpeed;
+
+        if (h != 0 && v != 0)
+        {
+            h *= 1.5f;
+            v *= 1.5f;
+        }
+        
 
         _lockedHorizontalVelocity = Mathf.Lerp(_lockedHorizontalVelocity, h, 0.5f);
         _lockedVerticalVelocity = Mathf.Lerp(_lockedVerticalVelocity, v, 0.5f);
