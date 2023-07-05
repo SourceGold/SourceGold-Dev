@@ -26,8 +26,8 @@ public class CameraManager : MonoBehaviour
 
             if (character != null)
             {
-                Vector3 lockTargetDirection = character.lockOnTransForm.position - TargetTransform.position;
-                float distanceFromTarget = Vector3.Distance(TargetTransform.position, character.lockOnTransForm.position);
+                Vector3 lockTargetDirection = character.transform.position - TargetTransform.position;
+                float distanceFromTarget = Vector3.Distance(TargetTransform.position, character.transform.position);
                 float viewableAngle = Vector3.Angle(lockTargetDirection, CameraTransform.forward);
 
                 if (character.transform.root != TargetTransform.transform.root
@@ -46,7 +46,7 @@ public class CameraManager : MonoBehaviour
             if (distanceFromTarget < shortestDistance)
             {
                 shortestDistance = distanceFromTarget;
-                NearestLockOnTarget = availableTargets[i].lockOnTransForm;
+                NearestLockOnTarget = availableTargets[i].transform;
             }
         }
 

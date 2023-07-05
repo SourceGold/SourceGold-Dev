@@ -238,9 +238,11 @@ public class MovementHandler : MonoBehaviour
             _currentLockOnTarget = null;
         }
 
-        if (_isLocked)
+        if (_isLocked && !_currentLockOnTarget.gameObject.activeSelf)
         {
-            
+            _isLocked = false;
+            _cameraManager.ClearLockOnTargets();
+            _currentLockOnTarget = null;
         }
     }
 
