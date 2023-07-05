@@ -12,7 +12,6 @@ public class MovementHandler : MonoBehaviour
     #region Instance: Camera
 
     public Transform Cam;
-    public Transform CamFollow;
     private Transform _currentLockOnTarget;
     CameraManager _cameraManager;
 
@@ -139,7 +138,7 @@ public class MovementHandler : MonoBehaviour
 
     public void ToggleLockOn(InputAction.CallbackContext context)
     {
-        if (context.performed && _weaponStatus == WeaponStatus.Equipped)
+        if (context.performed)
             _toggleLock = true; 
     }
 
@@ -238,7 +237,7 @@ public class MovementHandler : MonoBehaviour
             _currentLockOnTarget = null;
         }
 
-        if (_isLocked && !_currentLockOnTarget.gameObject.activeSelf)
+        if (_isLocked && (_currentLockOnTarget == null || !_currentLockOnTarget.gameObject.activeSelf))
         {
             _isLocked = false;
             _cameraManager.ClearLockOnTargets();

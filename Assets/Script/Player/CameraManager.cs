@@ -12,8 +12,13 @@ public class CameraManager : MonoBehaviour
     public float MaxLockOnDistance = 30;
 
     List<CharacterManager> availableTargets = new List<CharacterManager>();
-    
 
+    private Animator _anim;
+
+    private void Start()
+    {
+        _anim = GetComponentInChildren<Animator>();
+    }
 
     public Transform HandleLockOn()
     {
@@ -50,6 +55,9 @@ public class CameraManager : MonoBehaviour
             }
         }
 
+        if (NearestLockOnTarget)
+            _anim.SetBool("lock", true);
+
         return NearestLockOnTarget;
     }
 
@@ -57,5 +65,6 @@ public class CameraManager : MonoBehaviour
     {
         availableTargets.Clear();
         NearestLockOnTarget = null;
+        _anim.SetBool("lock", false);
     }
 }
