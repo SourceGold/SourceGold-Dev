@@ -63,19 +63,46 @@ namespace Assets.Script.Backend
             return new PlayableCharacterStats(maxHitPoint: 100, attackDmg: 30, defense: 10);
         }
 
-        protected virtual GameObjectEnvironmentalStats LoadDefaultEnvironmentalStats()
+        protected virtual GameObjectEnvironmentalStats LoadDefaultEnvironmentalStats(bool isEnemy = false)
         {
-            return new GameObjectEnvironmentalStats(
+            if (isEnemy)
+            {
+                return new GameObjectEnvironmentalStats(
                 spawnLocation: new Vector3()
-        {
+                {
                     X = 0,
                     Y = 0,
                     Z = 0
                 },
                 spawnRotation: new Vector2()
-            {
+                {
                     X = 1,
                     Y = 0
+                },
+                objectScale: new Vector3()
+                {
+                    X = 2,
+                    Y = 2,
+                    Z = 2
+                });
+            }
+            return new GameObjectEnvironmentalStats(
+                spawnLocation: new Vector3()
+                {
+                    X = 0,
+                    Y = 0,
+                    Z = 0
+                },
+                spawnRotation: new Vector2()
+                {
+                    X = 1,
+                    Y = 0
+                },
+                objectScale: new Vector3()
+                {
+                    X = 1,
+                    Y = 1,
+                    Z = 1
                 });
         }
 

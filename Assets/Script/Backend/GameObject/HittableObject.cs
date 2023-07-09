@@ -12,6 +12,8 @@ namespace Assets.Script.Backend
 
         public GameObjectEnvironmentalStats EnvironmentalStats { get; set; }
 
+        public string DeathEventName => $"{Name}Death";
+
         public HittableObject(string name, HittableObjectStats hittableObjectStats, 
             HittableObjectType hittableObjectType, 
             GameObjectEnvironmentalStats environmentalStats)
