@@ -9,9 +9,12 @@ namespace Assets.Script.Backend
     {
         protected ConcurrentDictionary<string, HittableObject> HittableObjectCollection { get; set; }
 
+        protected EventLogger Logger { get; set; }
+
         public GameStageBase()
         {
             HittableObjectCollection = new ConcurrentDictionary<string, HittableObject>();
+            Logger = new EventLogger();
         }
 
         public void InitializeStage()
@@ -26,8 +29,9 @@ namespace Assets.Script.Backend
 
         public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
         {
+            Logger.LogEvent($"{damangeSource.SrcObjectName} hit {damageTarget.TgtObjectName} with {damangeSource.AttackWeapon} weapon and {damangeSource.AttackName} attack");
             var targetObj = HittableObjectCollection[damageTarget.TgtObjectName];
-            targetObj.GotHit(CalculateDamage(damangeSource, damageTarget));
+            targetObj.GotHit(CalculateDamage(damangeSource, damageTarget), Logger);
 
             if (!targetObj.IsAlive)
             {

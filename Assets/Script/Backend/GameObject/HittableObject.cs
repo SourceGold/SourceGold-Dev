@@ -12,7 +12,9 @@ namespace Assets.Script.Backend
 
         public GameObjectEnvironmentalStats EnvironmentalStats { get; set; }
 
-        public HittableObject(string name, HittableObjectStats hittableObjectStats, HittableObjectType hittableObjectType, GameObjectEnvironmentalStats environmentalStats)
+        public HittableObject(string name, HittableObjectStats hittableObjectStats, 
+            HittableObjectType hittableObjectType, 
+            GameObjectEnvironmentalStats environmentalStats)
             : base(name, GameObjectType.HittableObject)
         {
             HittableObjectStats = hittableObjectStats;
@@ -20,12 +22,14 @@ namespace Assets.Script.Backend
             EnvironmentalStats = environmentalStats;
         }
 
-        public virtual void GotHit(int incomingDmg)
+        public virtual void GotHit(int incomingDmg, EventLogger logger)
         {
-            HittableObjectStats.GotHit(incomingDmg);
+            HittableObjectStats.GotHit(incomingDmg, logger);
+            
             if (!this.HittableObjectStats.IsAlive)
             {
                 EventManager.TriggerEvent($"{Name}Death");
+                logger.LogEvent($"{Name} is died");
             }
         }
 
@@ -50,11 +54,12 @@ namespace Assets.Script.Backend
             CurrentHp = maxHitPoint;
         }
 
-        public virtual void GotHit(int incomingDmg)
+        public virtual void GotHit(int incomingDmg, EventLogger logger)
         {
             int dmg = Math.Max(incomingDmg - Defense, 1);
 
             Interlocked.Add(ref CurrentHp, -dmg);
+            logger.LogEvent($"{dmg} damage dealt");
         }
 
         public bool IsAlive => CurrentHp > 0;
