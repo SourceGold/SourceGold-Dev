@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 84f2e78d6025843cd94f22c0a570d9dd
+guid: e9f3a7c668b7f4ac68585ea45299ee7a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: BattleStanding
+      name: LockedWalkBack
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 55
+      lastFrame: 88
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
