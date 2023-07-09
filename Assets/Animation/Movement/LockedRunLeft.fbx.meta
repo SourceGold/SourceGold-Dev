@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 84f2e78d6025843cd94f22c0a570d9dd
+guid: 4a524f5a6e2844f5dac1621f513e9a7e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: BattleStanding
+      name: LockedRunLeft
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 55
+      lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -53,8 +53,8 @@ ModelImporter:
       keepOriginalPositionY: 0
       keepOriginalPositionXZ: 1
       heightFromFeet: 1
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      mirror: 1
+      bodyMask: 01000000010000000100000001000000010000000100000000000000010000000000000001000000010000000100000001000000
       curves: []
       events: []
       transformMask: []

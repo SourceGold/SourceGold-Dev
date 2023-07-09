@@ -57,7 +57,7 @@ namespace Assets.Script.Backend
         public virtual void GotHit(int incomingDmg, EventLogger logger)
         {
             int dmg = Math.Max(incomingDmg - Defense, 1);
-
+            
             Interlocked.Add(ref CurrentHp, -dmg);
             logger.LogEvent($"{dmg} damage dealt");
         }

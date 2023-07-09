@@ -5,12 +5,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using System.Text;
 
 public class MovementHandler : MonoBehaviour
 {
     #region Instance: Camera
 
-    public Transform _cam;
+    public Transform Cam;
+    private Transform _currentLockOnTarget;
+    CameraManager _cameraManager;
 
     #endregion
     #region Variables: Animation
@@ -36,7 +39,8 @@ public class MovementHandler : MonoBehaviour
         Stand,
         Falling,
         Jumping,
-        Landing
+        Landing,
+        LockedOn
     };
     [HideInInspector] public PlayerPosture _playerPosture = PlayerPosture.Stand;
 
@@ -68,9 +72,14 @@ public class MovementHandler : MonoBehaviour
     private float _currentVelocity;
     private float _leftRight;
     private float _distanceToGround;
+    private float _lockedHorizontalVelocity;
+    private float _lockedVerticalVelocity;
 
     private float _groundCheckOffset = 0.5f;
     private float _fallHeight = 0.5f;
+
+    private bool _toggleLock = false;
+    private bool _isLocked = false;
 
     static readonly int CACHE_SIZE = 3;
     Vector3[] _velocityCache = new Vector3[CACHE_SIZE];
@@ -93,17 +102,20 @@ public class MovementHandler : MonoBehaviour
         _animator = GetComponent<Animator>();
         _transform = GetComponent<Transform>();
         _isRunning = false;
+        _cameraManager = FindObjectOfType<CameraManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckGround();
+        LockOnTarget();
         SwitchPosture();
         ApplyGravity();
         Jump();
         Rotate();
         SetupAnimator();
+        
     }
     #region Functions: Inputs
     public void GetMoveInput(InputAction.CallbackContext context)
@@ -123,6 +135,13 @@ public class MovementHandler : MonoBehaviour
     {
         _isJumping = context.ReadValueAsButton() && !_animator.GetBool("IsAttacking");
     }
+
+    public void ToggleLockOn(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _toggleLock = true; 
+    }
+
     #endregion
     private void SwitchPosture()
     {
@@ -131,7 +150,7 @@ public class MovementHandler : MonoBehaviour
             if (_verticalVelocity > 0.0f)
             {
                 _playerPosture = PlayerPosture.Jumping;
-            } 
+            }
             else if (_playerPosture != PlayerPosture.Jumping)
             {
                 if (_canFall)
@@ -139,12 +158,18 @@ public class MovementHandler : MonoBehaviour
                     _playerPosture = PlayerPosture.Falling;
                 }
             }
-        } else if (_playerPosture == PlayerPosture.Jumping)
+        }
+        else if (_playerPosture == PlayerPosture.Jumping)
         {
             StartCoroutine(CoolDownJump());
-        } else if (_isLanding)
+        }
+        else if (_isLanding)
         {
             _playerPosture = PlayerPosture.Landing;
+        }
+        else if (_currentLockOnTarget != null)
+        {
+            _playerPosture = PlayerPosture.LockedOn;
         }
         else
         {
@@ -153,10 +178,12 @@ public class MovementHandler : MonoBehaviour
         if (_input.Equals(Vector2.zero))
         {
             _locomotionState = LocomotionState.Idle;
-        } else if (!_isRunning)
+        }
+        else if (!_isRunning)
         {
             _locomotionState = LocomotionState.Walking;
-        } else
+        }
+        else
         {
             _locomotionState = LocomotionState.Running;
         }
@@ -169,6 +196,11 @@ public class MovementHandler : MonoBehaviour
             _animator.SetFloat("Posture", _standThreshold, 0.1f, Time.deltaTime);
             Move();
         }
+        else if (_playerPosture == PlayerPosture.LockedOn)
+        {
+            _animator.SetFloat("Posture", 0.5f, 0.1f, Time.deltaTime);
+            MoveLocked();
+        }
         else if (_playerPosture == PlayerPosture.Jumping || _playerPosture == PlayerPosture.Falling)
         {
             _animator.SetFloat("Posture", _midAirThreshold);
@@ -176,6 +208,8 @@ public class MovementHandler : MonoBehaviour
             if (_playerPosture == PlayerPosture.Jumping)
                 _animator.SetFloat("LeftRight", _leftRight);
         }
+        
+
         if (_weaponStatus == WeaponStatus.Equipped)
         {
             _animator.SetFloat("WeaponStatus", 1.0f, 0.1f, Time.deltaTime);
@@ -185,17 +219,55 @@ public class MovementHandler : MonoBehaviour
             _animator.SetFloat("WeaponStatus", 0.0f, 0.1f, Time.deltaTime);
         }
     }
+
+    private void LockOnTarget()
+    {
+
+        if (_toggleLock && !_isLocked)
+        {
+            _toggleLock = false;
+            _isLocked = true;
+            _currentLockOnTarget = _cameraManager.HandleLockOn();
+        }
+        else if (_toggleLock)
+        {
+            _toggleLock = false;
+            _isLocked = false;
+            _cameraManager.ClearLockOnTargets();
+            _currentLockOnTarget = null;
+        }
+
+        if (_isLocked && (_currentLockOnTarget == null || !_currentLockOnTarget.gameObject.activeSelf))
+        {
+            _isLocked = false;
+            _cameraManager.ClearLockOnTargets();
+            _currentLockOnTarget = null;
+        }
+    }
+
     private void Rotate()
     {
-        if (_input.Equals(Vector2.zero))
+        if (_playerPosture == PlayerPosture.LockedOn)
+        {
+            Vector3 dir = _currentLockOnTarget.position - _transform.position;
+            dir.Normalize();
+            dir.y = 0;
+
+            Quaternion targetRotation = Quaternion.LookRotation(dir);
+            transform.rotation = targetRotation;
+        }
+        else if (_input.Equals(Vector2.zero))
             return;
+        else
+        {
+            _direction.x = _input.x;
+            _direction.z = _input.y;
 
-        _direction.x = _input.x;
-        _direction.z = _input.y;
+            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
+            var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, _rotateSpeed);
+            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+        }
 
-        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
-        var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, _rotateSpeed);
-        transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
     }
     private void Move()
     {
@@ -203,6 +275,30 @@ public class MovementHandler : MonoBehaviour
         targetSpeed *= _input.magnitude;
         _HorizontalVelocity = Mathf.Lerp(_HorizontalVelocity, targetSpeed, 0.5f);
         _animator.SetFloat("HorizontalVelocity", _HorizontalVelocity);
+        //var sb = new StringBuilder();
+        //sb.Append(_input.x.ToString()).Append("  ").Append(_input.y.ToString());
+        //Debug.Log(sb.ToString());
+    }
+    private void MoveLocked()
+    {
+        float h, v;
+        float targetSpeed = _isRunning ? _runSpeed : _walkSpeed;
+        h = _input.x * targetSpeed;
+        v = _input.y * targetSpeed;
+
+        if (h != 0 && v != 0)
+        {
+            h *= 1.5f;
+            v *= 1.5f;
+        }
+        
+
+        _lockedHorizontalVelocity = Mathf.Lerp(_lockedHorizontalVelocity, h, 0.5f);
+        _lockedVerticalVelocity = Mathf.Lerp(_lockedVerticalVelocity, v, 0.5f);
+        //if (_lockedHorizontalVelocity != 0)
+            //_lockedVerticalVelocity = 0;
+        _animator.SetFloat("LockedH", _lockedHorizontalVelocity);
+        _animator.SetFloat("LockedV", _lockedVerticalVelocity);
     }
     private void Jump()
     {
@@ -304,4 +400,6 @@ public class MovementHandler : MonoBehaviour
             _characterController.Move(playerDelterMovement);
         }
     }
+
+   
 }

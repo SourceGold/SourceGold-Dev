@@ -67,13 +67,13 @@ namespace Assets.Script.Backend
         {
             return new GameObjectEnvironmentalStats(
                 spawnLocation: new Vector3()
-                {
+        {
                     X = 0,
                     Y = 0,
                     Z = 0
                 },
                 spawnRotation: new Vector2()
-                {
+            {
                     X = 1,
                     Y = 0
                 });
