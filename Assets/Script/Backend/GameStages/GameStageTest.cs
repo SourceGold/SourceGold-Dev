@@ -4,7 +4,7 @@
     {
         public override void InitializeCharacters()
         {
-            AddHittableObject("Enemy1", new Enemy("Enemy1", LoadEnemyStats(), LoadDefaultEnvironmentalStats(isEnemy: true)));
+            AddGameObject(new Enemy("EnemyDefault", LoadEnemyStats(), LoadDefaultEnvironmentalStats(isEnemy: true)));
             base.InitializeCharacters();
         }
     }

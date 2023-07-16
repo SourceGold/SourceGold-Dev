@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        EventManager.StartListening("Enemy1Death", DeathHandler);
+        EventManager.StartListening("EnemyDefaultDeath", DeathHandler);
     }
 
 
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
                 Health -= weaponInfo.damge;
                 Debug.Log("Hit By Sword");
                 
-                Backend.GameLoop.ProcessDamage(new DamangeSource(){SrcObjectName="Player"}, new DamageTarget() { TgtObjectName = "Enemy1" });
+                Backend.GameLoop.ProcessDamage(new DamangeSource(){SrcObjectName= "PlayerDefault" }, new DamageTarget() { TgtObjectName = "EnemyDefault" });
             } 
         }
     }
