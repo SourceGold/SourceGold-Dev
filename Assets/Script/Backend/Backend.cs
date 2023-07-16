@@ -15,6 +15,19 @@ namespace Assets.Script.Backend
         {
             GameLoop = new GameStageTest();
             GameLoop.InitializeStage();
+            DontDestroyOnLoad(this);
+        }
+
+        public void SetNextStage(string stageName)
+        {
+            var newStage = LoadStage(stageName);
+            newStage.InitializeStage(GameLoop);
+            GameLoop = newStage;
+        }
+
+        private GameStageBase LoadStage(string stageName)
+        {
+            return new GameStageTest();
         }
     }
 }

@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace Assets.Script.Backend
 {
     public class GameStageBase
     {
-        protected ConcurrentDictionary<string, HittableObject> HittableObjectCollection { get; set; }
+        protected ConcurrentDictionary<string, GameObject> AllGameObjectCollection { get; set; }
 
         protected EventLogger Logger { get; set; }
 
         public GameStageBase()
         {
-            HittableObjectCollection = new ConcurrentDictionary<string, HittableObject>();
+            AllGameObjectCollection = new ConcurrentDictionary<string, GameObject>();
             Logger = new EventLogger();
         }
 
@@ -22,35 +23,159 @@ namespace Assets.Script.Backend
             InitializeCharacters();
         }
 
+        public void InitializeStage(List<GameObject> savedGameObjects)
+        {
+            foreach (var gameObject in savedGameObjects)
+            {
+                RegisterGameObject(gameObject);
+            }
+            InitializeStage();
+        }
+
+        public void InitializeStage(GameStageBase previousStage)
+        {
+            var savedGameObjects = previousStage.GetSavedGameObjects();
+            InitializeStage(savedGameObjects);
+        }
+
         public virtual void InitializeCharacters()
         {
-            AddHittableObject("Player", new PlayableCharacter("Player", LoadCharacterStats(), LoadDefaultEnvironmentalStats()));
+            AddGameObject(new PlayableCharacter("PlayerDefault", LoadCharacterStats(), LoadDefaultEnvironmentalStats()));
         }
 
         public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
         {
             Logger.LogEvent($"{damangeSource.SrcObjectName} hit {damageTarget.TgtObjectName} with {damangeSource.AttackWeapon} weapon and {damangeSource.AttackName} attack");
-            var targetObj = HittableObjectCollection[damageTarget.TgtObjectName];
-            targetObj.GotHit(CalculateDamage(damangeSource, damageTarget), Logger);
-
-            if (!targetObj.IsAlive)
+            var targetObj = AllGameObjectCollection[damageTarget.TgtObjectName];
+            if (targetObj is HittableObject hittableObject)
             {
-                HittableObjectCollection.Remove(targetObj.Name, out _);
+                hittableObject.GotHit(CalculateDamage(damangeSource, damageTarget), Logger);
+                //if (!hittableObject.IsAlive)
+                //{
+                //    AllGameObjectCollection.Remove(targetObj.Name, out _);
+                //}
+            }
+            else
+            {
+                throw new NotSupportedException($"Not supported target object type: {targetObj.GetType()}");
             }
         }
 
-        public virtual List<HittableObject> GetHittableObjects()
+        public GameObject GetGameObject(string objectName)
         {
-            return new List<HittableObject>(HittableObjectCollection.Values);
+            return AllGameObjectCollection[objectName];
         }
 
-        protected void AddHittableObject(string objectName, HittableObject hittableObjects)
+        public List<GameObject> GetGameObjects(List<string> objectNames)
         {
-            if (HittableObjectCollection.ContainsKey(objectName))
+            return objectNames.Select(o => AllGameObjectCollection[o]).ToList();
+        }
+
+        public void RegisterGameObject(GameObject gameObject)
+        {
+            gameObject.RegisteredByGame = true;
+            if (gameObject is HittableObject hittableObject)
             {
-                throw new Exception($"Object with name: {objectName} already exist in current stage");
+                RegisterHittableObject(hittableObject);
             }
-            HittableObjectCollection[objectName] = hittableObjects;
+            else if (gameObject is InvincibleObject invincibleObject)
+            {
+                RegisterInvincibleObject(invincibleObject);
+            }
+            else
+            {
+                throw new NotSupportedException($"Not supported game object type: {gameObject.GetType()}");
+            }
+        }
+
+        public void RegisterGameObjects(List<GameObject> gameObjects)
+        {
+            foreach(var gameObject in gameObjects)
+            {
+                RegisterGameObject(gameObject);
+            }
+        }
+
+        public bool UnregisterGameObject(string objectName)
+        {
+            return AllGameObjectCollection.Remove(objectName, out _);
+        }
+
+        public List<HittableObject> GetHittableObjects()
+        {
+            return FilterObjectsByType<HittableObject>();
+        }
+
+        public List<GameObject> GetNonRegisteredGameObjects()
+        {
+            return FilterObjectsBySelector(o => !o.RegisteredByGame);
+        }
+
+        public List<HittableObject> GetAliveHittableObjectObjects()
+        {
+            var hittableObjects = GetHittableObjects();
+            return hittableObjects.Where(o => o.IsAlive).ToList();
+        }
+
+        public List<GameObject> GetSavedGameObjects()
+        {
+            return FilterObjectsBySelector(o => o.SaveToNextStage);
+        }
+
+        protected List<T> FilterObjectsByType<T>() where T : GameObject
+        {
+            return AllGameObjectCollection.Where(o => o.Value is T).Select(o => o.Value as T).ToList();
+        }
+
+        protected List<GameObject> FilterObjectsBySelector(Func<GameObject, bool> selector)
+        {
+            return AllGameObjectCollection.Where(o => selector(o.Value)).Select(o => o.Value).ToList();
+        }
+
+        protected void RegisterHittableObject(HittableObject hittableObject)
+        {
+            if (hittableObject is PlayableCharacter playableCharacter)
+            {
+                playableCharacter.HittableObjectStats = LoadCharacterStats();
+                AddGameObject(playableCharacter);
+            }
+            else if (hittableObject is Enemy enemy)
+            {
+                enemy.HittableObjectStats = LoadEnemyStats();
+                AddGameObject(enemy);
+            }
+            else
+            {
+                throw new NotSupportedException($"Not supported hittable object type: {hittableObject.GetType()}");
+            }
+        }
+
+        protected void RegisterInvincibleObject(InvincibleObject invincibleObject)
+        {
+            AddGameObject(invincibleObject);
+        }
+
+        protected void AddGameObject(GameObject gameObject)
+        {
+            var objectName = gameObject.Name;
+            if (AllGameObjectCollection.ContainsKey(objectName))
+            {
+                if (AllGameObjectCollection[objectName].SaveToNextStage)
+                {
+                    gameObject.SetGameObjectStates(AllGameObjectCollection[objectName].GetGameObjectStates());
+                }
+                else
+                {
+                    throw new Exception($"Object with name: {objectName} already exist in current stage's AllGameObjectCollection");
+                }
+            }
+            AllGameObjectCollection[objectName] = gameObject;
+        }
+
+        protected void SendFetchNewGameObjectsEvent()
+        {
+            EventManager.TriggerEvent(EventType.FetchNewGameObjectsEventName);
+            Logger.LogEvent($"Event Triggered: {EventType.FetchNewGameObjectsEventName}");
         }
 
         protected virtual EnemyStats LoadEnemyStats()
@@ -108,8 +233,15 @@ namespace Assets.Script.Backend
 
         protected virtual int CalculateDamage(DamangeSource damangeSource, DamageTarget damageTarget)
         {
-            var srcObject = HittableObjectCollection[damangeSource.SrcObjectName];
-            return srcObject.HittableObjectStats.AttackDmg;
+            var srcObject = AllGameObjectCollection[damangeSource.SrcObjectName];
+            if (srcObject is HittableObject hittableObject)
+            {
+                return hittableObject.HittableObjectStats.AttackDmg;
+            }
+            else
+            {
+                throw new NotSupportedException($"Not supported target object type: {srcObject.GetType()}");
+            }
         }
     }
 }
