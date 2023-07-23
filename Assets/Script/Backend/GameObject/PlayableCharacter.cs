@@ -14,9 +14,9 @@ namespace Assets.Script.Backend
         {
         }
 
-        public override void GotHit(int incomingDmg, EventLogger logger)
+        public override void GotHit(int incomingDmg)
         {
-            base.GotHit(incomingDmg, logger);
+            base.GotHit(incomingDmg);
         }
     }
 

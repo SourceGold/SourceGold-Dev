@@ -6,21 +6,19 @@ using System.Numerics;
 
 namespace Assets.Script.Backend
 {
-    public class GameStageBase
+    public class GameSceneBase
     {
         protected ConcurrentDictionary<string, GameObject> AllGameObjectCollection { get; set; }
 
-        protected EventLogger Logger { get; set; }
-
-        public GameStageBase()
+        public GameSceneBase()
         {
             AllGameObjectCollection = new ConcurrentDictionary<string, GameObject>();
-            Logger = new EventLogger();
         }
 
-        public void InitializeStage()
+        public void InitializeStage(GameSceneBase previousStage)
         {
-            InitializeCharacters();
+            var savedGameObjects = previousStage.GetSavedGameObjects();
+            InitializeStage(savedGameObjects);
         }
 
         public void InitializeStage(List<GameObject> savedGameObjects)
@@ -32,10 +30,9 @@ namespace Assets.Script.Backend
             InitializeStage();
         }
 
-        public void InitializeStage(GameStageBase previousStage)
+        public void InitializeStage()
         {
-            var savedGameObjects = previousStage.GetSavedGameObjects();
-            InitializeStage(savedGameObjects);
+            InitializeCharacters();
         }
 
         public virtual void InitializeCharacters()
@@ -45,11 +42,11 @@ namespace Assets.Script.Backend
 
         public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
         {
-            Logger.LogEvent($"{damangeSource.SrcObjectName} hit {damageTarget.TgtObjectName} with {damangeSource.AttackWeapon} weapon and {damangeSource.AttackName} attack");
+            GameEventLogger.LogEvent($"{damangeSource.SrcObjectName} hit {damageTarget.TgtObjectName} with {damangeSource.AttackWeapon} weapon and {damangeSource.AttackName} attack");
             var targetObj = AllGameObjectCollection[damageTarget.TgtObjectName];
             if (targetObj is HittableObject hittableObject)
             {
-                hittableObject.GotHit(CalculateDamage(damangeSource, damageTarget), Logger);
+                hittableObject.GotHit(CalculateDamage(damangeSource, damageTarget));
                 //if (!hittableObject.IsAlive)
                 //{
                 //    AllGameObjectCollection.Remove(targetObj.Name, out _);
@@ -69,6 +66,16 @@ namespace Assets.Script.Backend
         public List<GameObject> GetGameObjects(List<string> objectNames)
         {
             return objectNames.Select(o => AllGameObjectCollection[o]).ToList();
+        }
+
+        public void TriggerNetGameObjectEvent()
+        {
+            EventManager.TriggerEvent(GameEventTypes.FetchNewGameObjectsEvent);
+        }
+
+        public List<Enemy> GetSpawnedEnemies()
+        {
+            return GetSpawnedEnemies(null);
         }
 
         public void RegisterGameObject(GameObject gameObject)
@@ -122,6 +129,11 @@ namespace Assets.Script.Backend
             return FilterObjectsBySelector(o => o.SaveToNextStage);
         }
 
+        protected List<Enemy> GetSpawnedEnemies(InvincibleObject spawnSettings)
+        {
+            return new List<Enemy>();
+        }
+
         protected List<T> FilterObjectsByType<T>() where T : GameObject
         {
             return AllGameObjectCollection.Where(o => o.Value is T).Select(o => o.Value as T).ToList();
@@ -170,12 +182,6 @@ namespace Assets.Script.Backend
                 }
             }
             AllGameObjectCollection[objectName] = gameObject;
-        }
-
-        protected void SendFetchNewGameObjectsEvent()
-        {
-            EventManager.TriggerEvent(EventType.FetchNewGameObjectsEventName);
-            Logger.LogEvent($"Event Triggered: {EventType.FetchNewGameObjectsEventName}");
         }
 
         protected virtual EnemyStats LoadEnemyStats()

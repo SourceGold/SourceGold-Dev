@@ -11,8 +11,6 @@ namespace Assets.Script.Backend
 
         public HittableObjectStats? HittableObjectStats { get; set; }
 
-        public string DeathEventName => $"{Name}Death";
-
         public HittableObject(string name,
             HittableObjectStats hittableObjectStats,
             HittableObjectType hittableObjectType,
@@ -46,14 +44,13 @@ namespace Assets.Script.Backend
             return HittableObjectStats!;
         }
 
-        public virtual void GotHit(int incomingDmg, EventLogger logger)
+        public virtual void GotHit(int incomingDmg)
         {
-            HittableObjectStats!.GotHit(incomingDmg, logger);
+            HittableObjectStats!.GotHit(incomingDmg);
 
             if (!this.HittableObjectStats.IsAlive)
             {
-                EventManager.TriggerEvent($"{Name}Death");
-                logger.LogEvent($"{Name} is died");
+                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(this.Name));
             }
         }
 
@@ -78,12 +75,12 @@ namespace Assets.Script.Backend
             CurrentHp = maxHitPoint;
         }
 
-        public virtual void GotHit(int incomingDmg, EventLogger logger)
+        public virtual void GotHit(int incomingDmg)
         {
             int dmg = Math.Max(incomingDmg - Defense, 1);
 
             Interlocked.Add(ref CurrentHp, -dmg);
-            logger.LogEvent($"{dmg} damage dealt");
+            GameEventLogger.LogEvent($"{dmg} damage dealt");
         }
 
         public bool IsAlive => CurrentHp > 0;

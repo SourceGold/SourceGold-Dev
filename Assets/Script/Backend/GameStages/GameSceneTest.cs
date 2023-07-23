@@ -1,6 +1,6 @@
 ﻿namespace Assets.Script.Backend
 {
-    public class GameStageTest : GameStageBase
+    public class GameSceneTest : GameSceneBase
     {
         public override void InitializeCharacters()
         {
