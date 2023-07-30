@@ -11,11 +11,12 @@ public class MovementHandler : MonoBehaviour
 {
     #region Instance: Camera
 
-    public Transform Cam;
+    public Camera Camera;
     private Transform _currentLockOnTarget;
-    CameraManager _cameraManager;
+    private CameraManager _cameraManager;
 
     #endregion
+
     #region Variables: Animation
 
     private Animator _animator;
@@ -23,7 +24,6 @@ public class MovementHandler : MonoBehaviour
     #endregion
     #region Variables: Movement
 
-    private Transform _transform;
     private CharacterController _characterController;
 
     public enum WeaponStatus
@@ -100,7 +100,6 @@ public class MovementHandler : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
-        _transform = GetComponent<Transform>();
         _isRunning = false;
         _cameraManager = FindObjectOfType<CameraManager>();
     }
@@ -115,7 +114,6 @@ public class MovementHandler : MonoBehaviour
         Jump();
         Rotate();
         SetupAnimator();
-        
     }
     #region Functions: Inputs
     public void GetMoveInput(InputAction.CallbackContext context)
@@ -140,6 +138,14 @@ public class MovementHandler : MonoBehaviour
     {
         if (context.performed)
             _toggleLock = true; 
+    }
+
+    public void ToggleAim(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _cameraManager.ToggleAim();
+        }
     }
 
     #endregion
@@ -189,6 +195,8 @@ public class MovementHandler : MonoBehaviour
         }
           
     }
+
+
     private void SetupAnimator()
     {
         if (_playerPosture == PlayerPosture.Stand || _playerPosture == PlayerPosture.Landing)
@@ -249,7 +257,7 @@ public class MovementHandler : MonoBehaviour
     {
         if (_playerPosture == PlayerPosture.LockedOn)
         {
-            Vector3 dir = _currentLockOnTarget.position - _transform.position;
+            Vector3 dir = _currentLockOnTarget.position - transform.position;
             dir.Normalize();
             dir.y = 0;
 
@@ -260,10 +268,11 @@ public class MovementHandler : MonoBehaviour
             return;
         else
         {
-            _direction.x = _input.x;
-            _direction.z = _input.y;
+            //_direction.x = _input.x;
+            //_direction.z = _input.y;
+            Vector3 inputDirection = new Vector3(_input.x, 0.0f, _input.y).normalized;
 
-            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
+            var targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + Camera.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, _rotateSpeed);
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
         }
@@ -375,13 +384,13 @@ public class MovementHandler : MonoBehaviour
     #endregion
     private void CheckGround()
     {
-        if (Physics.SphereCast(_transform.position + (Vector3.up * _groundCheckOffset), _characterController.radius, Vector3.down, out RaycastHit hit, _groundCheckOffset - _characterController.radius + 2 * _characterController.skinWidth))
+        if (Physics.SphereCast(transform.position + (Vector3.up * _groundCheckOffset), _characterController.radius, Vector3.down, out RaycastHit hit, _groundCheckOffset - _characterController.radius + 2 * _characterController.skinWidth))
         {
             _isGrounded = true;
         } else
         {
             _isGrounded = false;
-            _canFall = !Physics.Raycast(_transform.position, Vector3.down, _fallHeight);
+            _canFall = !Physics.Raycast(transform.position, Vector3.down, _fallHeight);
         }
     }
     private void OnAnimatorMove()
