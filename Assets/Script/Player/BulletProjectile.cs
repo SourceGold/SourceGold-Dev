@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class BulletProjectile : MonoBehaviour
 {
     public Transform vfxHitGreen;
     public Transform vfxHitRed;
+    public float BulletSpeed = 200f;
+    public float VanishTime = 4f;
+    public LayerMask Border;
 
     private Rigidbody bulletRigidbody;
 
@@ -16,21 +20,30 @@ public class BulletProjectile : MonoBehaviour
 
     private void Start()
     {
-        float speed = 200f;
-        bulletRigidbody.velocity = transform.forward * speed;
+        bulletRigidbody.velocity = transform.forward * BulletSpeed;
+        Destroy(gameObject, VanishTime);
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    //Debug.Log(other);
-    //    Instantiate(vfxHitRed, transform.position, Quaternion.identity);
-    //    Destroy(gameObject);
-    //}
-
-    private void OnCollisionEnter(UnityEngine.Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(collision);
-        Instantiate(vfxHitRed, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (Border != (Border | (1 << other.transform.gameObject.layer))) // check layer
+        {
+            Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
+
+    private void FixedUpdate()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, BulletSpeed * Time.fixedDeltaTime))
+        {
+            if (Border != (Border | (1 << hit.transform.gameObject.layer))) // check layer
+            {
+                Instantiate(vfxHitRed, hit.point, Quaternion.identity);
+                Destroy(gameObject);
+            }
+        }
+    }
+
 }
