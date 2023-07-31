@@ -16,12 +16,20 @@ public class BulletProjectile : MonoBehaviour
 
     private void Start()
     {
-        float speed = 50f;
+        float speed = 200f;
         bulletRigidbody.velocity = transform.forward * speed;
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //Debug.Log(other);
+    //    Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+    //    Destroy(gameObject);
+    //}
+
+    private void OnCollisionEnter(UnityEngine.Collision collision)
     {
+        //Debug.Log(collision);
         Instantiate(vfxHitRed, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

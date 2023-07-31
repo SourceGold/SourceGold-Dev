@@ -12,6 +12,7 @@ public class CameraManager : MonoBehaviour
     public Transform NearestLockOnTarget;
     public GameObject CinemachineCameraTarget;
     public CinemachineVirtualCamera AimCamera;
+    public Transform Crosshair;
 
     [Tooltip("How far in degrees can you move the camera up")]
     public float TopClamp = 70.0f;
@@ -49,9 +50,15 @@ public class CameraManager : MonoBehaviour
     public void ToggleAim()
     {
         if (AimCamera.gameObject.activeSelf)
+        {
             AimCamera.gameObject.SetActive(false);
+            Crosshair.gameObject.SetActive(false);
+        }
         else
+        {
+            Crosshair.gameObject.SetActive(true);
             AimCamera.gameObject.SetActive(true);
+        }
     }
 
     public void Look(InputAction.CallbackContext context)
