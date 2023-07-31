@@ -24,14 +24,14 @@ public class BulletProjectile : MonoBehaviour
         Destroy(gameObject, VanishTime);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (Border != (Border | (1 << other.transform.gameObject.layer))) // check layer
-        {
-            Instantiate(vfxHitRed, transform.position, Quaternion.identity);
-            Destroy(gameObject);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (Border != (Border | (1 << other.transform.gameObject.layer))) // check layer
+    //    {
+    //        Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     private void FixedUpdate()
     {

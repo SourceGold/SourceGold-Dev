@@ -32,7 +32,7 @@ public class ShootingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        shootWait += shootDelay;
     }
 
     // Update is called once per frame
