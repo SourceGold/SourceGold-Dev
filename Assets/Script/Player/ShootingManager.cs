@@ -15,7 +15,7 @@ public class ShootingManager : MonoBehaviour
 
     //private bool _isShooting = false;
     private bool isShooting = false;
-    private float shootDelay;
+    private float shootDelay { get { return 1 / RateOfFire; } }
     private float shootWait = 0;
     private bool allowShoot { get { return shootWait >= shootDelay; } }
 
@@ -32,7 +32,7 @@ public class ShootingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shootDelay = 1 / RateOfFire;
+        
     }
 
     // Update is called once per frame
