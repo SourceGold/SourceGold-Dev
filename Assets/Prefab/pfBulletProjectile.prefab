@@ -99,7 +99,7 @@ MonoBehaviour:
     type: 3}
   vfxHitRed: {fileID: 613433886817584985, guid: e3ce1db75ea6c424ba8159cb0e3ba180,
     type: 3}
-  BulletSpeed: 200
+  BulletSpeed: 50
   VanishTime: 4
   Border:
     serializedVersion: 2
