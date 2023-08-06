@@ -1,7 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Assets.Script.Backend
 {
@@ -42,10 +41,10 @@ namespace Assets.Script.Backend
             }
         }
 
-        public static void StartListening(string eventName, UnityAction listener)
+        public static void StartListening(GameEventType eventType, UnityAction listener)
         {
             UnityEvent thisEvent = null;
-            if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+            if (TryGetEvent(eventType, out thisEvent))
             {
                 thisEvent.AddListener(listener);
             }
@@ -53,27 +52,35 @@ namespace Assets.Script.Backend
             {
                 thisEvent = new UnityEvent();
                 thisEvent.AddListener(listener);
-                instance.eventDictionary.Add(eventName, thisEvent);
+                instance.eventDictionary.Add(eventType.ToString(), thisEvent);
             }
+            GameEventLogger.LogEvent($"Listener: {listener} started listening event: {eventType}");
         }
 
-        public static void StopListening(string eventName, UnityAction listener)
+        public static void StopListening(GameEventType eventType, UnityAction listener)
         {
             if (eventManager == null) return;
             UnityEvent thisEvent = null;
-            if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+            if (TryGetEvent(eventType, out thisEvent))
             {
                 thisEvent.RemoveListener(listener);
             }
+            GameEventLogger.LogEvent($"Listener: {listener} stopped listening event: {eventType}");
         }
 
-        public static void TriggerEvent(string eventName)
+        public static void TriggerEvent(GameEventType eventType)
         {
             UnityEvent thisEvent = null;
-            if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+            GameEventLogger.LogEvent($"Event Triggered: {eventType}");
+            if (TryGetEvent(eventType, out thisEvent))
             {
                 thisEvent.Invoke();
             }
+        }
+
+        private static bool TryGetEvent(GameEventType eventType, out UnityEvent thisEvent)
+        {
+            return instance.eventDictionary.TryGetValue(eventType.ToString(), out thisEvent);
         }
     }
 }

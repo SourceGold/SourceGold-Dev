@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +9,26 @@ namespace Assets.Script.Backend
 {
     public class Backend : MonoBehaviour
     {
-        public static GameStageBase GameLoop;
+        public static GameSceneBase GameLoop;
 
-        public void Start()
+        public void Awake()
         {
-            GameLoop = new GameStageTest();
+            GameLoop = new GameSceneTest();
             GameLoop.InitializeStage();
+            DontDestroyOnLoad(this);
+        }
+
+        public void SetNextStage(string stageName)
+        {
+            // broadcast to all game objects the new state
+            var newStage = LoadStage(stageName);
+            newStage.InitializeStage(GameLoop);
+            GameLoop = newStage;
+        }
+
+        private GameSceneBase LoadStage(string stageName)
+        {
+            return new GameSceneTest();
         }
     }
 }

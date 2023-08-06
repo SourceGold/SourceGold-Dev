@@ -11,7 +11,7 @@ namespace Assets.Script.Backend
     {
         _,
         HittableObject,
-        NonHittableObject,
+        InvincibleObject,
         Items
     }
 
@@ -22,5 +22,10 @@ namespace Assets.Script.Backend
         Enemy,
         HittableNpc,
         StationaryObject
+    }
+
+    public enum InvincibleObjectType
+    {
+        _,
     }
 }

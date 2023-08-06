@@ -9,11 +9,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float Health;
     private Animator _anim;
     private bool _dead = false;
+
+    private string _name = "EnemyDefault";
     // Start is called before the first frame update
     void Start()
     {
         _anim = GetComponent<Animator>();
-        EventManager.StartListening("Enemy1Death", DeathHandler);
+        EventManager.StartListening(GameEventTypes.GetObjectOnDeathEvent(_name), DeathHandler);
     }
 
 
@@ -49,7 +51,7 @@ public class Enemy : MonoBehaviour
                 Health -= weaponInfo.damge;
                 Debug.Log("Hit By Sword");
                 
-                Backend.GameLoop.ProcessDamage(new DamangeSource(){SrcObjectName="Player"}, new DamageTarget() { TgtObjectName = "Enemy1" });
+                Backend.GameLoop.ProcessDamage(new DamangeSource(){SrcObjectName= "PlayerDefault" }, new DamageTarget() { TgtObjectName = _name });
             } 
         }
     }

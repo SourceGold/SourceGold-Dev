@@ -1,39 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
+
+#nullable enable
 
 namespace Assets.Script.Backend
 {
     public class HittableObject : GameObject
     {
-
         public HittableObjectType HittableObjectType { get; set; }
 
-        public HittableObjectStats HittableObjectStats { get; set; }
+        public HittableObjectStats? HittableObjectStats { get; set; }
 
-        public HittableObject(string name, HittableObjectStats hittableObjectStats, HittableObjectType hittableObjectType) : base(name, GameObjectType.HittableObject)
+        public HittableObject(string name,
+            HittableObjectStats hittableObjectStats,
+            HittableObjectType hittableObjectType,
+            GameObjectEnvironmentalStats environmentalStats,
+            bool saveToNextStage)
+            : base(name, GameObjectType.HittableObject, environmentalStats, saveToNextStage)
         {
             HittableObjectStats = hittableObjectStats;
             HittableObjectType = hittableObjectType;
         }
 
-        public virtual void GotHit(int incomingDmg)
+        public HittableObject(string name,
+            HittableObjectType hittableObjectType,
+            GameObjectEnvironmentalStats environmentalStats,
+            bool saveToNextStage)
+            : base(name, GameObjectType.HittableObject, environmentalStats, saveToNextStage)
         {
-            HittableObjectStats.GotHit(incomingDmg);
-            if (!this.HittableObjectStats.IsAlive)
+            HittableObjectType = hittableObjectType;
+        }
+
+        public override void SetGameObjectStates(GameObjectStats gameObjectStats)
+        {
+            if (gameObjectStats is HittableObjectStats hittableObjectStats)
             {
-                EventManager.TriggerEvent($"{Name}Death");
+                HittableObjectStats = hittableObjectStats;
             }
         }
 
-        public bool IsAlive => HittableObjectStats.IsAlive;
+        public override GameObjectStats GetGameObjectStates()
+        {
+            return HittableObjectStats!;
+        }
+
+        public virtual void GotHit(int incomingDmg)
+        {
+            HittableObjectStats!.GotHit(incomingDmg);
+
+            if (!this.HittableObjectStats.IsAlive)
+            {
+                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(this.Name));
+            }
+        }
+
+        public bool IsAlive => HittableObjectStats!.IsAlive;
     }
 
-    public class HittableObjectStats
+    public class HittableObjectStats : GameObjectStats
     {
         public int MaxHitPoint { get; private set; }
 
@@ -54,8 +78,9 @@ namespace Assets.Script.Backend
         public virtual void GotHit(int incomingDmg)
         {
             int dmg = Math.Max(incomingDmg - Defense, 1);
-            
+
             Interlocked.Add(ref CurrentHp, -dmg);
+            GameEventLogger.LogEvent($"{dmg} damage dealt");
         }
 
         public bool IsAlive => CurrentHp > 0;
