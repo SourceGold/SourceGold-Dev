@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 
 #nullable enable
 
@@ -47,11 +46,6 @@ namespace Assets.Script.Backend
         public virtual void GotHit(int incomingDmg)
         {
             HittableObjectStats!.GotHit(incomingDmg);
-
-            if (!this.HittableObjectStats.IsAlive)
-            {
-                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(this.Name));
-            }
         }
 
         public bool IsAlive => HittableObjectStats!.IsAlive;
@@ -59,30 +53,114 @@ namespace Assets.Script.Backend
 
     public class HittableObjectStats : GameObjectStats
     {
-        public int MaxHitPoint { get; private set; }
+        protected readonly string HPName = "HitPoint";
 
-        public int AttackDmg { get; private set; }
+        protected readonly string MPName = "MagicPoint";
 
-        public int Defense { get; private set; }
+        protected readonly string StaminaName = "Stamina";
 
-        public int CurrentHp = -1;
+        protected ThreadSafeDoubleStats _hp { get; set; }
 
-        public HittableObjectStats(int maxHitPoint = 100, int attackDmg = 0, int defense = 0)
+        protected ThreadSafeDoubleStats _mp { get; set; }
+
+        protected ThreadSafeDoubleStats _stamina { get; set; }
+
+        public double BaseAttack { get; private set; }
+
+        public double BaseDefense { get; private set; }
+
+
+
+        public int MaxHitPoint => (int)Math.Round(_hp.MaxStats);
+
+        public int MaxMagicPoint => (int)Math.Round(_mp.MaxStats);
+
+        public int MaxStamina => (int)Math.Round(_stamina.MaxStats);
+
+        public int CurrentHp => (int)Math.Round(_hp.CurrentStats);
+
+        public int CurrentMp => (int)Math.Round(_mp.CurrentStats);
+
+        public int CurrentStamina => (int)Math.Round(_stamina.CurrentStats);
+
+        public int Attack => (int)CalculateAttack();
+
+        public int Defense => (int)CalculateDefense();
+
+        public HittableObjectStats(
+            string parentName,
+            int maxHitPoint = 100,
+            int maxMagicPoint = 100,
+            int maxStamina = 100,
+            int baseAttack = 10,
+            int baseDefense = 0
+            ) : base(parentName)
         {
-            MaxHitPoint = maxHitPoint;
-            AttackDmg = attackDmg;
-            Defense = defense;
-            CurrentHp = maxHitPoint;
+            _hp = new ThreadSafeDoubleStats(statsName: HPName, minStats: 0, maxStats: maxHitPoint, currentStats: maxHitPoint);
+            _mp = new ThreadSafeDoubleStats(statsName: MPName, minStats: 0, maxStats: maxMagicPoint, currentStats: maxMagicPoint);
+            _stamina = new ThreadSafeDoubleStats(statsName: StaminaName, minStats: 0, maxStats: maxStamina, currentStats: maxStamina);
+            BaseAttack = baseAttack;
+            BaseDefense = baseDefense;
         }
 
         public virtual void GotHit(int incomingDmg)
         {
-            int dmg = Math.Max(incomingDmg - Defense, 1);
+            int dmg = (int)Math.Round(CalculateDamage(incomingDmg));
+            GameEventLogger.LogEvent($"{nameof(GotHit)}: {dmg} damage dealt");
+            UpdateHitPoint(-dmg);
+        }
 
-            Interlocked.Add(ref CurrentHp, -dmg);
-            GameEventLogger.LogEvent($"{dmg} damage dealt");
+        public virtual void UpdateHitPoint(int changeInHp)
+        {
+            GameEventLogger.LogEvent($"{nameof(UpdateHitPoint)}: {changeInHp} {HPName} used");
+            _hp.UpdateStats(changeInHp);
+            if (!IsAlive)
+            {
+                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(ParentName));
+            }
+        }
+
+        public virtual void UpdateMagicPoint(int changeInMp)
+        {
+            if (CurrentMp + changeInMp < 0)
+            {
+                EventManager.TriggerEvent(GameEventTypes.GetNotEnoughStatsEvent(nameof(CurrentMp)));
+            }
+            else
+            {
+                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInMp} {MPName} used");
+                _mp.UpdateStats(changeInMp);
+            }
+        }
+
+        public virtual void UpdateStamina(int changeInStamina)
+        {
+            if (CurrentStamina + changeInStamina < 0)
+            {
+                EventManager.TriggerEvent(GameEventTypes.GetNotEnoughStatsEvent(nameof(CurrentStamina)));
+            }
+            else
+            {
+                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInStamina} {StaminaName} used");
+                _stamina.UpdateStats(changeInStamina);
+            }
         }
 
         public bool IsAlive => CurrentHp > 0;
+
+        protected virtual double CalculateAttack()
+        {
+            return Math.Round(BaseAttack);
+        }
+
+        protected virtual double CalculateDefense()
+        {
+            return Math.Round(BaseDefense);
+        }
+
+        protected virtual double CalculateDamage(int incomingDmg)
+        {
+            return Math.Max(incomingDmg - CalculateDefense(), 1);
+        }
     }
 }

@@ -22,7 +22,8 @@
     {
         public int Level { get; set; }
 
-        public EnemyStats(int maxHitPoint, int attackDmg, int defense, int level = 1) : base(maxHitPoint, attackDmg, defense)
+        public EnemyStats(string parentName, int maxHitPoint, int maxMagicPoint, int baseAttack, int baseDefence, int level = 1) :
+            base(parentName, maxHitPoint, maxMagicPoint, maxStamina: 0, baseAttack, baseDefence)
         {
             Level = level;
         }

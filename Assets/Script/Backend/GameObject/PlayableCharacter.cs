@@ -28,7 +28,16 @@ namespace Assets.Script.Backend
 
         public const int LevelUpExp = 100;
 
-        public PlayableCharacterStats(int maxHitPoint, int attackDmg, int defense, int level = 1, int currentExp = 0) : base(maxHitPoint, attackDmg, defense)
+        public PlayableCharacterStats(
+            string parentName, 
+            int maxHitPoint, 
+            int maxMagicPoint,
+            int maxStamina,
+            int baseAttack, 
+            int baseDefense, 
+            int level = 1, 
+            int currentExp = 0) 
+            : base(parentName, maxHitPoint, maxMagicPoint, maxStamina, baseAttack, baseDefense)
         {
             Level = level;
             CurrentExp = currentExp;

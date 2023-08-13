@@ -37,7 +37,8 @@ namespace Assets.Script.Backend
 
         public virtual void InitializeCharacters()
         {
-            AddGameObject(new PlayableCharacter("PlayerDefault", LoadCharacterStats(), LoadDefaultEnvironmentalStats()));
+            string playerName = "PlayerDefault";
+            AddGameObject(new PlayableCharacter(playerName, LoadCharacterStats(playerName), LoadDefaultEnvironmentalStats()));
         }
 
         public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
@@ -148,12 +149,12 @@ namespace Assets.Script.Backend
         {
             if (hittableObject is PlayableCharacter playableCharacter)
             {
-                playableCharacter.HittableObjectStats = LoadCharacterStats();
+                playableCharacter.HittableObjectStats = LoadCharacterStats(playableCharacter.Name);
                 AddGameObject(playableCharacter);
             }
             else if (hittableObject is Enemy enemy)
             {
-                enemy.HittableObjectStats = LoadEnemyStats();
+                enemy.HittableObjectStats = LoadEnemyStats(enemy.Name);
                 AddGameObject(enemy);
             }
             else
@@ -184,14 +185,14 @@ namespace Assets.Script.Backend
             AllGameObjectCollection[objectName] = gameObject;
         }
 
-        protected virtual EnemyStats LoadEnemyStats()
+        protected virtual EnemyStats LoadEnemyStats(string parentName)
         {
-            return new EnemyStats(maxHitPoint: 100, attackDmg: 30, defense: 10);
+            return new EnemyStats(parentName, maxHitPoint: 100, maxMagicPoint:100, baseAttack: 30, baseDefence: 10);
         }
 
-        protected virtual PlayableCharacterStats LoadCharacterStats()
+        protected virtual PlayableCharacterStats LoadCharacterStats(string parentName)
         {
-            return new PlayableCharacterStats(maxHitPoint: 100, attackDmg: 30, defense: 10);
+            return new PlayableCharacterStats(parentName, maxMagicPoint: 100, maxHitPoint: 100, maxStamina:100, baseAttack: 30, baseDefense: 10);
         }
 
         protected virtual GameObjectEnvironmentalStats LoadDefaultEnvironmentalStats(bool isEnemy = false)
@@ -242,7 +243,7 @@ namespace Assets.Script.Backend
             var srcObject = AllGameObjectCollection[damangeSource.SrcObjectName];
             if (srcObject is HittableObject hittableObject)
             {
-                return hittableObject.HittableObjectStats.AttackDmg;
+                return hittableObject.HittableObjectStats.Attack;
             }
             else
             {
