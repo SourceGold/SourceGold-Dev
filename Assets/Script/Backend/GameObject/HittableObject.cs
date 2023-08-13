@@ -44,7 +44,7 @@ namespace Assets.Script.Backend
             return HittableObjectStats!;
         }
 
-        public virtual void GotHit(int incomingDmg, EventLogger logger)
+        public virtual void GotHit(int incomingDmg)
         {
             HittableObjectStats!.GotHit(incomingDmg);
 
@@ -75,7 +75,7 @@ namespace Assets.Script.Backend
             CurrentHp = maxHitPoint;
         }
 
-        public virtual void GotHit(int incomingDmg, EventLogger logger)
+        public virtual void GotHit(int incomingDmg)
         {
             int dmg = Math.Max(incomingDmg - Defense, 1);
 
