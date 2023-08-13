@@ -2,14 +2,19 @@
 {
     public class Enemy : HittableObject
     {
-        public Enemy(string name, EnemyStats enemyStats, GameObjectEnvironmentalStats environmentalStats)
-            : base(name, enemyStats, HittableObjectType.Enemy, environmentalStats)
+        public Enemy(string name, EnemyStats enemyStats, GameObjectEnvironmentalStats environmentalStats, bool saveToNextStage = false)
+            : base(name, enemyStats, HittableObjectType.Enemy, environmentalStats, saveToNextStage)
         {
         }
 
-        public override void GotHit(int incomingDmg, EventLogger logger)
+        public Enemy(string name, GameObjectEnvironmentalStats environmentalStats, bool saveToNextStage = false)
+            : base(name, HittableObjectType.Enemy, environmentalStats, saveToNextStage)
         {
-            base.GotHit(incomingDmg, logger);
+        }
+
+        public override void GotHit(int incomingDmg)
+        {
+            base.GotHit(incomingDmg);
         }
     }
 

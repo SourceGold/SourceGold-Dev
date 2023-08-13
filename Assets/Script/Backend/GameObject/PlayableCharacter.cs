@@ -5,7 +5,12 @@ namespace Assets.Script.Backend
     public class PlayableCharacter : HittableObject
     {
         public PlayableCharacter(string name, PlayableCharacterStats characterStats, GameObjectEnvironmentalStats environmentalStats)
-            : base(name, characterStats, HittableObjectType.PlayableCharacter, environmentalStats)
+            : base(name, characterStats, HittableObjectType.PlayableCharacter, environmentalStats, saveToNextStage: true)
+        {
+        }
+
+        public PlayableCharacter(string name, GameObjectEnvironmentalStats environmentalStats)
+            : base(name, HittableObjectType.PlayableCharacter, environmentalStats, saveToNextStage: true)
         {
         }
 
