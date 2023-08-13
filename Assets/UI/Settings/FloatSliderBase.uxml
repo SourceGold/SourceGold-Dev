@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="FloatSliderBase" class="one-row-settings">
+        <ui:Label text="Label" name="FloatSliderLabel" class="setting-label" />
+        <ui:VisualElement class="setting-slider-holder">
+            <ui:Label text="23.5" name="FloatSliderNumber" class="setting-slider-number" />
+            <ui:Slider picking-mode="Ignore" value="42" high-value="100" name="FloatSlider" class="setting-slider-slider" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

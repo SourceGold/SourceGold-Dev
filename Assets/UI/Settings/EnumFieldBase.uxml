@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Login%20Screen/MenuStyles.uss?fileID=7433441132597879392&amp;guid=fb16504d0fa14f643b3acbba3d4513f1&amp;type=3#MenuStyles" />
+    <ui:VisualElement name="SelectionBase" class="one-row-settings">
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="SelectionLabel" class="setting-label" />
+        <ui:VisualElement class="setting-slider-holder">
+            <ui:EnumField name="Selection" type="PlasticGui.DialogResultType, unityplastic" class="setting-slider-slider settings-page-select" style="margin-left: -4px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

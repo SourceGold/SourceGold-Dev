@@ -1,0 +1,13 @@
+gameplay_settings: 
+    difficulties: 1
+    setting_int:
+        abd: 1
+        ccd: 2
+    setting_bool:
+        free_sync: false
+control_settings: 
+    revert_camera_movements: false
+    mouse_sensitivity: 0.5
+    press_to_speed_up: true
+graphics_settings: 
+    visual_quality: 1
