@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="ToggleBase" class="one-row-settings">
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="ToggleLabel" class="setting-label" />
+        <ui:VisualElement class="setting-slider-holder">
+            <ui:Toggle label="&#10;" name="Toggle" class="setting-slider-slider" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

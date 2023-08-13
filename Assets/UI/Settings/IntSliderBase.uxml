@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="IntSliderBase" class="one-row-settings">
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" name="IntSliderLabel" class="setting-label" />
+        <ui:VisualElement class="setting-slider-holder" style="background-color: rgba(0, 0, 0, 0);">
+            <ui:Label tabindex="-1" text="4" display-tooltip-when-elided="true" name="IntSliderLabel" class="setting-slider-number" />
+            <ui:SliderInt picking-mode="Ignore" value="4" high-value="10" name="IntSlider" class="setting-slider-slider" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
