@@ -87,7 +87,7 @@ namespace Assets.Script.Backend
         {
             if (!System.IO.File.Exists(userSettingsPath))
             {
-                throw new Exception();
+                throw new FileNotFoundException("User settings cannot be found when calling load user defined settings");
             }
             StreamReader reader = new StreamReader(userSettingsPath);
             var settingsInText = reader.ReadToEnd();
@@ -97,14 +97,8 @@ namespace Assets.Script.Backend
 
         public void SaveUserDefinedSettings()
         {
-            if (System.IO.File.Exists(userSettingsPath))
-            {
-                File.Delete(userSettingsPath);
-            }
             var yaml = serializer.Serialize(userDefinedSettings);
-            StreamWriter writer = new StreamWriter(userSettingsPath, false);
-            writer.Write(yaml);
-            writer.Close();
+            File.WriteAllText(userSettingsPath, yaml);
         }
 
         public void LoadUserDefinedDefaultSettings()
