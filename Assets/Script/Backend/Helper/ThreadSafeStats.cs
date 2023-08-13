@@ -1,4 +1,6 @@
-﻿namespace Assets.Script.Backend
+﻿using System;
+
+namespace Assets.Script.Backend
 {
     public abstract class ThreadSafeStats<T>
     {
@@ -16,6 +18,15 @@
             CurrentStats = currentStats;
         }
 
-        public abstract void UpdateStats(T changeInStats);
+        public virtual void UpdateStats(T changeInStats)
+        {
+            lock (Lock)
+            {
+                CurrentStats = CalculateCurrentStats(changeInStats);
+            }
+            GameEventLogger.LogEvent($"Updating Stats: {StatsName} by: {changeInStats}");
+        }
+
+        public abstract T CalculateCurrentStats(T changeInStats);
     }
 }
