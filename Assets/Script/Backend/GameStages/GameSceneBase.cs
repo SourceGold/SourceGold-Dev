@@ -47,7 +47,7 @@ namespace Assets.Script.Backend
             var targetObj = AllGameObjectCollection[damageTarget.TgtObjectName];
             if (targetObj is HittableObject hittableObject)
             {
-                hittableObject.GotHit(CalculateDamage(damangeSource, damageTarget));
+                hittableObject.GotDamanged(CalculateDamage(damangeSource, damageTarget));
                 //if (!hittableObject.IsAlive)
                 //{
                 //    AllGameObjectCollection.Remove(targetObj.Name, out _);
@@ -104,7 +104,7 @@ namespace Assets.Script.Backend
             }
         }
 
-        public void RegesterPlayerOnStatsChangeCallBack(Action<PlayableCharacterStats> onStatsChangedCallback)
+        public void RegisterPlayerOnStatsChangeCallBack(Action<PlayableCharacterStats> onStatsChangedCallback)
         {
             var playableChars = GetPlayableCharacters();
             foreach (var playableChar in playableChars)

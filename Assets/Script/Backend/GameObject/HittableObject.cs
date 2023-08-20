@@ -43,9 +43,9 @@ namespace Assets.Script.Backend
             return HittableObjectStats!;
         }
 
-        public virtual void GotHit(int incomingDmg)
+        public virtual void GotDamanged(int incomingDmg)
         {
-            HittableObjectStats!.GotHit(incomingDmg);
+            HittableObjectStats!.GotDamanged(incomingDmg);
         }
 
         public bool IsAlive => HittableObjectStats!.IsAlive;
@@ -114,10 +114,10 @@ namespace Assets.Script.Backend
             BaseDefense = baseDefense;
         }
 
-        public virtual void GotHit(int incomingDmg)
+        public virtual void GotDamanged(int incomingDmg)
         {
             int dmg = (int)Math.Round(CalculateDamage(incomingDmg));
-            GameEventLogger.LogEvent($"{nameof(GotHit)}: {dmg} damage dealt");
+            GameEventLogger.LogEvent($"{nameof(GotDamanged)}: {dmg} damage dealt");
             UpdateHitPoint(-dmg);
         }
 

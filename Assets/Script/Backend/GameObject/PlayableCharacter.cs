@@ -33,9 +33,9 @@ namespace Assets.Script.Backend
         {
         }
 
-        public override void GotHit(int incomingDmg)
+        public override void GotDamanged(int incomingDmg)
         {
-            base.GotHit(incomingDmg);
+            base.GotDamanged(incomingDmg);
         }
 
         public void SetOnStatsChangedCallback(Action<PlayableCharacterStats> onStatsChangedCallback)
