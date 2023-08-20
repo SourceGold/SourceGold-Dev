@@ -1,12 +1,31 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace Assets.Script.Backend
 {
     public class PlayableCharacter : HittableObject
     {
-        public PlayableCharacter(string name, PlayableCharacterStats characterStats, GameObjectEnvironmentalStats environmentalStats)
+        private bool _isMainCharacter { get; set; }
+
+        public PlayableCharacterStats PlayableCharacterStats => HittableObjectStats as PlayableCharacterStats;
+
+        public bool IsMainCharacter
+        {
+            get
+            {
+                return _isMainCharacter;
+            }
+            set
+            {
+                _isMainCharacter = value;
+                EnableOnStatsChangedCallback = value;
+            }
+        }
+
+        public PlayableCharacter(string name, PlayableCharacterStats characterStats, GameObjectEnvironmentalStats environmentalStats, bool isMainCharacter)
             : base(name, characterStats, HittableObjectType.PlayableCharacter, environmentalStats, saveToNextStage: true)
         {
+            IsMainCharacter = isMainCharacter;
         }
 
         public PlayableCharacter(string name, GameObjectEnvironmentalStats environmentalStats)
@@ -18,6 +37,12 @@ namespace Assets.Script.Backend
         {
             base.GotHit(incomingDmg);
         }
+
+        public void SetOnStatsChangedCallback(Action<PlayableCharacterStats> onStatsChangedCallback)
+        {
+            PlayableCharacterStats.OnStatsChangedCallback = onStatsChangedCallback;
+            EnableOnStatsChangedCallback = _isMainCharacter;
+        }
     }
 
     public class PlayableCharacterStats : HittableObjectStats
@@ -28,19 +53,26 @@ namespace Assets.Script.Backend
 
         public const int LevelUpExp = 100;
 
+        public Action<PlayableCharacterStats> OnStatsChangedCallback { get; set; }
+
         public PlayableCharacterStats(
-            string parentName, 
-            int maxHitPoint, 
+            string parentName,
+            int maxHitPoint,
             int maxMagicPoint,
             int maxStamina,
-            int baseAttack, 
-            int baseDefense, 
-            int level = 1, 
-            int currentExp = 0) 
+            int baseAttack,
+            int baseDefense,
+            int level = 1,
+            int currentExp = 0)
             : base(parentName, maxHitPoint, maxMagicPoint, maxStamina, baseAttack, baseDefense)
         {
             Level = level;
             CurrentExp = currentExp;
+        }
+
+        protected override void OnStatsChanged()
+        {
+            OnStatsChangedCallback(this);
         }
 
         public virtual void GotExp(int Exp)

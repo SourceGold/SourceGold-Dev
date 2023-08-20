@@ -4,7 +4,7 @@
 
 namespace Assets.Script.Backend
 {
-    public class HittableObject : GameObject
+    public abstract class HittableObject : GameObject
     {
         public HittableObjectType HittableObjectType { get; set; }
 
@@ -49,9 +49,15 @@ namespace Assets.Script.Backend
         }
 
         public bool IsAlive => HittableObjectStats!.IsAlive;
+
+        public bool EnableOnStatsChangedCallback
+        {
+            get => HittableObjectStats!.EnableOnStatsChangedCallback;
+            set => HittableObjectStats!.EnableOnStatsChangedCallback = value;
+        }
     }
 
-    public class HittableObjectStats : GameObjectStats
+    public abstract class HittableObjectStats : GameObjectStats
     {
         protected readonly string HPName = "HitPoint";
 
@@ -87,6 +93,8 @@ namespace Assets.Script.Backend
 
         public int Defense => (int)CalculateDefense();
 
+        public bool EnableOnStatsChangedCallback { get; set; } = false;
+
         public HittableObjectStats(
             string parentName,
             int maxHitPoint = 100,
@@ -99,6 +107,9 @@ namespace Assets.Script.Backend
             _hp = new ThreadSafeDoubleStats(statsName: HPName, minStats: 0, maxStats: maxHitPoint, currentStats: maxHitPoint);
             _mp = new ThreadSafeDoubleStats(statsName: MPName, minStats: 0, maxStats: maxMagicPoint, currentStats: maxMagicPoint);
             _stamina = new ThreadSafeDoubleStats(statsName: StaminaName, minStats: 0, maxStats: maxStamina, currentStats: maxStamina);
+            _hp.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
+            _mp.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
+            _stamina.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
             BaseAttack = baseAttack;
             BaseDefense = baseDefense;
         }
@@ -147,6 +158,8 @@ namespace Assets.Script.Backend
         }
 
         public bool IsAlive => CurrentHp > 0;
+
+        protected abstract void OnStatsChanged();
 
         protected virtual double CalculateAttack()
         {

@@ -38,7 +38,7 @@ namespace Assets.Script.Backend
         public virtual void InitializeCharacters()
         {
             string playerName = "PlayerDefault";
-            AddGameObject(new PlayableCharacter(playerName, LoadCharacterStats(playerName), LoadDefaultEnvironmentalStats()));
+            AddGameObject(new PlayableCharacter(playerName, LoadCharacterStats(playerName), LoadDefaultEnvironmentalStats(), isMainCharacter: true));
         }
 
         public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
@@ -98,15 +98,43 @@ namespace Assets.Script.Backend
 
         public void RegisterGameObjects(List<GameObject> gameObjects)
         {
-            foreach(var gameObject in gameObjects)
+            foreach (var gameObject in gameObjects)
             {
                 RegisterGameObject(gameObject);
             }
         }
 
+        public void RegesterPlayerOnStatsChangeCallBack(Action<PlayableCharacterStats> onStatsChangedCallback)
+        {
+            var playableChars = GetPlayableCharacters();
+            foreach (var playableChar in playableChars)
+            {
+                playableChar.SetOnStatsChangedCallback(onStatsChangedCallback);
+            }
+        }
+
+        public void SetMainCharacter(string playerName)
+        {
+            var playableChars = GetPlayableCharacters();
+            foreach (var playableChar in playableChars)
+            {
+                playableChar.IsMainCharacter = playableChar.Name == playerName;
+            }
+        }
+
+        public PlayableCharacter GetMainCharacters()
+        {
+            return GetPlayableCharacters().Where(o => o.IsMainCharacter).Single();
+        }
+
         public bool UnregisterGameObject(string objectName)
         {
             return AllGameObjectCollection.Remove(objectName, out _);
+        }
+
+        public List<PlayableCharacter> GetPlayableCharacters()
+        {
+            return FilterObjectsByType<PlayableCharacter>();
         }
 
         public List<HittableObject> GetHittableObjects()
@@ -187,12 +215,12 @@ namespace Assets.Script.Backend
 
         protected virtual EnemyStats LoadEnemyStats(string parentName)
         {
-            return new EnemyStats(parentName, maxHitPoint: 100, maxMagicPoint:100, baseAttack: 30, baseDefence: 10);
+            return new EnemyStats(parentName, maxHitPoint: 100, maxMagicPoint: 100, baseAttack: 30, baseDefence: 10);
         }
 
         protected virtual PlayableCharacterStats LoadCharacterStats(string parentName)
         {
-            return new PlayableCharacterStats(parentName, maxMagicPoint: 100, maxHitPoint: 100, maxStamina:100, baseAttack: 30, baseDefense: 10);
+            return new PlayableCharacterStats(parentName, maxMagicPoint: 100, maxHitPoint: 100, maxStamina: 100, baseAttack: 30, baseDefense: 10);
         }
 
         protected virtual GameObjectEnvironmentalStats LoadDefaultEnvironmentalStats(bool isEnemy = false)
