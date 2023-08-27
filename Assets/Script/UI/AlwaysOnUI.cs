@@ -44,8 +44,8 @@ public class AlwaysOnUI : MonoBehaviour
 
     void PlayerStatsChangeCallback(PlayableCharacterStats newStats)
     {
-        _HealthLabel.text = ((int)newStats.CurrentHp).ToString() + "/" + ((int)newStats.MaxHitPoint).ToString();
-        int healthPercent = 100 - (int)((float)newStats.CurrentHp / (float)newStats.MaxHitPoint * 100.0);
+        _HealthLabel.text = ((int)newStats.CurrentHitPoint).ToString() + "/" + ((int)newStats.MaxHitPoint).ToString();
+        int healthPercent = 100 - (int)((float)newStats.CurrentHitPoint / (float)newStats.MaxHitPoint * 100.0);
         healthPercent = Mathf.Clamp(healthPercent, 0, 100);
         _HealthBar.style.marginRight = new Length(healthPercent, LengthUnit.Percent);
 
@@ -57,9 +57,8 @@ public class AlwaysOnUI : MonoBehaviour
     {
         //VisualElement Icon = new VisualElement();
         //Icon.AddToClassList("status-icon");
-        //var texture = Resources.Load<Texture2D>("Icons/PlayerStatus/healing");
-        //Icon.style.backgroundImage = texture;
+        //Icon.style.backgroundImage = Resources.Load<Texture2D>("Icons/PlayerStatus/healing");
         //_StatusHolder.Add(Icon);
     }
-    
+
 }
