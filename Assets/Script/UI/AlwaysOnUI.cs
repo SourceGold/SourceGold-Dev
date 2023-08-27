@@ -44,12 +44,20 @@ public class AlwaysOnUI : MonoBehaviour
 
     void PlayerStatsChangeCallback(PlayableCharacterStats newStats)
     {
-        _HealthLabel.text = ((int)newStats.CurrentHitPoint).ToString() + "/" + ((int)newStats.MaxHitPoint).ToString();
+        _HealthLabel.text = newStats.CurrentHitPoint.ToString() + "/" + newStats.MaxHitPoint.ToString();
         int healthPercent = 100 - (int)((float)newStats.CurrentHitPoint / (float)newStats.MaxHitPoint * 100.0);
         healthPercent = Mathf.Clamp(healthPercent, 0, 100);
         _HealthBar.style.marginRight = new Length(healthPercent, LengthUnit.Percent);
 
+        _ManaLabel.text = newStats.CurrentMagicPoint.ToString() + "/" + newStats.MaxMagicPoint.ToString();
+        int manaPercent = 100 - (int)((float)newStats.CurrentMagicPoint / (float)newStats.MaxMagicPoint * 100.0);
+        manaPercent = Mathf.Clamp(manaPercent, 0, 100);
+        _ManaBar.style.marginRight = new Length(manaPercent, LengthUnit.Percent);
 
+        _StaminaLabel.text = newStats.CurrentStamina.ToString() + "/" + newStats.MaxStamina.ToString();
+        int staminaPercent = 100 - (int)((float)newStats.CurrentStamina / (float)newStats.MaxStamina * 100.0);
+        staminaPercent = Mathf.Clamp(staminaPercent, 0, 100);
+        _StaminaBar.style.marginRight = new Length(staminaPercent, LengthUnit.Percent);
         PlayerBuffChangeCallback(newStats);
     }
 
