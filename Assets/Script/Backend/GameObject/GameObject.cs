@@ -29,11 +29,11 @@ namespace Assets.Script.Backend
 
     public abstract class GameObjectStats
     {
-        protected string ParentName { get; private set; }
+        protected string GameObjectName { get; private set; }
 
-        public GameObjectStats(string parentName)
+        public GameObjectStats(string gameObjectName)
         {
-            ParentName = parentName;
+            GameObjectName = gameObjectName;
         }
     }
 }

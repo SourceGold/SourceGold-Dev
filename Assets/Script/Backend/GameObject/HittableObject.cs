@@ -59,9 +59,9 @@ namespace Assets.Script.Backend
 
     public abstract class HittableObjectStats : GameObjectStats
     {
-        protected readonly string HPName = "HitPoint";
+        protected readonly string HitPointName = "HitPoint";
 
-        protected readonly string MPName = "MagicPoint";
+        protected readonly string MagicPointName = "MagicPoint";
 
         protected readonly string StaminaName = "Stamina";
 
@@ -83,9 +83,9 @@ namespace Assets.Script.Backend
 
         public int MaxStamina => (int)Math.Round(_stamina.MaxStats);
 
-        public int CurrentHp => (int)Math.Round(_hp.CurrentStats);
+        public int CurrentHitPoint => (int)Math.Round(_hp.CurrentStats);
 
-        public int CurrentMp => (int)Math.Round(_mp.CurrentStats);
+        public int CurrentMagicPoint => (int)Math.Round(_mp.CurrentStats);
 
         public int CurrentStamina => (int)Math.Round(_stamina.CurrentStats);
 
@@ -104,8 +104,8 @@ namespace Assets.Script.Backend
             int baseDefense = 0
             ) : base(parentName)
         {
-            _hp = new ThreadSafeDoubleStats(statsName: HPName, minStats: 0, maxStats: maxHitPoint, currentStats: maxHitPoint);
-            _mp = new ThreadSafeDoubleStats(statsName: MPName, minStats: 0, maxStats: maxMagicPoint, currentStats: maxMagicPoint);
+            _hp = new ThreadSafeDoubleStats(statsName: HitPointName, minStats: 0, maxStats: maxHitPoint, currentStats: maxHitPoint);
+            _mp = new ThreadSafeDoubleStats(statsName: MagicPointName, minStats: 0, maxStats: maxMagicPoint, currentStats: maxMagicPoint);
             _stamina = new ThreadSafeDoubleStats(statsName: StaminaName, minStats: 0, maxStats: maxStamina, currentStats: maxStamina);
             _hp.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
             _mp.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
@@ -123,23 +123,23 @@ namespace Assets.Script.Backend
 
         public virtual void UpdateHitPoint(int changeInHp)
         {
-            GameEventLogger.LogEvent($"{nameof(UpdateHitPoint)}: {changeInHp} {HPName} used");
+            GameEventLogger.LogEvent($"{nameof(UpdateHitPoint)}: {changeInHp} {HitPointName} used");
             _hp.UpdateStats(changeInHp);
             if (!IsAlive)
             {
-                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(ParentName));
+                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(GameObjectName));
             }
         }
 
         public virtual void UpdateMagicPoint(int changeInMp)
         {
-            if (CurrentMp + changeInMp < 0)
+            if (CurrentMagicPoint + changeInMp < 0)
             {
-                EventManager.TriggerEvent(GameEventTypes.GetNotEnoughStatsEvent(nameof(CurrentMp)));
+                EventManager.TriggerEvent(GameEventTypes.GetNotEnoughStatsEvent(nameof(CurrentMagicPoint)));
             }
             else
             {
-                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInMp} {MPName} used");
+                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInMp} {MagicPointName} used");
                 _mp.UpdateStats(changeInMp);
             }
         }
@@ -157,7 +157,7 @@ namespace Assets.Script.Backend
             }
         }
 
-        public bool IsAlive => CurrentHp > 0;
+        public bool IsAlive => CurrentHitPoint > 0;
 
         protected abstract void OnStatsChanged();
 
