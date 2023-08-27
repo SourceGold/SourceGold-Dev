@@ -241,7 +241,7 @@ Transform:
   m_Children:
   - {fileID: 6112208569337128090}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6127038918285932975
 Camera:
@@ -1419,7 +1419,6 @@ GameObject:
   - component: {fileID: 9013562132529153390}
   - component: {fileID: 1990137454387748125}
   - component: {fileID: 4574538302189277101}
-  - component: {fileID: 4108447634182345427}
   m_Layer: 0
   m_Name: Lock Camera
   m_TagString: Untagged
@@ -1596,19 +1595,6 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -5630151704836100654, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   ZAxis: {fileID: 0}
---- !u!114 &4108447634182345427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6163612577851315224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a34841dcf12345ca977e8cd36630323, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_YPosition: 0.05
 --- !u!1 &6541305796330303183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,9 +1653,7 @@ MonoBehaviour:
   m_AnimatedTarget: {fileID: 6527084159382939466}
   m_LayerIndex: 0
   m_ShowDebugText: 0
-  m_ChildCameras:
-  - {fileID: 8778658703857916952}
-  - {fileID: 9013562132529153390}
+  m_ChildCameras: []
   m_Instructions:
   - m_FullHash: -1783792012
     m_VirtualCamera: {fileID: 8778658703857916952}

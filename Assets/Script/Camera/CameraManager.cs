@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
 
     public Transform TargetTransform;
     public Transform CameraTransform;
-    public Transform NearestLockOnTarget;
+
+    private Transform _nearestLockOnTarget;
 
     public float MaxLockOnDistance = 30;
+
+    private LockOnCameraManager _lockOnCameraManagerRef;
 
     List<CharacterManager> availableTargets = new List<CharacterManager>();
 
@@ -18,6 +22,8 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         _anim = GetComponentInChildren<Animator>();
+        _lockOnCameraManagerRef = GetComponentInChildren<LockOnCameraManager>();
+
     }
 
     public Transform HandleLockOn()
@@ -51,20 +57,23 @@ public class CameraManager : MonoBehaviour
             if (distanceFromTarget < shortestDistance)
             {
                 shortestDistance = distanceFromTarget;
-                NearestLockOnTarget = availableTargets[i].transform;
+                _nearestLockOnTarget = availableTargets[i].transform;
             }
         }
 
-        if (NearestLockOnTarget)
+        if (_nearestLockOnTarget) {
             _anim.SetBool("lock", true);
+            _lockOnCameraManagerRef.SetLookAtTarget(_nearestLockOnTarget.Find("Lock On Center"));
+        }
+            
 
-        return NearestLockOnTarget;
+        return _nearestLockOnTarget;
     }
 
     public void ClearLockOnTargets()
     {
         availableTargets.Clear();
-        NearestLockOnTarget = null;
+        _nearestLockOnTarget = null;
         _anim.SetBool("lock", false);
     }
 }
