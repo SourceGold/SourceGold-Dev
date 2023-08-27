@@ -4,7 +4,8 @@
     {
         public override void InitializeCharacters()
         {
-            AddGameObject(new Enemy("EnemyDefault", LoadEnemyStats(), LoadDefaultEnvironmentalStats(isEnemy: true)));
+            var enemyName = "EnemyDefault";
+            AddGameObject(new Enemy(enemyName, LoadEnemyStats(enemyName), LoadDefaultEnvironmentalStats(isEnemy: true)));
             base.InitializeCharacters();
         }
     }

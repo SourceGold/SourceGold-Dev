@@ -27,5 +27,13 @@ namespace Assets.Script.Backend
         public abstract GameObjectStats GetGameObjectStates();
     }
 
-    public class GameObjectStats { }
+    public abstract class GameObjectStats
+    {
+        protected string GameObjectName { get; private set; }
+
+        public GameObjectStats(string gameObjectName)
+        {
+            GameObjectName = gameObjectName;
+        }
+    }
 }
