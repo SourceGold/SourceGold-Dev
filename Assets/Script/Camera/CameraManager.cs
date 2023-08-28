@@ -5,9 +5,10 @@ using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
-
-    public Transform TargetTransform;
+    public Transform Player;
     public Transform CameraTransform;
+
+    public Transform TargetTransform { get; set; }
 
     private Transform _nearestLockOnTarget;
 
@@ -23,7 +24,7 @@ public class CameraManager : MonoBehaviour
     {
         _anim = GetComponentInChildren<Animator>();
         _lockOnCameraManagerRef = GetComponentInChildren<LockOnCameraManager>();
-
+        TargetTransform = Player.Find("Player Bot");
     }
 
     public Transform HandleLockOn()
@@ -53,7 +54,7 @@ public class CameraManager : MonoBehaviour
 
         for (int i = 0; i < availableTargets.Count; i++)
         {
-            float distanceFromTarget = Vector3.Distance(TargetTransform.position, availableTargets[i].lockOnTransForm.position);
+            float distanceFromTarget = Vector3.Distance(TargetTransform.position, availableTargets[i].transform.position);
             if (distanceFromTarget < shortestDistance)
             {
                 shortestDistance = distanceFromTarget;
@@ -63,7 +64,7 @@ public class CameraManager : MonoBehaviour
 
         if (_nearestLockOnTarget) {
             _anim.SetBool("lock", true);
-            _lockOnCameraManagerRef.SetLookAtTarget(_nearestLockOnTarget.Find("Lock On Center"));
+            _lockOnCameraManagerRef.FreeLook.LookAt = _nearestLockOnTarget.Find("Lock On Center");
         }
             
 

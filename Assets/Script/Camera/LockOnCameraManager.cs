@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class LockOnCameraManager : MonoBehaviour
 {
+    public CinemachineFreeLook FreeLook { get; set; }
+
     private Transform playerBot;
-    private CinemachineFreeLook freeLook;
     // Start is called before the first frame update
     void Start()
     {
-        freeLook = GetComponent<CinemachineFreeLook>();
-        playerBot = GetComponentInParent<CameraManager>().TargetTransform;
-        freeLook.Follow = playerBot;
-        //freeLook.LookAt = playerBot.Find("Follow Target");
+        FreeLook = GetComponent<CinemachineFreeLook>();
+        playerBot = GetComponentInParent<CameraManager>().Player.Find("Player Bot");
+
+        FreeLook.Follow = playerBot;
     }
 
     // Update is called once per frame
@@ -22,9 +23,5 @@ public class LockOnCameraManager : MonoBehaviour
 
     }
 
-    public void SetLookAtTarget(Transform target)
-    {
-        freeLook.LookAt = target;
-    }
 
 }

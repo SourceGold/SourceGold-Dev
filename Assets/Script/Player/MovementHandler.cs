@@ -11,7 +11,7 @@ public class MovementHandler : MonoBehaviour
 {
     #region Instance: Camera
 
-    public Transform Cam;
+    private Transform Cam;
     private Transform _currentLockOnTarget;
     CameraManager _cameraManager;
 
@@ -98,6 +98,7 @@ public class MovementHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cam = GetComponentInParent<PlayerManager>().MainCamera;
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _transform = GetComponent<Transform>();
