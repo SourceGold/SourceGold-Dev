@@ -241,7 +241,7 @@ Transform:
   m_Children:
   - {fileID: 6112208569337128090}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6127038918285932975
 Camera:

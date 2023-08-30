@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : CharacterManager
+public class AllEnemyManager : MonoBehaviour
 {
-
-
+    public Transform Player;
     // Start is called before the first frame update
     void Start()
     {

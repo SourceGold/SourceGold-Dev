@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        WeaponHandlerRef = GetComponentInParent<EnemyManager>().Player.GetComponentInChildren<WeaponHandler>();
+        WeaponHandlerRef = GetComponentInParent<AllEnemyManager>().Player.GetComponentInChildren<WeaponHandler>();
 
         EventManager.StartListening(GameEventTypes.GetObjectOnDeathEvent(_name), DeathHandler);
     }

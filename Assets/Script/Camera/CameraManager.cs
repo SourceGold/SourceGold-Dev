@@ -25,6 +25,7 @@ public class CameraManager : MonoBehaviour
         _anim = GetComponentInChildren<Animator>();
         _lockOnCameraManagerRef = GetComponentInChildren<LockOnCameraManager>();
         TargetTransform = Player.Find("Player Bot");
+        
     }
 
     public Transform HandleLockOn()
@@ -61,6 +62,7 @@ public class CameraManager : MonoBehaviour
                 _nearestLockOnTarget = availableTargets[i].transform;
             }
         }
+
 
         if (_nearestLockOnTarget) {
             _anim.SetBool("lock", true);
