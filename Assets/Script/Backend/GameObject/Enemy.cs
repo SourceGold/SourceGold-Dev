@@ -1,7 +1,11 @@
-﻿namespace Assets.Script.Backend
+﻿using System;
+
+namespace Assets.Script.Backend
 {
     public class Enemy : HittableObject
     {
+        public EnemyStats EnemyStats => HittableObjectStats as EnemyStats;
+
         public Enemy(string name, EnemyStats enemyStats, GameObjectEnvironmentalStats environmentalStats, bool saveToNextStage = false)
             : base(name, enemyStats, HittableObjectType.Enemy, environmentalStats, saveToNextStage)
         {
@@ -12,9 +16,15 @@
         {
         }
 
-        public override void GotHit(int incomingDmg)
+        public override void GotDamanged(int incomingDmg)
         {
-            base.GotHit(incomingDmg);
+            base.GotDamanged(incomingDmg);
+        }
+
+        public void SetOnStatsChangedCallback(Action<EnemyStats> onStatsChangedCallback, bool enableOnStatsChangedCallback)
+        {
+            EnemyStats.OnStatsChangedCallback = onStatsChangedCallback;
+            EnableOnStatsChangedCallback = enableOnStatsChangedCallback;
         }
     }
 
@@ -22,9 +32,17 @@
     {
         public int Level { get; set; }
 
-        public EnemyStats(int maxHitPoint, int attackDmg, int defense, int level = 1) : base(maxHitPoint, attackDmg, defense)
+        public Action<EnemyStats> OnStatsChangedCallback { get; set; }
+
+        public EnemyStats(string parentName, int maxHitPoint, int maxMagicPoint, int baseAttack, int baseDefence, int level = 1) :
+            base(parentName, maxHitPoint, maxMagicPoint, maxStamina: 0, baseAttack, baseDefence)
         {
             Level = level;
+        }
+
+        protected override void OnStatsChanged()
+        {
+            OnStatsChangedCallback(this);
         }
     }
 }

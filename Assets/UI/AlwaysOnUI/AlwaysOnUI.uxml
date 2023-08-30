@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/AlwaysOnUI/AlwaysOnUI.uss?fileID=7433441132597879392&amp;guid=b379ebe65d6a27c48a77f595a58c6890&amp;type=3#AlwaysOnUI" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); padding-left: 0; margin-left: 3%; margin-top: 2.5%; margin-right: 3%;">
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(255, 0, 0, 0); height: 25%; width: 25%; padding-left: 0;">
+            <ui:VisualElement name="VisualElement" class="bar-holder">
+                <ui:VisualElement name="HealthBar" class="smaller-bar" style="background-color: rgb(96, 147, 114); margin-right: 50%;">
+                    <ui:Label tabindex="-1" text="150/200" display-tooltip-when-elided="true" name="HealthLabel" style="-unity-text-align: middle-left; flex-grow: 1; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 12%; padding-left: 10px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 6%;" />
+            <ui:VisualElement name="VisualElement" class="bar-holder" style="height: 12%; width: 80%;">
+                <ui:VisualElement name="ManaBar" class="smaller-bar" style="background-color: rgb(59, 82, 147);">
+                    <ui:Label tabindex="-1" text="150/200" display-tooltip-when-elided="true" name="ManaLabel" style="-unity-text-align: middle-left; flex-grow: 1; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 12%; padding-left: 10px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 6%;" />
+            <ui:VisualElement name="VisualElement" class="bar-holder" style="height: 12%; width: 80%;">
+                <ui:VisualElement name="StaminaBar" class="smaller-bar">
+                    <ui:Label tabindex="-1" text="150/200" display-tooltip-when-elided="true" name="StaminaLabel" style="-unity-text-align: middle-left; flex-grow: 1; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 12%; padding-left: 10px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="StatusHolder" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); padding-top: 0; margin-top: 6px; margin-left: 0; margin-right: 0; flex-direction: row; flex-wrap: wrap; width: 80%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

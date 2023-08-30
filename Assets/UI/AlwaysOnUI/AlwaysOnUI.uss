@@ -1,0 +1,34 @@
+VisualElement {
+}
+
+.status-icon {
+    flex-grow: 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    width: 32px;
+    height: 32px;
+    margin-left: 2px;
+    padding-left: 0;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    opacity: 1;
+}
+
+.smaller-bar {
+    background-color: rgb(147, 147, 96);
+    margin-left: 0;
+    margin-bottom: 0;
+    margin-right: 73%;
+}
+
+.bar-holder {
+    flex-grow: 0;
+    background-color: rgba(192, 128, 130, 0.4);
+    height: 14%;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    overflow: hidden;
+}
