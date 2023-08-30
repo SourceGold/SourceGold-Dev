@@ -498,7 +498,6 @@ GameObject:
   - component: {fileID: 3296831053376171544}
   - component: {fileID: 7243469942359830387}
   - component: {fileID: 6910861946803168216}
-  - component: {fileID: 969781590441301469}
   m_Layer: 7
   m_Name: Enemy Bot
   m_TagString: Untagged
@@ -525,7 +524,7 @@ Transform:
   - {fileID: 1724093162325707634}
   - {fileID: 6000282388849232139}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3296831053376171544
 Animator:
@@ -585,20 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb397dd5a5d184ee7b5bc2c0929bbac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponHandlerRef: {fileID: 0}
   Health: 40000
---- !u!114 &969781590441301469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2374059574870064750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3690cf61fed747b98493ed7332e5e13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2499124452285540143
 GameObject:
   m_ObjectHideFlags: 0

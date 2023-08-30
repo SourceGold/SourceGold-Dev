@@ -5,7 +5,7 @@ using Assets.Script.Backend;
 
 public class Enemy : MonoBehaviour
 {
-    public WeaponHandler WeaponHandlerRef;
+    private WeaponHandler WeaponHandlerRef;
     [SerializeField] private float Health;
     private Animator _anim;
     private bool _dead = false;
@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
+        WeaponHandlerRef = GetComponentInParent<EnemyManager>().Player.GetComponentInChildren<WeaponHandler>();
+
         EventManager.StartListening(GameEventTypes.GetObjectOnDeathEvent(_name), DeathHandler);
     }
 

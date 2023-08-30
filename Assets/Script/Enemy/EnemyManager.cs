@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyManager : CharacterManager
 {
+
+    public Transform Player;
+
     // Start is called before the first frame update
     void Start()
     {
