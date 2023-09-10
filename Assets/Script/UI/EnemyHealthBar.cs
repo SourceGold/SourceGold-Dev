@@ -1,3 +1,4 @@
+using Assets.Script.Backend;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +37,6 @@ public class EnemyHealthBar : MonoBehaviour
     void Start()
     {
         maxHitPoint = 100f;
-        EnemyStatsChangeCallback(15);
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         canvasTransform = canvas.GetComponent<Transform>();
     }
@@ -53,8 +53,10 @@ public class EnemyHealthBar : MonoBehaviour
         canvasGroup.alpha = alphaToUse;
     }
 
-    public void EnemyStatsChangeCallback(float newHitPoint)
+    public void EnemyStatsChangeCallback(EnemyStats newStats)
     {
+        var newHitPoint = newStats.CurrentHitPoint;
+        maxHitPoint = newStats.MaxHitPoint;
         canvas.SetActive(true);
         onTimeAlpha = 1.0f;
         decreasingOnTimeAlpha = false;

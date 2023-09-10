@@ -2,7 +2,7 @@
 
 namespace Assets.Script.Backend
 {
-    public abstract class GameObject
+    public abstract class BackendGameObject
     {
         public string Name { get; set; }
 
@@ -14,7 +14,7 @@ namespace Assets.Script.Backend
 
         public bool SaveToNextStage { get; set; }
 
-        public GameObject(string name, GameObjectType type, GameObjectEnvironmentalStats environmentalStats, bool saveToNextStage)
+        public BackendGameObject(string name, GameObjectType type, GameObjectEnvironmentalStats environmentalStats, bool saveToNextStage)
         {
             Name = name;
             Type = type;

@@ -4,7 +4,7 @@
 
 namespace Assets.Script.Backend
 {
-    public abstract class HittableObject : GameObject
+    public abstract class HittableObject : BackendGameObject
     {
         public HittableObjectType HittableObjectType { get; set; }
 

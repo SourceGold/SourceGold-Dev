@@ -33,6 +33,11 @@ namespace Assets.Script.Backend
         {
         }
 
+        public PlayableCharacter(string name)
+            : base(name, HittableObjectType.PlayableCharacter, null, saveToNextStage: true)
+        {
+        }
+
         public override void GotDamanged(int incomingDmg)
         {
             base.GotDamanged(incomingDmg);

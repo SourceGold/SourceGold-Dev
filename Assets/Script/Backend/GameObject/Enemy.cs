@@ -16,6 +16,11 @@ namespace Assets.Script.Backend
         {
         }
 
+        public Enemy(string name, bool saveToNextStage = false)
+            : base(name, HittableObjectType.Enemy, null, saveToNextStage)
+        {
+        }
+
         public override void GotDamanged(int incomingDmg)
         {
             base.GotDamanged(incomingDmg);

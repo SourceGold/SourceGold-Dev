@@ -10,16 +10,24 @@ public class Enemy : MonoBehaviour
     private Animator _anim;
     private bool _dead = false;
 
+    private EnemyHealthBar _enemyHealthBar;
     private string _name = "EnemyDefault";
     // Start is called before the first frame update
     void Start()
     {
         _anim = GetComponent<Animator>();
         WeaponHandlerRef = GetComponentInParent<AllEnemyManager>().Player.GetComponentInChildren<WeaponHandler>();
-
+        _enemyHealthBar = GetComponentInChildren<EnemyHealthBar>();
+        var enemy = new Assets.Script.Backend.Enemy(_name);
+        Backend.GameLoop.RegisterGameObject(enemy);
+        enemy.SetOnStatsChangedCallback(EnemyStatsChangeCallbackWrapper, true);
         EventManager.StartListening(GameEventTypes.GetObjectOnDeathEvent(_name), DeathHandler);
     }
 
+    public void EnemyStatsChangeCallbackWrapper(EnemyStats newStats)
+    {
+        _enemyHealthBar.EnemyStatsChangeCallback(newStats);
+    }
 
     // Update is called once per frame
     void Update()
@@ -52,7 +60,7 @@ public class Enemy : MonoBehaviour
                 _anim.SetTrigger("Hit");
                 Health -= weaponInfo.damge;
                 Debug.Log("Hit By Sword");
-                
+
                 Backend.GameLoop.ProcessDamage(new DamangeSource(){SrcObjectName= "PlayerDefault" }, new DamageTarget() { TgtObjectName = _name });
             } 
         }

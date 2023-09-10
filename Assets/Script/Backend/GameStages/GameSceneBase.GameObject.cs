@@ -7,7 +7,7 @@ namespace Assets.Script.Backend
 {
     public partial class GameSceneBase
     {
-        public void InitializeStageGameObject(List<GameObject> savedGameObjects)
+        public void InitializeStageGameObject(List<BackendGameObject> savedGameObjects)
         {
             foreach (var gameObject in savedGameObjects)
             {
@@ -18,8 +18,6 @@ namespace Assets.Script.Backend
 
         public virtual void InitializeCharacters()
         {
-            string playerName = "PlayerDefault";
-            AddGameObject(new PlayableCharacter(playerName, LoadCharacterStats(playerName), LoadDefaultEnvironmentalStats(), isMainCharacter: true));
         }
 
         public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
@@ -40,12 +38,12 @@ namespace Assets.Script.Backend
             }
         }
 
-        public GameObject GetGameObject(string objectName)
+        public BackendGameObject GetGameObject(string objectName)
         {
             return AllGameObjectCollection[objectName];
         }
 
-        public List<GameObject> GetGameObjects(List<string> objectNames)
+        public List<BackendGameObject> GetGameObjects(List<string> objectNames)
         {
             return objectNames.Select(o => AllGameObjectCollection[o]).ToList();
         }
@@ -60,7 +58,7 @@ namespace Assets.Script.Backend
             return GetSpawnedEnemies(null);
         }
 
-        public void RegisterGameObject(GameObject gameObject)
+        public void RegisterGameObject(BackendGameObject gameObject)
         {
             gameObject.RegisteredByGame = true;
             if (gameObject is HittableObject hittableObject)
@@ -77,7 +75,7 @@ namespace Assets.Script.Backend
             }
         }
 
-        public void RegisterGameObjects(List<GameObject> gameObjects)
+        public void RegisterGameObjects(List<BackendGameObject> gameObjects)
         {
             foreach (var gameObject in gameObjects)
             {
@@ -123,7 +121,7 @@ namespace Assets.Script.Backend
             return FilterObjectsByType<HittableObject>();
         }
 
-        public List<GameObject> GetNonRegisteredGameObjects()
+        public List<BackendGameObject> GetNonRegisteredGameObjects()
         {
             return FilterObjectsBySelector(o => !o.RegisteredByGame);
         }
@@ -134,7 +132,7 @@ namespace Assets.Script.Backend
             return hittableObjects.Where(o => o.IsAlive).ToList();
         }
 
-        public List<GameObject> GetSavedGameObjects()
+        public List<BackendGameObject> GetSavedGameObjects()
         {
             return FilterObjectsBySelector(o => o.SaveToNextStage);
         }
@@ -144,12 +142,12 @@ namespace Assets.Script.Backend
             return new List<Enemy>();
         }
 
-        protected List<T> FilterObjectsByType<T>() where T : GameObject
+        protected List<T> FilterObjectsByType<T>() where T : BackendGameObject
         {
             return AllGameObjectCollection.Where(o => o.Value is T).Select(o => o.Value as T).ToList();
         }
 
-        protected List<GameObject> FilterObjectsBySelector(Func<GameObject, bool> selector)
+        protected List<BackendGameObject> FilterObjectsBySelector(Func<BackendGameObject, bool> selector)
         {
             return AllGameObjectCollection.Where(o => selector(o.Value)).Select(o => o.Value).ToList();
         }
@@ -159,8 +157,8 @@ namespace Assets.Script.Backend
             if (hittableObject is PlayableCharacter playableCharacter)
             {
                 playableCharacter.HittableObjectStats = LoadCharacterStats(playableCharacter.Name);
-                SetMainCharacter(playableCharacter.Name);
                 AddGameObject(playableCharacter);
+                SetMainCharacter(playableCharacter.Name);
             }
             else if (hittableObject is Enemy enemy)
             {
@@ -178,7 +176,7 @@ namespace Assets.Script.Backend
             AddGameObject(invincibleObject);
         }
 
-        protected void AddGameObject(GameObject gameObject)
+        protected void AddGameObject(BackendGameObject gameObject)
         {
             var objectName = gameObject.Name;
             if (AllGameObjectCollection.ContainsKey(objectName))

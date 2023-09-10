@@ -1,6 +1,6 @@
 ﻿namespace Assets.Script.Backend
 {
-    public class InvincibleObject : GameObject
+    public class InvincibleObject : BackendGameObject
     {
         public InvincibleObjectType InvincibleObjectType { get; set; }
 

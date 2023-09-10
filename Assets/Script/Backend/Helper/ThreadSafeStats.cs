@@ -24,6 +24,7 @@ namespace Assets.Script.Backend
             lock (Lock)
             {
                 CurrentStats = CalculateCurrentStats(changeInStats);
+                _enableOnStatsChangedCallback = true;
                 if (_enableOnStatsChangedCallback)
                 {
                     OnStatsChangedCallback();
