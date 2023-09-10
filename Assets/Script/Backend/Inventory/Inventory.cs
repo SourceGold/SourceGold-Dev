@@ -10,10 +10,10 @@ namespace Assets.Script.Backend
         private int _itemMaxCount;
         private ConcurrentDictionary<string, InventoryItem> _items { get; set; }
 
-        public Inventory()
+        public Inventory(int itemMaxCount)
         {
             _items = new ConcurrentDictionary<string, InventoryItem>();
-            _itemMaxCount = 100;
+            _itemMaxCount = itemMaxCount;
         }
 
         public void AddItem(InventoryItem item, out InventoryItem? notAddedItem)
