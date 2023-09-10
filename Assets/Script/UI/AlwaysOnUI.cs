@@ -33,7 +33,7 @@ public class AlwaysOnUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Backend.GameLoop.RegisterPlayerOnStatsChangeCallBack(PlayerStatsChangeCallback);
     }
 
     // Update is called once per frame
