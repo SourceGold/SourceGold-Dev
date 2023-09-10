@@ -1,6 +1,6 @@
 ﻿namespace Assets.Script.Backend
 {
-    public class InvincibleObject : GameObject
+    public class InvincibleObject : BackendGameObject
     {
         public InvincibleObjectType InvincibleObjectType { get; set; }
 
@@ -13,12 +13,12 @@
             InvincibleObjectType = invincibleObjectType;
         }
 
-        public override void SetGameObjectStates(GameObjectStats GameObjectStats)
+        public override void SetGameObjectStates(BackendGameObjectStats GameObjectStats)
         {
             return;
         }
 
-        public override GameObjectStats GetGameObjectStates()
+        public override BackendGameObjectStats GetGameObjectStates()
         {
             return null;
         }

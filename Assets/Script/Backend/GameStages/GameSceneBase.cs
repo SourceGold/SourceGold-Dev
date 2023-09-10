@@ -4,13 +4,13 @@ namespace Assets.Script.Backend
 {
     public partial class GameSceneBase
     {
-        protected ConcurrentDictionary<string, GameObject> AllGameObjectCollection { get; set; }
+        protected ConcurrentDictionary<string, BackendGameObject> AllGameObjectCollection { get; set; }
 
         protected Inventory PlayerInventory { get; set; }
 
         public GameSceneBase()
         {
-            AllGameObjectCollection = new ConcurrentDictionary<string, GameObject>();
+            AllGameObjectCollection = new ConcurrentDictionary<string, BackendGameObject>();
             PlayerInventory = new Inventory(100);
         }
 

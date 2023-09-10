@@ -4,7 +4,7 @@
 
 namespace Assets.Script.Backend
 {
-    public abstract class HittableObject : GameObject
+    public abstract class HittableObject : BackendGameObject
     {
         public HittableObjectType HittableObjectType { get; set; }
 
@@ -13,9 +13,8 @@ namespace Assets.Script.Backend
         public HittableObject(string name,
             HittableObjectStats hittableObjectStats,
             HittableObjectType hittableObjectType,
-            GameObjectEnvironmentalStats environmentalStats,
             bool saveToNextStage)
-            : base(name, GameObjectType.HittableObject, environmentalStats, saveToNextStage)
+            : base(name, GameObjectType.HittableObject, saveToNextStage)
         {
             HittableObjectStats = hittableObjectStats;
             HittableObjectType = hittableObjectType;
@@ -23,14 +22,13 @@ namespace Assets.Script.Backend
 
         public HittableObject(string name,
             HittableObjectType hittableObjectType,
-            GameObjectEnvironmentalStats environmentalStats,
             bool saveToNextStage)
-            : base(name, GameObjectType.HittableObject, environmentalStats, saveToNextStage)
+            : base(name, GameObjectType.HittableObject, saveToNextStage)
         {
             HittableObjectType = hittableObjectType;
         }
 
-        public override void SetGameObjectStates(GameObjectStats gameObjectStats)
+        public override void SetGameObjectStates(BackendGameObjectStats gameObjectStats)
         {
             if (gameObjectStats is HittableObjectStats hittableObjectStats)
             {
@@ -38,7 +36,7 @@ namespace Assets.Script.Backend
             }
         }
 
-        public override GameObjectStats GetGameObjectStates()
+        public override BackendGameObjectStats GetGameObjectStates()
         {
             return HittableObjectStats!;
         }
@@ -52,13 +50,14 @@ namespace Assets.Script.Backend
 
         public bool EnableOnStatsChangedCallback
         {
-            get => HittableObjectStats!.EnableOnStatsChangedCallback;
             set => HittableObjectStats!.EnableOnStatsChangedCallback = value;
         }
     }
 
-    public abstract class HittableObjectStats : GameObjectStats
+    public abstract class HittableObjectStats : BackendGameObjectStats
     {
+        private bool _enableOnStatsChangedCallback = false;
+
         protected readonly string HitPointName = "HitPoint";
 
         protected readonly string MagicPointName = "MagicPoint";
@@ -93,7 +92,20 @@ namespace Assets.Script.Backend
 
         public int Defense => (int)CalculateDefense();
 
-        public bool EnableOnStatsChangedCallback { get; set; } = false;
+        public bool EnableOnStatsChangedCallback 
+        {
+            protected get
+            {
+                return _enableOnStatsChangedCallback;
+            }
+            set
+            {
+                _enableOnStatsChangedCallback = value;
+                _hp.SetEnableOnStatsChangedCallback(value);
+                _mp.SetEnableOnStatsChangedCallback(value);
+                _stamina.SetEnableOnStatsChangedCallback(value);
+            }
+        }
 
         public HittableObjectStats(
             string parentName,
@@ -107,9 +119,9 @@ namespace Assets.Script.Backend
             _hp = new ThreadSafeDoubleStats(statsName: HitPointName, minStats: 0, maxStats: maxHitPoint, currentStats: maxHitPoint);
             _mp = new ThreadSafeDoubleStats(statsName: MagicPointName, minStats: 0, maxStats: maxMagicPoint, currentStats: maxMagicPoint);
             _stamina = new ThreadSafeDoubleStats(statsName: StaminaName, minStats: 0, maxStats: maxStamina, currentStats: maxStamina);
-            _hp.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
-            _mp.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
-            _stamina.SetOnStatsChangedCallback(OnStatsChanged, EnableOnStatsChangedCallback);
+            _hp.SetOnStatsChangedCallback(OnStatsChanged);
+            _mp.SetOnStatsChangedCallback(OnStatsChanged);
+            _stamina.SetOnStatsChangedCallback(OnStatsChanged);
             BaseAttack = baseAttack;
             BaseDefense = baseDefense;
         }
@@ -127,7 +139,7 @@ namespace Assets.Script.Backend
             _hp.UpdateStats(changeInHp);
             if (!IsAlive)
             {
-                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(GameObjectName));
+                EventManager.TriggerEvent(GameEventTypes.GetObjectOnDeathEvent(BackendGameObjectName));
             }
         }
 
