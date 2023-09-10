@@ -99,6 +99,7 @@ public class MovementHandler : MonoBehaviour
     void Start()
     {
         Cam = GetComponentInParent<PlayerManager>().MainCamera;
+        //Debug.Log(Cam);
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _transform = GetComponent<Transform>();

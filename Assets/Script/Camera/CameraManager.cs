@@ -5,8 +5,8 @@ using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
-    public Transform Player;
-    public Transform CameraTransform;
+    [HideInInspector] public Transform Player;
+    [HideInInspector] public Transform CameraTransform;
 
     public Transform TargetTransform { get; set; }
 
@@ -19,6 +19,12 @@ public class CameraManager : MonoBehaviour
     List<CharacterManager> availableTargets = new List<CharacterManager>();
 
     private Animator _anim;
+
+    private void Awake()
+    {
+        Player = FindObjectOfType<PlayerManager>().GetComponent<Transform>();
+        CameraTransform = GetComponent<Transform>();
+    }
 
     private void Start()
     {

@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class AllEnemyManager : MonoBehaviour
 {
-    public Transform Player;
+    //public Transform Player;
+    [HideInInspector] public Transform Player;
+
+    private void Awake()
+    {
+        Player = FindObjectOfType<PlayerManager>().GetComponent<Transform>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
