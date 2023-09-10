@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
-    public Transform lockOnTransForm;
     // Start is called before the first frame update
     void Start()
     {

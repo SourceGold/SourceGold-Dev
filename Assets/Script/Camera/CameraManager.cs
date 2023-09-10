@@ -1,23 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
+    [HideInInspector] public Transform Player;
+    [HideInInspector] public Transform CameraTransform;
 
-    public Transform TargetTransform;
-    public Transform CameraTransform;
-    public Transform NearestLockOnTarget;
+    public Transform TargetTransform { get; set; }
+
+    private Transform _nearestLockOnTarget;
 
     public float MaxLockOnDistance = 30;
+
+    private LockOnCameraManager _lockOnCameraManagerRef;
 
     List<CharacterManager> availableTargets = new List<CharacterManager>();
 
     private Animator _anim;
 
+    private void Awake()
+    {
+        Player = FindObjectOfType<PlayerManager>().GetComponent<Transform>();
+        CameraTransform = GetComponent<Transform>();
+    }
+
     private void Start()
     {
         _anim = GetComponentInChildren<Animator>();
+        _lockOnCameraManagerRef = GetComponentInChildren<LockOnCameraManager>();
+        TargetTransform = Player.Find("Player Bot");
+        
     }
 
     public Transform HandleLockOn()
@@ -47,24 +61,28 @@ public class CameraManager : MonoBehaviour
 
         for (int i = 0; i < availableTargets.Count; i++)
         {
-            float distanceFromTarget = Vector3.Distance(TargetTransform.position, availableTargets[i].lockOnTransForm.position);
+            float distanceFromTarget = Vector3.Distance(TargetTransform.position, availableTargets[i].transform.position);
             if (distanceFromTarget < shortestDistance)
             {
                 shortestDistance = distanceFromTarget;
-                NearestLockOnTarget = availableTargets[i].transform;
+                _nearestLockOnTarget = availableTargets[i].transform;
             }
         }
 
-        if (NearestLockOnTarget)
-            _anim.SetBool("lock", true);
 
-        return NearestLockOnTarget;
+        if (_nearestLockOnTarget) {
+            _anim.SetBool("lock", true);
+            _lockOnCameraManagerRef.FreeLook.LookAt = _nearestLockOnTarget.Find("Lock On Center");
+        }
+            
+
+        return _nearestLockOnTarget;
     }
 
     public void ClearLockOnTargets()
     {
         availableTargets.Clear();
-        NearestLockOnTarget = null;
+        _nearestLockOnTarget = null;
         _anim.SetBool("lock", false);
     }
 }

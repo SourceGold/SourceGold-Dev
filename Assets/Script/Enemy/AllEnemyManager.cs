@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : CharacterManager
+public class AllEnemyManager : MonoBehaviour
 {
-    [HideInInspector] public Transform MainCamera;
+    //public Transform Player;
+    [HideInInspector] public Transform Player;
 
     private void Awake()
     {
-        MainCamera = FindObjectOfType<CameraManager>().GetComponent<Transform>();
+        Player = FindObjectOfType<PlayerManager>().GetComponent<Transform>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-       
-        //Debug.Log(MainCamera);
+        
     }
 
     // Update is called once per frame
