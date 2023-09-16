@@ -72,6 +72,7 @@ public class EnemyHealthBar : MonoBehaviour
         }
 
         healthBarImage.color = colorGradient.Evaluate(newHitPoint / maxHitPoint);
+        healthBarSlider.maxValue = maxHitPoint;
         healthBarSlider.value = newHitPoint;
     }
 
