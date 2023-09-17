@@ -1,6 +1,5 @@
+using Assets.Script.Backend;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,11 +31,12 @@ public class EnemyHealthBar : MonoBehaviour
     private float onTimeAlpha = 0.0f;
     private bool decreasingOnTimeAlpha = false;
     private float maxHitPoint;
+
+    private bool _isFirstSetup = true;
     // Start is called before the first frame update
     void Start()
     {
         maxHitPoint = 100f;
-        EnemyStatsChangeCallback(15);
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         canvasTransform = canvas.GetComponent<Transform>();
     }
@@ -53,15 +53,26 @@ public class EnemyHealthBar : MonoBehaviour
         canvasGroup.alpha = alphaToUse;
     }
 
-    public void EnemyStatsChangeCallback(float newHitPoint)
+    public void EnemyStatsChangeCallback(EnemyStats newStats)
     {
-        canvas.SetActive(true);
-        onTimeAlpha = 1.0f;
-        decreasingOnTimeAlpha = false;
-        CancelInvoke();
-        Invoke("disableVisualize", onTime);
+        var newHitPoint = newStats.CurrentHitPoint;
+        maxHitPoint = newStats.MaxHitPoint;
+
+        if(_isFirstSetup)
+        {
+            _isFirstSetup = false;
+        }
+        else
+        {
+            canvas.SetActive(true);
+            onTimeAlpha = 1.0f;
+            decreasingOnTimeAlpha = false;
+            CancelInvoke();
+            Invoke("disableVisualize", onTime);
+        }
 
         healthBarImage.color = colorGradient.Evaluate(newHitPoint / maxHitPoint);
+        healthBarSlider.maxValue = maxHitPoint;
         healthBarSlider.value = newHitPoint;
     }
 

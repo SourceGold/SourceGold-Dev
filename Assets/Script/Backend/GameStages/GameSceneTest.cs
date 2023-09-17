@@ -4,8 +4,9 @@
     {
         public override void InitializeCharacters()
         {
-            var enemyName = "EnemyDefault";
-            AddGameObject(new Enemy(enemyName, LoadEnemyStats(enemyName), LoadDefaultEnvironmentalStats(isEnemy: true)));
+            // this is test code to register a default enemy
+            //var enemyName = "EnemyDefault";
+            //AddGameObject(new Enemy(enemyName, LoadEnemyStats(enemyName), LoadDefaultEnvironmentalStats(isEnemy: true)));
             base.InitializeCharacters();
         }
     }

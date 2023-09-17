@@ -22,14 +22,14 @@ namespace Assets.Script.Backend
             }
         }
 
-        public PlayableCharacter(string name, PlayableCharacterStats characterStats, GameObjectEnvironmentalStats environmentalStats, bool isMainCharacter)
-            : base(name, characterStats, HittableObjectType.PlayableCharacter, environmentalStats, saveToNextStage: true)
+        public PlayableCharacter(string name, PlayableCharacterStats characterStats, bool isMainCharacter)
+            : base(name, characterStats, HittableObjectType.PlayableCharacter, saveToNextStage: true)
         {
             IsMainCharacter = isMainCharacter;
         }
 
-        public PlayableCharacter(string name, GameObjectEnvironmentalStats environmentalStats)
-            : base(name, HittableObjectType.PlayableCharacter, environmentalStats, saveToNextStage: true)
+        public PlayableCharacter(string name)
+            : base(name, HittableObjectType.PlayableCharacter, saveToNextStage: true)
         {
         }
 
@@ -40,8 +40,8 @@ namespace Assets.Script.Backend
 
         public void SetOnStatsChangedCallback(Action<PlayableCharacterStats> onStatsChangedCallback)
         {
-            PlayableCharacterStats.OnStatsChangedCallback = onStatsChangedCallback;
             EnableOnStatsChangedCallback = _isMainCharacter;
+            PlayableCharacterStats.OnStatsChangedCallback = onStatsChangedCallback;
         }
     }
 
@@ -53,7 +53,23 @@ namespace Assets.Script.Backend
 
         public const int LevelUpExp = 100;
 
-        public Action<PlayableCharacterStats> OnStatsChangedCallback { get; set; }
+        private Action<PlayableCharacterStats> _onStatsChangedCallback;
+
+        public Action<PlayableCharacterStats> OnStatsChangedCallback
+        {
+            protected get
+            {
+                return _onStatsChangedCallback;
+            }
+            set
+            {
+                _onStatsChangedCallback = value;
+                if (EnableOnStatsChangedCallback)
+                {
+                    _onStatsChangedCallback(this);
+                }
+            }
+        }
 
         public PlayableCharacterStats(
             string parentName,

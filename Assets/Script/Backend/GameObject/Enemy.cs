@@ -6,13 +6,13 @@ namespace Assets.Script.Backend
     {
         public EnemyStats EnemyStats => HittableObjectStats as EnemyStats;
 
-        public Enemy(string name, EnemyStats enemyStats, GameObjectEnvironmentalStats environmentalStats, bool saveToNextStage = false)
-            : base(name, enemyStats, HittableObjectType.Enemy, environmentalStats, saveToNextStage)
+        public Enemy(string name, EnemyStats enemyStats, bool saveToNextStage = false)
+            : base(name, enemyStats, HittableObjectType.Enemy, saveToNextStage)
         {
         }
 
-        public Enemy(string name, GameObjectEnvironmentalStats environmentalStats, bool saveToNextStage = false)
-            : base(name, HittableObjectType.Enemy, environmentalStats, saveToNextStage)
+        public Enemy(string name, bool saveToNextStage = false)
+            : base(name, HittableObjectType.Enemy, saveToNextStage)
         {
         }
 
@@ -23,8 +23,8 @@ namespace Assets.Script.Backend
 
         public void SetOnStatsChangedCallback(Action<EnemyStats> onStatsChangedCallback, bool enableOnStatsChangedCallback)
         {
-            EnemyStats.OnStatsChangedCallback = onStatsChangedCallback;
             EnableOnStatsChangedCallback = enableOnStatsChangedCallback;
+            EnemyStats.OnStatsChangedCallback = onStatsChangedCallback;
         }
     }
 
@@ -32,7 +32,23 @@ namespace Assets.Script.Backend
     {
         public int Level { get; set; }
 
-        public Action<EnemyStats> OnStatsChangedCallback { get; set; }
+        private Action<EnemyStats> _onStatsChangedCallback;
+
+        public Action<EnemyStats> OnStatsChangedCallback
+        {
+            protected get
+            {
+                return _onStatsChangedCallback;
+            }
+            set
+            {
+                _onStatsChangedCallback = value;
+                if (EnableOnStatsChangedCallback)
+                {
+                    _onStatsChangedCallback(this);
+                }
+            }
+        }
 
         public EnemyStats(string parentName, int maxHitPoint, int maxMagicPoint, int baseAttack, int baseDefence, int level = 1) :
             base(parentName, maxHitPoint, maxMagicPoint, maxStamina: 0, baseAttack, baseDefence)

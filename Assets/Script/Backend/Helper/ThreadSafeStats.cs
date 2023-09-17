@@ -32,9 +32,13 @@ namespace Assets.Script.Backend
             GameEventLogger.LogEvent($"Updating Stats: {StatsName} by: {changeInStats}");
         }
 
-        public void SetOnStatsChangedCallback(Action onStatsChangedCallback, bool enableOnStatsChangedCallback)
+        public void SetOnStatsChangedCallback(Action onStatsChangedCallback)
         {
             OnStatsChangedCallback = onStatsChangedCallback;
+        }
+
+        public void SetEnableOnStatsChangedCallback(bool enableOnStatsChangedCallback)
+        {
             _enableOnStatsChangedCallback = enableOnStatsChangedCallback;
         }
 
