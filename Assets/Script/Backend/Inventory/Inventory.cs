@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 
 #nullable enable
 
@@ -8,62 +10,80 @@ namespace Assets.Script.Backend
     public class Inventory
     {
         private int _itemMaxCount;
-        private ConcurrentDictionary<string, InventoryItem> _items { get; set; }
+        private ConcurrentDictionary<int, InventoryItem> _items { get; set; }
 
         public Inventory(int itemMaxCount)
         {
-            _items = new ConcurrentDictionary<string, InventoryItem>();
+            _items = new ConcurrentDictionary<int, InventoryItem>();
             _itemMaxCount = itemMaxCount;
         }
 
-        public void AddItem(InventoryItem item, out InventoryItem? notAddedItem)
+        public List<(int id, int count)> GetInventoryItemList()
         {
-            notAddedItem = null;
-            var addedCount = item.CurrentCount;
-            if (_items.TryGetValue(item.Name, out var existingItem))
+            return _items.Select(x => (x.Key, x.Value.CurrentCount)).ToList();
+        }
+
+        public void AddItem(int itemId, int itemAddCount, out int? itemNotAddedCount)
+        {
+            itemNotAddedCount = null;
+            var addedCount = itemAddCount;
+            if (_items.TryGetValue(itemId, out var existingItem))
             {
-                addedCount = existingItem.AddItems(item.CurrentCount);
-                if (addedCount != item.CurrentCount)
+                addedCount = existingItem.AddItems(itemAddCount);
+                if (addedCount != itemAddCount)
                 {
-                    notAddedItem = item.Clone();
-                    notAddedItem.RemoveItems(addedCount);
+                    itemNotAddedCount = itemAddCount - addedCount;
                 }
+                GameEventLogger.LogEvent($"Adding item Id: {itemId}, count: {addedCount} to inventory");
                 return;
             }
             else if (_items.Count >= _itemMaxCount)
             {
-                GameEventLogger.LogEvent($"Faied to Add item name: {item.Name}, count: {addedCount} to inventory, Inventory is full");
+                GameEventLogger.LogEvent($"Faied to Add item Id: {itemId}, count: {addedCount} to inventory, Inventory is full");
                 EventManager.TriggerEvent(GameEventTypes.GetInventoryFullEvent);
-                notAddedItem = item.Clone();
+                itemNotAddedCount = itemAddCount;
                 return;
             }
-            _items.TryAdd(item.Name, item);
-            GameEventLogger.LogEvent($"Adding item name: {item.Name}, count: {addedCount} to inventory");
+            var item = LoadInventoryItem(itemId, itemAddCount);
+            _items.TryAdd(itemId, item);
+            GameEventLogger.LogEvent($"Adding item Id: {itemId}, count: {addedCount} to inventory");
         }
 
-        public void UseItems(InventoryItem item, out InventoryItem? updatedItem)
+        public void RemoveItem(int itemId, int itemUseCount, bool isUseItem, out int? itemUpdatedCount)
         {
-            if (_items.TryGetValue(item.Name, out var existingItem))
+            if (_items.TryGetValue(itemId, out var existingItem))
             {
-                if (existingItem.CurrentCount < item.CurrentCount)
+                if (existingItem.CurrentCount < itemUseCount)
                 {
-                    throw new Exception($"Not enough items in inventory. Requested: {item.CurrentCount}, available: {existingItem.CurrentCount}");
+                    throw new Exception($"Not enough items in inventory. Requested: {itemUseCount}, available: {existingItem.CurrentCount}");
                 }
-                for (int i = 0; i < item.CurrentCount; i++)
+                if (isUseItem)
                 {
-                    existingItem.UseItem();
+                    for (int i = 0; i < itemUseCount; i++)
+                    {
+                        existingItem.UseItem();
+                    }
                 }
-                updatedItem = existingItem;
+                itemUpdatedCount = existingItem.CurrentCount;
             }
-            throw new Exception($"Item {item.Name} not found in inventory");
+            else
+            {
+                throw new Exception($"Item Id: {itemId} not found in inventory");
+            }
         }
 
-        public void RemoveItem(InventoryItem item)
+        public void RemoveAllItem(int itemId)
         {
-            if (!_items.TryRemove(item.Name, out _))
+            if (!_items.TryRemove(itemId, out _))
             {
-                throw new Exception($"Item {item.Name} not found in inventory");
+                throw new Exception($"Item {itemId} not found in inventory");
             }
+        }
+
+        protected InventoryItem LoadInventoryItem(int itemId, int count)
+        {
+            var item = new InventoryItem(itemId, count);
+            return item;
         }
     }
 }
