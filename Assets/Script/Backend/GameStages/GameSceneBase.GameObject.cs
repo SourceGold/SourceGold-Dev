@@ -7,6 +7,8 @@ namespace Assets.Script.Backend
 {
     public partial class GameSceneBase
     {
+        private Action<PlayableCharacterStats> _playerOnStatsChangedCallback = null;
+
         public void InitializeStageGameObject(List<BackendGameObject> savedGameObjects)
         {
             foreach (var gameObject in savedGameObjects)
@@ -98,6 +100,7 @@ namespace Assets.Script.Backend
             {
                 playableChar.SetOnStatsChangedCallback(onStatsChangedCallback);
             }
+            _playerOnStatsChangedCallback = onStatsChangedCallback;
         }
 
         public void SetMainCharacter(string playerName)
@@ -167,6 +170,7 @@ namespace Assets.Script.Backend
                 playableCharacter.HittableObjectStats = LoadCharacterStats(playableCharacter.Name);
                 AddGameObject(playableCharacter);
                 SetMainCharacter(playableCharacter.Name);
+                playableCharacter.SetOnStatsChangedCallback(_playerOnStatsChangedCallback);
             }
             else if (hittableObject is Enemy enemy)
             {
