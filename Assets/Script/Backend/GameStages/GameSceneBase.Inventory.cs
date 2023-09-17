@@ -31,7 +31,7 @@ namespace Assets.Script.Backend
             PlayerInventory.RemoveItem(itemId, itemAddCount, isUseItem: false, out itemUpdatedCount);
         }
 
-        public void UseItems(int itemId, int itemAddCount, out int? itemUpdatedCount)
+        public void UseItem(int itemId, int itemAddCount, out int? itemUpdatedCount)
         {
             PlayerInventory.RemoveItem(itemId, itemAddCount, isUseItem: true, out itemUpdatedCount);
         }
