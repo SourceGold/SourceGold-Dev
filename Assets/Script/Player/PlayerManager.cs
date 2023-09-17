@@ -20,22 +20,23 @@ public class PlayerManager : CharacterManager
     // Update is called once per frame
     void Update()
     {
-        //AutoKouxue();
+        // This is a test function to auto seft damage
+        //AutoSelfDmg();
     }
 
     private bool _start = false;
-    public void AutoKouxue()
+    public void AutoSelfDmg()
     {
         if (!_start)
         {
-            Invoke("kouxue", 10.0f);
+            Invoke("SelfDmg", 10.0f);
             _start = true;
         }
     }
 
-    public void kouxue()
+    public void SelfDmg()
     {
         Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = this.name }, new DamageTarget() { TgtObjectName = this.name });
-        Invoke("kouxue", 10.0f);
+        Invoke("SelfDmg", 10.0f);
     }
 }

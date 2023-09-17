@@ -18,6 +18,7 @@ namespace Assets.Script.Backend
 
         public virtual void InitializeCharacters()
         {
+            // this is test code to register a default player object
             //string playerName = "PlayerDefault";
             //AddGameObject(new PlayableCharacter(playerName, LoadCharacterStats(playerName), LoadDefaultEnvironmentalStats(), isMainCharacter: true));
         }
@@ -62,6 +63,11 @@ namespace Assets.Script.Backend
 
         public void RegisterGameObject(BackendGameObject gameObject)
         {
+            if (AllGameObjectCollection.ContainsKey(gameObject.Name))
+            {
+                throw new Exception($"Object with the name {gameObject.Name} already registered, please make sure each object has unique names.");
+            }
+
             gameObject.RegisteredByGame = true;
             if (gameObject is HittableObject hittableObject)
             {
