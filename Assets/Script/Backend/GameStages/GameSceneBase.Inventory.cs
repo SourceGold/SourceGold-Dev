@@ -1,5 +1,7 @@
 ﻿#nullable enable
 
+using System.Collections.Generic;
+
 namespace Assets.Script.Backend
 {
     public partial class GameSceneBase
@@ -14,19 +16,29 @@ namespace Assets.Script.Backend
             return PlayerInventory;
         }
 
-        public void AddItem(InventoryItem item, out InventoryItem? notAddedItem)
+        public List<(int id, int count)> GetInventoryItemList()
         {
-            PlayerInventory.AddItem(item, out notAddedItem);
+            return PlayerInventory.GetInventoryItemList();
         }
 
-        public void RemoveItem(InventoryItem item)
+        public void AddItem(int itemId, int itemAddCount, out int? itemNotAddedCount)
         {
-            PlayerInventory.RemoveItem(item);
+            PlayerInventory.AddItem(itemId, itemAddCount, out itemNotAddedCount);
         }
 
-        public void UseItems(InventoryItem item, out InventoryItem? updatedItem)
+        public void RemoveItem(int itemId, int itemAddCount, out int? itemUpdatedCount)
         {
-            PlayerInventory.UseItems(item, out updatedItem);
+            PlayerInventory.RemoveItem(itemId, itemAddCount, isUseItem: false, out itemUpdatedCount);
+        }
+
+        public void UseItem(int itemId, int itemAddCount, out int? itemUpdatedCount)
+        {
+            PlayerInventory.RemoveItem(itemId, itemAddCount, isUseItem: true, out itemUpdatedCount);
+        }
+
+        public void RemoveAllItem(int itemId)
+        {
+            PlayerInventory.RemoveAllItem(itemId);
         }
     }
 }

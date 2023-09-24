@@ -6,10 +6,8 @@ namespace Assets.Script.Backend
     {
         private ThreadSafeIntStats _count { get; set; }
 
-        public string Name { get; set; }
         public long Id { get; set; }
         public string Type { get; set; }
-        public string Description { get; set; }
         public int CurrentCount => _count.CurrentStats;
         public int MaxCount => _count.MaxStats;
 
@@ -46,7 +44,7 @@ namespace Assets.Script.Backend
             {
                 throw new Exception($"Not enough items in inventory. Requested: {1}, available: {CurrentCount}");
             }
-            GameEventLogger.LogEvent($"Using item name: {Name}");
+            GameEventLogger.LogEvent($"Using item Id: {Id}");
             ItemEffect();
             _count.UpdateStats(-1);
         }
@@ -57,10 +55,8 @@ namespace Assets.Script.Backend
         {
             return new InventoryItem(MaxCount, CurrentCount)
             {
-                Name = Name,
                 Id = Id,
                 Type = Type,
-                Description = Description,
             };
         }
     }
