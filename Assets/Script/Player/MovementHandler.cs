@@ -154,8 +154,9 @@ public class MovementHandler : LocomotionManager
             _direction.x = _input.x;
             _direction.z = _input.y;
 
-        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
-        Rotate(targetAngle);
+            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
+            Rotate(targetAngle);
+        }
     }
 
     private void OnAnimatorMove()
