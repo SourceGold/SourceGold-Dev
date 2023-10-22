@@ -21,7 +21,7 @@ public class PlayerManager : CharacterManager
     void Update()
     {
         // This is a test function to auto seft damage
-        AutoSelfDmg();
+        //AutoSelfDmg();
     }
 
     private bool _start = false;
