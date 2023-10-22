@@ -64,9 +64,12 @@ namespace Assets.Script.Backend
             set
             {
                 _onStatsChangedCallback = value;
-                if (EnableOnStatsChangedCallback)
+                if (_onStatsChangedCallback != null)
                 {
-                    _onStatsChangedCallback(this);
+                    if (EnableOnStatsChangedCallback)
+                    {
+                        _onStatsChangedCallback(this);
+                    }
                 }
             }
         }
