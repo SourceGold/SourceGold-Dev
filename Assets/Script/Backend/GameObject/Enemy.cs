@@ -26,6 +26,11 @@ namespace Assets.Script.Backend
             EnableOnStatsChangedCallback = enableOnStatsChangedCallback;
             EnemyStats.OnStatsChangedCallback = onStatsChangedCallback;
         }
+
+        internal void SetOnStatsChangedCallback(Action<global::EnemyStats> enemyStatsChangeCallback, bool v)
+        {
+
+        }
     }
 
     public class EnemyStats : HittableObjectStats
