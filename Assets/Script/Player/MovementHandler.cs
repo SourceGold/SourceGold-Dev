@@ -164,14 +164,6 @@ public class MovementHandler : MonoBehaviour
             _toggleLock = true; 
     }
 
-    public void ToggleAim(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            _cameraManager.ToggleAim();
-        }
-    }
-
     #endregion
     private void SwitchPosture()
     {

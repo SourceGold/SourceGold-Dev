@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 public class CameraManager : MonoBehaviour
 {
 
-    // public Transform TargetTransform;
-    // public Transform CameraTransform;
     private Transform NearestLockOnTarget;
     private Transform CinemachineCameraTarget;
     private CinemachineVirtualCamera FollowCamera;
@@ -48,20 +46,15 @@ public class CameraManager : MonoBehaviour
     {
         // reference initialization
         FollowCamera = gameObject.transform.Find("Follow Camera").GetComponent<CinemachineVirtualCamera>();
-        AimCamera = gameObject.transform.Find("Aim Camera").GetComponent<CinemachineVirtualCamera>();
         LockCamera = gameObject.transform.Find("Lock Camera").GetComponent<CinemachineVirtualCamera>();
 
         CinemachineCameraTarget = FindObjectOfType<PlayerManager>().transform.Find("Player Bot").Find("Follow Target");
-        Crosshair = gameObject.transform.Find("Crosshair").Find("Image");
-        NearestLockOnTarget = FindObjectOfType<AllEnemyManager>().transform.Find("Human Enemy").Find("Enemy Bot").Find("Lock On Head");
 
         input = FindObjectOfType<ControlManager>().InputMap;
 
         // Camera property initialization
         FollowCamera.Follow = CinemachineCameraTarget;
-        AimCamera.Follow = CinemachineCameraTarget;
         LockCamera.Follow = CinemachineCameraTarget;
-        AimCamera.gameObject.SetActive(false);
         LockCamera.gameObject.SetActive(false);
 
         // register input action
@@ -77,21 +70,6 @@ public class CameraManager : MonoBehaviour
     private void LateUpdate()
     {
         CameraRotation();
-    }
-
-    public void ToggleAim()
-    {
-        if (AimCamera.gameObject.activeSelf)
-        {
-            AimCamera.gameObject.SetActive(false);
-            Crosshair.gameObject.SetActive(false);
-        }
-        else
-        {
-            Crosshair.gameObject.SetActive(true);
-            //Crosshair.GetChild(0).gameObject.SetActive(true);
-            AimCamera.gameObject.SetActive(true);
-        }
     }
 
     public void Look(InputAction.CallbackContext context)
@@ -155,37 +133,37 @@ public class CameraManager : MonoBehaviour
         float shortestDistance = Mathf.Infinity;
         currentState = CameraState.LockOn;
         LockCamera.gameObject.SetActive(true);
-        //Collider[] colliders = Physics.OverlapSphere(TargetTransform.position, 26);
+        Collider[] colliders = Physics.OverlapSphere(CinemachineCameraTarget.position, 26);
 
-        //for (int i = 0; i < colliders.Length; i++)
-        //{
-        //    CharacterManager character = colliders[i].GetComponent<CharacterManager>();
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            CharacterManager character = colliders[i].GetComponent<CharacterManager>();
 
-        //    if (character != null)
-        //    {
-        //        Vector3 lockTargetDirection = character.transform.position - TargetTransform.position;
-        //        float distanceFromTarget = Vector3.Distance(TargetTransform.position, character.transform.position);
-        //        float viewableAngle = Vector3.Angle(lockTargetDirection, CameraTransform.forward);
+            if (character != null)
+            {
+                Vector3 lockTargetDirection = character.transform.position - CinemachineCameraTarget.position;
+                float distanceFromTarget = Vector3.Distance(CinemachineCameraTarget.position, character.transform.position);
+                float viewableAngle = Vector3.Angle(lockTargetDirection, transform.forward);
 
-        //        if (character.transform.root != TargetTransform.transform.root
-        //            && viewableAngle > -50 && viewableAngle < 50
-        //            && distanceFromTarget <= MaxLockOnDistance)
-        //        {
-        //            availableTargets.Add(character);
-        //        }
-        //    }
+                if (character.transform.root != CinemachineCameraTarget.transform.root
+                    && viewableAngle > -50 && viewableAngle < 50
+                    && distanceFromTarget <= MaxLockOnDistance)
+                {
+                    availableTargets.Add(character);
+                }
+            }
 
-        //}
+        }
 
-        //for (int i = 0; i < availableTargets.Count; i++)
-        //{
-        //    float distanceFromTarget = Vector3.Distance(TargetTransform.position, availableTargets[i].lockOnTransForm.position);
-        //    if (distanceFromTarget < shortestDistance)
-        //    {
-        //        shortestDistance = distanceFromTarget;
-        //        NearestLockOnTarget = availableTargets[i].transform;
-        //    }
-        //}
+        for (int i = 0; i < availableTargets.Count; i++)
+        {
+            float distanceFromTarget = Vector3.Distance(CinemachineCameraTarget.position, availableTargets[i].transform.position);
+            if (distanceFromTarget < shortestDistance)
+            {
+                shortestDistance = distanceFromTarget;
+                NearestLockOnTarget = availableTargets[i].transform;
+            }
+        }
 
 
         return NearestLockOnTarget;
@@ -194,8 +172,8 @@ public class CameraManager : MonoBehaviour
     public void StopLockOn()
     {
         currentState = CameraState.Follow;
-        //availableTargets.Clear();
-        //NearestLockOnTarget = null;
+        availableTargets.Clear();
+        NearestLockOnTarget = null;
         //_anim.SetBool("lock", false);
         LockCamera.gameObject.SetActive(false);
     }
