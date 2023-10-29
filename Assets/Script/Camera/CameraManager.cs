@@ -7,13 +7,16 @@ using UnityEngine.InputSystem;
 public class CameraManager : MonoBehaviour
 {
 
-    public Transform TargetTransform;
-    public Transform CameraTransform;
-    public Transform NearestLockOnTarget;
-    public GameObject CinemachineCameraTarget;
-    public CinemachineVirtualCamera AimCamera;
-    public CinemachineVirtualCamera LockCamera;
-    public Transform Crosshair;
+    // public Transform TargetTransform;
+    // public Transform CameraTransform;
+    private Transform NearestLockOnTarget;
+    private Transform CinemachineCameraTarget;
+    private CinemachineVirtualCamera FollowCamera;
+    private CinemachineVirtualCamera AimCamera;
+    private CinemachineVirtualCamera LockCamera;
+    private Transform Crosshair;
+    private Transform Player;
+    private InputMap input;
 
     private enum CameraState
     {
@@ -43,13 +46,31 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        // reference initialization
+        FollowCamera = gameObject.transform.Find("Follow Camera").GetComponent<CinemachineVirtualCamera>();
+        AimCamera = gameObject.transform.Find("Aim Camera").GetComponent<CinemachineVirtualCamera>();
+        LockCamera = gameObject.transform.Find("Lock Camera").GetComponent<CinemachineVirtualCamera>();
+
+        CinemachineCameraTarget = FindObjectOfType<PlayerManager>().transform.Find("Player Bot").Find("Follow Target");
+        Crosshair = gameObject.transform.Find("Crosshair").Find("Image");
+        NearestLockOnTarget = FindObjectOfType<AllEnemyManager>().transform.Find("Human Enemy").Find("Enemy Bot").Find("Lock On Head");
+
+        input = FindObjectOfType<ControlManager>().InputMap;
+
+        // Camera property initialization
+        FollowCamera.Follow = CinemachineCameraTarget;
+        AimCamera.Follow = CinemachineCameraTarget;
+        LockCamera.Follow = CinemachineCameraTarget;
         AimCamera.gameObject.SetActive(false);
         LockCamera.gameObject.SetActive(false);
+
+        // register input action
+        input.Player.Look.performed += Look;
     }
 
     private void Start()
     {
-        _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+        _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
         //_anim = GetComponentInChildren<Animator>();
     }
 
@@ -68,6 +89,7 @@ public class CameraManager : MonoBehaviour
         else
         {
             Crosshair.gameObject.SetActive(true);
+            //Crosshair.GetChild(0).gameObject.SetActive(true);
             AimCamera.gameObject.SetActive(true);
         }
     }
@@ -92,7 +114,7 @@ public class CameraManager : MonoBehaviour
 
             Quaternion targetRotation = Quaternion.LookRotation(dir);
             targetRotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 10);
-            CinemachineCameraTarget.transform.rotation = targetRotation;
+            CinemachineCameraTarget.rotation = targetRotation;
             _cinemachineTargetYaw = ClampAngle(targetRotation.eulerAngles.y, float.MinValue, float.MaxValue);
             _cinemachineTargetPitch = ClampAngle(targetRotation.eulerAngles.x, BottomClamp, TopClamp);
         }
@@ -115,7 +137,7 @@ public class CameraManager : MonoBehaviour
             _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
             // Cinemachine will follow this target
-            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0.0f);
+            CinemachineCameraTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0.0f);
             //CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
             //    _cinemachineTargetYaw, 0.0f);
         }

@@ -11,7 +11,7 @@ public class MovementHandler : MonoBehaviour
 {
     #region Instance: Camera
 
-    public Camera Camera;
+    private Camera Camera;
     private Transform _currentLockOnTarget;
     private CameraManager _cameraManager;
 
@@ -94,14 +94,38 @@ public class MovementHandler : MonoBehaviour
     [SerializeField] private float _leftRightWalkingCoef = 2.0f;
     [SerializeField] private float _jumpCoolDown = 0.15f;
     [SerializeField] private bool _runMode = true;
-    #endregion
-    // Start is called before the first frame update
-    void Start()
+
+    private InputMap input;
+
+    private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _isRunning = false;
         _cameraManager = FindObjectOfType<CameraManager>();
+        Camera = _cameraManager.gameObject.GetComponent<Camera>();
+
+        input = FindObjectOfType<ControlManager>().InputMap;
+
+        input.Player.Move.started       += GetMoveInput;
+        input.Player.Move.performed     += GetMoveInput;
+        input.Player.Move.canceled      += GetMoveInput;
+        input.Player.Jump.started       += TriggerJump;
+        input.Player.Jump.performed     += TriggerJump;
+        input.Player.Jump.canceled      += TriggerJump;
+        input.Player.Run.started        += ToggleRunning;
+        input.Player.Run.performed      += ToggleRunning;
+        input.Player.Run.canceled       += ToggleRunning;
+        input.Player.LockOn.started     += ToggleLockOn;
+        input.Player.LockOn.performed   += ToggleLockOn;
+        input.Player.LockOn.canceled    += ToggleLockOn;
+        //input.Player.Aim.performed                      += TriggerJump;
+    }
+
+    #endregion
+    // Start is called before the first frame update
+    void Start()
+    {
     }
 
     // Update is called once per frame
