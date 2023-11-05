@@ -50,21 +50,24 @@ public class CameraManager : MonoBehaviour
 
         CinemachineCameraTarget = FindObjectOfType<PlayerManager>().transform.Find("Player Bot").Find("Follow Target");
 
-        input = FindObjectOfType<ControlManager>().InputMap;
 
         // Camera property initialization
         FollowCamera.Follow = CinemachineCameraTarget;
         LockCamera.Follow = CinemachineCameraTarget;
         LockCamera.gameObject.SetActive(false);
 
-        // register input action
-        input.Player.Look.performed += Look;
+        
+        
     }
 
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
         //_anim = GetComponentInChildren<Animator>();
+
+        // register input action
+        input = FindObjectOfType<ControlManager>().InputMap;
+        input.Player.Look.performed += Look;
     }
 
     private void LateUpdate()

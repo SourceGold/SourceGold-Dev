@@ -105,27 +105,28 @@ public class MovementHandler : MonoBehaviour
         _cameraManager = FindObjectOfType<CameraManager>();
         Camera = _cameraManager.gameObject.GetComponent<Camera>();
 
-        input = FindObjectOfType<ControlManager>().InputMap;
 
-        input.Player.Move.started       += GetMoveInput;
-        input.Player.Move.performed     += GetMoveInput;
-        input.Player.Move.canceled      += GetMoveInput;
-        input.Player.Jump.started       += TriggerJump;
-        input.Player.Jump.performed     += TriggerJump;
-        input.Player.Jump.canceled      += TriggerJump;
-        input.Player.Run.started        += ToggleRunning;
-        input.Player.Run.performed      += ToggleRunning;
-        input.Player.Run.canceled       += ToggleRunning;
-        input.Player.LockOn.started     += ToggleLockOn;
-        input.Player.LockOn.performed   += ToggleLockOn;
-        input.Player.LockOn.canceled    += ToggleLockOn;
-        //input.Player.Aim.performed                      += TriggerJump;
     }
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        input = FindObjectOfType<ControlManager>().InputMap;
+
+        input.Player.Move.started += GetMoveInput;
+        input.Player.Move.performed += GetMoveInput;
+        input.Player.Move.canceled += GetMoveInput;
+        input.Player.Jump.started += TriggerJump;
+        input.Player.Jump.performed += TriggerJump;
+        input.Player.Jump.canceled += TriggerJump;
+        input.Player.Run.started += ToggleRunning;
+        input.Player.Run.performed += ToggleRunning;
+        input.Player.Run.canceled += ToggleRunning;
+        input.Player.LockOn.started += ToggleLockOn;
+        input.Player.LockOn.performed += ToggleLockOn;
+        input.Player.LockOn.canceled += ToggleLockOn;
+        //input.Player.Aim.performed                      += TriggerJump;
     }
 
     // Update is called once per frame
