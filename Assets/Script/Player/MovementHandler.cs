@@ -120,21 +120,26 @@ public class MovementHandler : LocomotionManager
         _isRunning = false;
         _cameraManager = FindObjectOfType<CameraManager>();
         _cam = _cameraManager.gameObject.GetComponent<Camera>().transform;
+        _transform = GetComponent<Transform>(); 
+    }
 
+    // Start is called before the first frame update
+    void Start()
+    {
         input = FindObjectOfType<ControlManager>().InputMap;
 
-        input.Player.Move.started       += GetMoveInput;
-        input.Player.Move.performed     += GetMoveInput;
-        input.Player.Move.canceled      += GetMoveInput;
-        input.Player.Jump.started       += TriggerJump;
-        input.Player.Jump.performed     += TriggerJump;
-        input.Player.Jump.canceled      += TriggerJump;
-        input.Player.Run.started        += ToggleRunning;
-        input.Player.Run.performed      += ToggleRunning;
-        input.Player.Run.canceled       += ToggleRunning;
-        input.Player.LockOn.started     += ToggleLockOn;
-        input.Player.LockOn.performed   += ToggleLockOn;
-        input.Player.LockOn.canceled    += ToggleLockOn;
+        input.Player.Move.started += GetMoveInput;
+        input.Player.Move.performed += GetMoveInput;
+        input.Player.Move.canceled += GetMoveInput;
+        input.Player.Jump.started += TriggerJump;
+        input.Player.Jump.performed += TriggerJump;
+        input.Player.Jump.canceled += TriggerJump;
+        input.Player.Run.started += ToggleRunning;
+        input.Player.Run.performed += ToggleRunning;
+        input.Player.Run.canceled += ToggleRunning;
+        input.Player.LockOn.started += ToggleLockOn;
+        input.Player.LockOn.performed += ToggleLockOn;
+        input.Player.LockOn.canceled += ToggleLockOn;
         //input.Player.Aim.performed                      += TriggerJump;
     }
 
@@ -183,8 +188,8 @@ public class MovementHandler : LocomotionManager
             return;
         else
         {
-            //_direction.x = _input.x;
-            //_direction.z = _input.y;
+            _direction.x = _input.x;
+            _direction.z = _input.y;
             Vector3 inputDirection = new Vector3(_input.x, 0.0f, _input.y).normalized;
 
             var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
