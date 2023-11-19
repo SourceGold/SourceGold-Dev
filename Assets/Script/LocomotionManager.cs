@@ -35,6 +35,8 @@ public abstract class LocomotionManager : MonoBehaviour
     private float _fallHeight = 0.5f;
     private float _leftRight;
     private float _horizontalVelocity;
+    private float _lockedHorizontalVelocity;
+    private float _lockedVerticalVelocity;
     public abstract float VerticalVelocity { get; set; }
 
     private bool _isGrounded;
@@ -250,12 +252,39 @@ public abstract class LocomotionManager : MonoBehaviour
         Animator.SetFloat("HorizontalVelocity", _horizontalVelocity);
     }
 
+    private void MoveLocked()
+    {
+        float h, v;
+        float targetSpeed = IsRunning ? _runSpeed : _walkSpeed;
+        h = Input.x * targetSpeed;
+        v = Input.y * targetSpeed;
+
+        if (h != 0 && v != 0)
+        {
+            h *= 1.5f;
+            v *= 1.5f;
+        }
+
+
+        _lockedHorizontalVelocity = Mathf.Lerp(_lockedHorizontalVelocity, h, 0.5f);
+        _lockedVerticalVelocity = Mathf.Lerp(_lockedVerticalVelocity, v, 0.5f);
+        //if (_lockedHorizontalVelocity != 0)
+        //_lockedVerticalVelocity = 0;
+        Animator.SetFloat("LockedH", _lockedHorizontalVelocity);
+        Animator.SetFloat("LockedV", _lockedVerticalVelocity);
+    }
+
     protected void SetupAnimator()
     {
         if (PlayerPosture == PlayerPosture.Stand || PlayerPosture == PlayerPosture.Landing)
         {
             Animator.SetFloat("Posture", _standThreshold, 0.1f, Time.deltaTime);
             Move();
+        }
+        else if (PlayerPosture == PlayerPosture.LockedOn)
+        {
+            Animator.SetFloat("Posture", 0.5f, 0.1f, Time.deltaTime);
+            MoveLocked();
         }
         else if (PlayerPosture == PlayerPosture.Jumping || PlayerPosture == PlayerPosture.Falling)
         {
@@ -264,6 +293,7 @@ public abstract class LocomotionManager : MonoBehaviour
             if (PlayerPosture == PlayerPosture.Jumping)
                 Animator.SetFloat("LeftRight", _leftRight);
         }
+
         if (WeaponStatus == WeaponStatus.Equipped)
         {
             Animator.SetFloat("WeaponStatus", 1.0f, 0.1f, Time.deltaTime);
