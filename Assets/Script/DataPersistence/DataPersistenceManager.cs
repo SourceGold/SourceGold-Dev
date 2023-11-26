@@ -3,34 +3,43 @@ using Assets.Script.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Script
 {
-    public class DataPersistenceManager : MonoBehaviour
+    public class DataPersistenceManager
     {
         private List<IDataPersistence> _dataPersistenceObjects { get; set; }
 
         private string _rootDataPath { get; set; }
 
-        public static DataPersistenceManager Instance { get; private set; }
+        private static DataPersistenceManager _instance;
 
-        private void Awake()
+        public static DataPersistenceManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new DataPersistenceManager();
+                }
+
+                return _instance;
+            }
+        }
+
+        public DataPersistenceManager()
         {
             _rootDataPath = Application.persistentDataPath;
             _dataPersistenceObjects = new List<IDataPersistence>();
-            DontDestroyOnLoad(this);
-            if (Instance == null)
+            if (_instance != null)
             {
-                Instance = this;
-                return;
+                throw new InvalidOperationException("Found more than one Data Persistence Manager in the scene");
             }
-            throw new InvalidOperationException("Found more than one Data Persistence Manager in the scene");
         }
 
         // testing only
-        private string _testSave = "DefaultTestingSave";
+        public static string _testSave = "DefaultTestingSave";
 
         public void AddDataPersistenceObject(IDataPersistence dataPersistence)
         {
@@ -42,26 +51,26 @@ namespace Assets.Script
 
         }
 
-        public void LoadGame(string saveName)
+        public static void LoadGame(string saveName)
         {
             GameEventLogger.LogEvent("Loading Game", EventLogType.SystemEvent);
-            foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
+            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
             {
                 var fileName = $"{dataPersistenceObject.GetSaveFileName()}.yaml";
                 var fullSaveFileName = Path.Combine(saveName, fileName);
-                var fullPath = Path.Combine(_rootDataPath, fullSaveFileName);
+                var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);
                 dataPersistenceObject.LoadData(fullPath);
             }
         }
 
-        public void SaveGame(string saveName)
+        public static void SaveGame(string saveName)
         {
             GameEventLogger.LogEvent("Saving Game", EventLogType.SystemEvent);
-            foreach (IDataPersistence dataPersistenceObject in _dataPersistenceObjects)
+            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
             {
                 var fileName = $"{dataPersistenceObject.GetSaveFileName()}.yaml";
                 var fullSaveFileName = Path.Combine(saveName, fileName);
-                var fullPath = Path.Combine(_rootDataPath, fullSaveFileName);
+                var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);
                 dataPersistenceObject.SaveData(fullPath);
             }
         }

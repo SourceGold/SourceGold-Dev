@@ -19,12 +19,24 @@ namespace Assets.Script.Backend
             DontDestroyOnLoad(this);
         }
 
+        // test only
+        public void Start()
+        {
+            DataPersistenceManager.LoadGame(DataPersistenceManager._testSave);
+        }
+
         public void SetNextStage(string stageName)
         {
             // broadcast to all game objects the new state
             var newStage = LoadStage(stageName);
             newStage.InitializeStage(GameLoop);
             GameLoop = newStage;
+        }
+
+        // test only
+        public void OnApplicationQuit()
+        {
+            DataPersistenceManager.SaveGame(DataPersistenceManager._testSave);
         }
 
         private GameSceneBase LoadStage(string stageName)
