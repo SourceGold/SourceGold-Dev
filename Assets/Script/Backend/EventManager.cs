@@ -54,7 +54,7 @@ namespace Assets.Script.Backend
                 thisEvent.AddListener(listener);
                 instance.eventDictionary.Add(eventType.ToString(), thisEvent);
             }
-            GameEventLogger.LogEvent($"Listener: {listener} started listening event: {eventType}");
+            GameEventLogger.LogEvent($"Listener: {listener} started listening event: {eventType}", EventLogType.GameEvent);
         }
 
         public static void StopListening(GameEventType eventType, UnityAction listener)
@@ -65,7 +65,7 @@ namespace Assets.Script.Backend
             {
                 thisEvent.RemoveListener(listener);
             }
-            GameEventLogger.LogEvent($"Listener: {listener} stopped listening event: {eventType}");
+            GameEventLogger.LogEvent($"Listener: {listener} stopped listening event: {eventType}", EventLogType.GameEvent);
         }
 
         public static void TriggerEvent(GameEventType eventType)

@@ -13,6 +13,7 @@ namespace Assets.Script.Backend
 
         public void Awake()
         {
+            GameEventLogger.LogEvent("Game Backend Awaken", EventLogType.SystemEvent);
             GameLoop = new GameSceneTest();
             GameLoop.InitializeStage();
             DontDestroyOnLoad(this);
