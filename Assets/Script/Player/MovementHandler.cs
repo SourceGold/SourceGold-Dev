@@ -11,11 +11,12 @@ public class MovementHandler : MonoBehaviour
 {
     #region Instance: Camera
 
-    private Transform Cam;
+    private Camera Camera;
     private Transform _currentLockOnTarget;
-    CameraManager _cameraManager;
+    private CameraManager _cameraManager;
 
     #endregion
+
     #region Variables: Animation
 
     private Animator _animator;
@@ -23,7 +24,6 @@ public class MovementHandler : MonoBehaviour
     #endregion
     #region Variables: Movement
 
-    private Transform _transform;
     private CharacterController _characterController;
 
     public enum WeaponStatus
@@ -94,17 +94,39 @@ public class MovementHandler : MonoBehaviour
     [SerializeField] private float _leftRightWalkingCoef = 2.0f;
     [SerializeField] private float _jumpCoolDown = 0.15f;
     [SerializeField] private bool _runMode = true;
+
+    private InputMap input;
+
+    private void Awake()
+    {
+        _characterController = GetComponent<CharacterController>();
+        _animator = GetComponent<Animator>();
+        _isRunning = false;
+        _cameraManager = FindObjectOfType<CameraManager>();
+        Camera = _cameraManager.gameObject.GetComponent<Camera>();
+
+
+    }
+
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-        Cam = GetComponentInParent<PlayerManager>().MainCamera;
-        //Debug.Log(Cam);
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
-        _transform = GetComponent<Transform>();
-        _isRunning = false;
-        _cameraManager = FindObjectOfType<CameraManager>();
+        input = FindObjectOfType<ControlManager>().InputMap;
+
+        input.Player.Move.started += GetMoveInput;
+        input.Player.Move.performed += GetMoveInput;
+        input.Player.Move.canceled += GetMoveInput;
+        input.Player.Jump.started += TriggerJump;
+        input.Player.Jump.performed += TriggerJump;
+        input.Player.Jump.canceled += TriggerJump;
+        input.Player.Run.started += ToggleRunning;
+        input.Player.Run.performed += ToggleRunning;
+        input.Player.Run.canceled += ToggleRunning;
+        input.Player.LockOn.started += ToggleLockOn;
+        input.Player.LockOn.performed += ToggleLockOn;
+        input.Player.LockOn.canceled += ToggleLockOn;
+        //input.Player.Aim.performed                      += TriggerJump;
     }
 
     // Update is called once per frame
@@ -117,7 +139,6 @@ public class MovementHandler : MonoBehaviour
         Jump();
         Rotate();
         SetupAnimator();
-        
     }
     #region Functions: Inputs
     public void GetMoveInput(InputAction.CallbackContext context)
@@ -191,6 +212,8 @@ public class MovementHandler : MonoBehaviour
         }
           
     }
+
+
     private void SetupAnimator()
     {
         if (_playerPosture == PlayerPosture.Stand || _playerPosture == PlayerPosture.Landing)
@@ -230,19 +253,20 @@ public class MovementHandler : MonoBehaviour
             _toggleLock = false;
             _isLocked = true;
             _currentLockOnTarget = _cameraManager.HandleLockOn();
+            //_animator.SetBool("lock", true);
         }
         else if (_toggleLock)
         {
             _toggleLock = false;
             _isLocked = false;
-            _cameraManager.ClearLockOnTargets();
+            _cameraManager.StopLockOn();
             _currentLockOnTarget = null;
         }
 
         if (_isLocked && (_currentLockOnTarget == null || !_currentLockOnTarget.gameObject.activeSelf))
         {
             _isLocked = false;
-            _cameraManager.ClearLockOnTargets();
+            _cameraManager.StopLockOn();
             _currentLockOnTarget = null;
         }
     }
@@ -251,7 +275,7 @@ public class MovementHandler : MonoBehaviour
     {
         if (_playerPosture == PlayerPosture.LockedOn)
         {
-            Vector3 dir = _currentLockOnTarget.position - _transform.position;
+            Vector3 dir = _currentLockOnTarget.position - transform.position;
             dir.Normalize();
             dir.y = 0;
 
@@ -262,10 +286,11 @@ public class MovementHandler : MonoBehaviour
             return;
         else
         {
-            _direction.x = _input.x;
-            _direction.z = _input.y;
+            //_direction.x = _input.x;
+            //_direction.z = _input.y;
+            Vector3 inputDirection = new Vector3(_input.x, 0.0f, _input.y).normalized;
 
-            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + Cam.eulerAngles.y;
+            var targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + Camera.transform.eulerAngles.y;
             var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, _rotateSpeed);
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
         }
@@ -377,13 +402,13 @@ public class MovementHandler : MonoBehaviour
     #endregion
     private void CheckGround()
     {
-        if (Physics.SphereCast(_transform.position + (Vector3.up * _groundCheckOffset), _characterController.radius, Vector3.down, out RaycastHit hit, _groundCheckOffset - _characterController.radius + 2 * _characterController.skinWidth))
+        if (Physics.SphereCast(transform.position + (Vector3.up * _groundCheckOffset), _characterController.radius, Vector3.down, out RaycastHit hit, _groundCheckOffset - _characterController.radius + 2 * _characterController.skinWidth))
         {
             _isGrounded = true;
         } else
         {
             _isGrounded = false;
-            _canFall = !Physics.Raycast(_transform.position, Vector3.down, _fallHeight);
+            _canFall = !Physics.Raycast(transform.position, Vector3.down, _fallHeight);
         }
     }
     private void OnAnimatorMove()

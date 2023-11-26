@@ -34,6 +34,14 @@ public class EnemyHealthBar : MonoBehaviour
 
     private bool _isFirstSetup = true;
     // Start is called before the first frame update
+
+    public Camera MainCamera;
+
+    private void Awake()
+    {
+        MainCamera = FindObjectOfType<CameraManager>().GetComponent<Camera>();
+    }
+
     void Start()
     {
         maxHitPoint = 100f;
@@ -43,7 +51,7 @@ public class EnemyHealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        canvasTransform.LookAt(transform.position + Camera.main.transform.forward);
+        canvasTransform.LookAt(transform.position + MainCamera.transform.forward);
         if (decreasingOnTimeAlpha)
         {
             onTimeAlpha -= Time.deltaTime * fadeOutSpeed;
@@ -78,7 +86,7 @@ public class EnemyHealthBar : MonoBehaviour
 
     float computeDistanceAlpha()
     {
-        float distance = Vector3.Distance(transform.position, Camera.main.transform.position);
+        float distance = Vector3.Distance(transform.position, MainCamera.transform.position);
         return 1f - Math.Clamp((distance - fullVisibleDistance) / (startVisibleDistance - fullVisibleDistance), 0, 1);
     }
 

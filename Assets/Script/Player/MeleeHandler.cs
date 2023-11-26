@@ -27,10 +27,26 @@ public class MeleeHandler : MonoBehaviour
     //private BoxCollider _weaponCollider;
     //private int _maxFrameBuffer = 10;
 
+    private InputMap input;
+
+    private void Awake()
+    {
+
+    }
+
 
     void Start()
     {
         _anim = GetComponent<Animator>();
+        input = FindObjectOfType<ControlManager>().InputMap;
+
+        input.Player.MeleeAttack1.performed += StandingMeleeAttack1;
+        input.Player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
+        input.Player.EquipWeapon.performed += EquipWeapon;
+        input.Player.SkillMeleeAttack1.performed += SkillMeleeAttack1;
+        input.Player.SwitchWeapon.performed += SwitchWeapon;
+        input.Player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
+        input.Player.MeleeAttack3.performed += StandingMeleeAttack3;
     }
 
     void Update()
