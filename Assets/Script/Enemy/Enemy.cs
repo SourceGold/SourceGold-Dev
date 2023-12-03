@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     protected void Awake()
     {
-        _name = this.transform.parent.name;
+        _name = this.transform.name;
     }
 
     // Start is called before the first frame update
