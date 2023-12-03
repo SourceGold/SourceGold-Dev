@@ -5,7 +5,11 @@ namespace Assets.Script.Backend
 {
     public class GameEventLogger : DataPersistence
     {
-        protected ConcurrentQueue<EventLogMessage> EventLog { get; set; }
+        // this need to be public to do default serilize before we found a solution
+        // commented code are for using default serilize option
+        //public List<EventLogMessage> EventLog { get; private set; }
+
+        public ConcurrentQueue<EventLogMessage> EventLog { get; private set; }
 
         private static GameEventLogger _instance;
 
@@ -13,23 +17,26 @@ namespace Assets.Script.Backend
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = new GameEventLogger();
-                }
-
-                return _instance;
+                return _instance ?? (_instance = new GameEventLogger(true));
             }
         }
 
         public GameEventLogger()
         {
             EventLog = new ConcurrentQueue<EventLogMessage>();
+            //EventLog = new List<EventLogMessage>();
+        }
+
+        public GameEventLogger(bool autoRegister) : base(autoRegister)
+        {
+            EventLog = new ConcurrentQueue<EventLogMessage>();
+            //EventLog = new List<EventLogMessage>();
         }
 
         public static void LogEvent(string message, EventLogType eventLogType = EventLogType.UserEvent)
         {
             Instance.EventLog.Enqueue(new EventLogMessage(message, eventLogType));
+            //Instance.EventLog.Add(new EventLogMessage(message, eventLogType));
         }
 
         public override void LoadData(string fileName)

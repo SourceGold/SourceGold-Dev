@@ -16,7 +16,7 @@
         /// </summary>
         void RegisterExistence()
         {
-            DataPersistenceManager.Instance.AddDataPersistenceObject(this);
+            DataPersistenceManager.AddDataPersistenceObject(this);
         }
     }
 }

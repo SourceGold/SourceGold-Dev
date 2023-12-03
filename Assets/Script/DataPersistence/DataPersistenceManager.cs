@@ -19,12 +19,7 @@ namespace Assets.Script
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = new DataPersistenceManager();
-                }
-
-                return _instance;
+                return _instance ?? (_instance = new DataPersistenceManager());
             }
         }
 
@@ -41,9 +36,9 @@ namespace Assets.Script
         // testing only
         public static string _testSave = "DefaultTestingSave";
 
-        public void AddDataPersistenceObject(IDataPersistence dataPersistence)
+        public static void AddDataPersistenceObject(IDataPersistence dataPersistence)
         {
-            _dataPersistenceObjects.Add(dataPersistence);
+            Instance._dataPersistenceObjects.Add(dataPersistence);
         }
 
         public void NewGame()

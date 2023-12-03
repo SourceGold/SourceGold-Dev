@@ -43,8 +43,7 @@ namespace Assets.Script.Backend
 
         public static void StartListening(GameEventType eventType, UnityAction listener)
         {
-            UnityEvent thisEvent = null;
-            if (TryGetEvent(eventType, out thisEvent))
+             if (TryGetEvent(eventType, out UnityEvent thisEvent))
             {
                 thisEvent.AddListener(listener);
             }
@@ -60,8 +59,7 @@ namespace Assets.Script.Backend
         public static void StopListening(GameEventType eventType, UnityAction listener)
         {
             if (eventManager == null) return;
-            UnityEvent thisEvent = null;
-            if (TryGetEvent(eventType, out thisEvent))
+            if (TryGetEvent(eventType, out UnityEvent thisEvent))
             {
                 thisEvent.RemoveListener(listener);
             }
@@ -70,9 +68,8 @@ namespace Assets.Script.Backend
 
         public static void TriggerEvent(GameEventType eventType)
         {
-            UnityEvent thisEvent = null;
             GameEventLogger.LogEvent($"Event Triggered: {eventType}");
-            if (TryGetEvent(eventType, out thisEvent))
+            if (TryGetEvent(eventType, out UnityEvent thisEvent))
             {
                 thisEvent.Invoke();
             }
