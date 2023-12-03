@@ -38,15 +38,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (!_dead)
-        //{
-        //    if (Health <= 0)
-        //    {
-        //        _dead = true;
-        //        _anim.SetBool("Dead", true);
-        //        return;
-        //    }
-        //}
+
     }
 
     private void DeathHandler()
@@ -63,7 +55,7 @@ public class Enemy : MonoBehaviour
             if (weaponInfo.name == other.gameObject.name)
             {
                 var attackerName = other.GetComponentInParent<PlayerManager>().name;
-                _anim.SetTrigger("Hit");
+                //_anim.SetTrigger("Hit");
                 Debug.Log("Hit By Sword");
 
                 Backend.GameLoop.ProcessDamage(new DamangeSource(){ SrcObjectName = attackerName }, new DamageTarget() { TgtObjectName = _name });

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterManager : MonoBehaviour
+public class EnemyStat : CharacterStats
 {
-/*    // Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
         
@@ -14,5 +14,5 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         
-    }*/
+    }
 }

@@ -168,7 +168,6 @@ public class CameraManager : MonoBehaviour
             }
         }
 
-
         return NearestLockOnTarget;
     }
 
