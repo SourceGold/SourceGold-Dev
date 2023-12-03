@@ -7,11 +7,9 @@ public class collectableItem : InteractableObject
     public float fullVisibleRange = -1f;
     public float initialVisibleRange = -1f;
 
-    public List<GameItem> item;
     public List<int> count;
     
     private SceneItemActiveUI uiElement;
-    private playerInventory inventory;
     private bool activated;
     // Start is called before the first frame update
     void Start()
