@@ -31,13 +31,13 @@ public abstract class InteractableObject : MonoBehaviour {
     /// also the priority is highest.
     /// </summary>
     /// <param name="distance">Tell the actual distance with the object</param>
-    public abstract void cloestActivation(float distance);
+    public abstract void closestActivation();
 
     /// <summary>
     /// This function is called when the object no longer the activated cloest
     /// object.
     /// </summary>
-    public abstract void cloestDeactivation();
+    public abstract void closestDeactivation();
     /// <summary>
     /// This function is called whenever the player interaction is pressed.
     /// </summary>

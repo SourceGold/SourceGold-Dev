@@ -17,14 +17,14 @@ public class collectableItem : InteractableObject
         uiElement = GetComponentInChildren<SceneItemActiveUI>();
     }
 
-    public override void cloestActivation(float distance)
+    public override void closestActivation()
     {
         if (uiElement != null) {
             uiElement.setActive(initialVisibleRange, fullVisibleRange); 
         }
     }
 
-    public override void cloestDeactivation()
+    public override void closestDeactivation()
     {
         if (uiElement != null) { 
             uiElement.setInactive(); 

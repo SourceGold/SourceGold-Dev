@@ -2122,11 +2122,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e37f0872725bad41b0b4cc1158ab828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationRange: 3
+  activationRange: 1.5
   priority: 0
   fullVisibleRange: 5.5
   initialVisibleRange: 6
-  item: []
   count: 
 --- !u!114 &1297679555569258875
 MonoBehaviour:
@@ -2712,11 +2711,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e37f0872725bad41b0b4cc1158ab828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationRange: 3
+  activationRange: 1.5
   priority: 0
   fullVisibleRange: 5.5
   initialVisibleRange: 6
-  item: []
   count: 
 --- !u!33 &5980092495849569337
 MeshFilter:
@@ -2739,6 +2737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stickyTime: 0.25
+  forceActivationRange: 0.3
 --- !u!1001 &6358705389283311437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2986,7 +2985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6399389471720424475}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.51699996, z: 1.1734246}
+  m_LocalPosition: {x: 0, y: 0.51699996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3244,7 +3243,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 4
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

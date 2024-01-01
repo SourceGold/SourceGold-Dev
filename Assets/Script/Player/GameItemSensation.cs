@@ -15,15 +15,18 @@ public class GameItemSensation : MonoBehaviour
     [Header("Behavior")]
     [SerializeField]
     float stickyTime;
-
+    [SerializeField]
+    float forceActivationRange = 0.35f;
     private InputMap input;
     private float relativeZDistance;
+    private Camera MainCamera;
     private void Start()
     {
         input = FindObjectOfType<ControlManager>().InputMap;
 
         input.Player.SceneInteraction.performed += pickupKeyPress;
         relativeZDistance = transform.localPosition.z;
+        MainCamera = FindObjectOfType<CameraManager>().GetComponent<Camera>();
     }
 
     private void Update()
@@ -36,42 +39,81 @@ public class GameItemSensation : MonoBehaviour
     }
     private void computeClosestObject()
     {
-        InteractableObject itemShouldBeActivate = null;
-        float minDistance = float.MaxValue;
-        int currentPriority = 0;
+        InteractableObject item_should_be_active = null;
+        float minimum_score = float.MaxValue;
+        int should_be_active_priority = 0;
+
+        bool force_activation_flag = false;
+        int force_activation_priority = 0;
+        float force_activation_score = float.MaxValue;
+
         foreach (GameObject item in inRangeItems)
         {
-            InteractableObject inRangeObject = item.GetComponent<InteractableObject>();
-            inRangeObject.cloestDeactivation();
-            if (inRangeObject.priority < currentPriority) continue;
+            InteractableObject in_range_interactable = item.GetComponent<InteractableObject>();
 
             Vector3 ray_start = transform.position - relativeZDistance * transform.forward;
             Vector3 direction = item.transform.position - ray_start;
+            Vector3 camera_view_direction = MainCamera.transform.forward;
+        
+            float camera_to_object_distance = direction.sqrMagnitude;
+            direction = direction.normalized;
             ray_start += 0.1f * direction;
 
-            float length = direction.sqrMagnitude;
-            direction = direction.normalized;
-
+            // check distance with the object
             RaycastHit hit;
             int layerMask = LayerMask.GetMask("Default", "Environment");
-
-            if (Physics.Raycast(ray_start, direction, out hit, length, (int)layerMask))
+            
+            if (Physics.Raycast(ray_start, direction, out hit, camera_to_object_distance, (int)layerMask))
             {
                 Debug.DrawRay(ray_start, direction * hit.distance, Color.green, 0.5f);
-                if (inRangeObject.activationRange > 0 && hit.distance > inRangeObject.activationRange) continue;
-                print(hit.collider.gameObject);
-                if (hit.collider.gameObject != item) continue;
-                if (inRangeObject.priority > currentPriority || hit.distance < minDistance)
-                {
-                    currentPriority = inRangeObject.priority;
-                    minDistance = hit.distance;
+                // Turn off all activation
+                in_range_interactable.closestDeactivation();
 
-                    itemShouldBeActivate = inRangeObject;
+                // check in range
+                if (in_range_interactable.activationRange > 0 && hit.distance > in_range_interactable.activationRange) {
+                    in_range_interactable.outRange();
+                    continue;
+                } else {
+                    in_range_interactable.inRange();
+                }  
+
+                // check activation
+                if (hit.collider.gameObject != item) continue;
+
+                // force activation
+                if (hit.distance < forceActivationRange || force_activation_flag) {
+                    force_activation_flag = true;
+
+                    if (in_range_interactable.priority < force_activation_priority) continue;
+                    if (in_range_interactable.priority > force_activation_priority || hit.distance < force_activation_score)
+                    {           
+                        force_activation_priority = in_range_interactable.priority;
+                        force_activation_score = hit.distance;
+
+                        item_should_be_active = in_range_interactable;
+                        closest = item;
+                    }
+                    continue;
+                }
+
+                if (in_range_interactable.priority < should_be_active_priority) continue;
+                float cameraDotObject = Vector3.Dot(camera_view_direction, direction);
+                if (cameraDotObject < 0.25) continue;
+
+                // float score = (float)(hit.distance * Math.Pow(1 - cameraDotObject, 3.0f));
+                float score = 1 - cameraDotObject;
+                
+                if (in_range_interactable.priority > should_be_active_priority || score < minimum_score)
+                {           
+                    should_be_active_priority = in_range_interactable.priority;
+                    minimum_score = score;
+
+                    item_should_be_active = in_range_interactable;
                     closest = item;
                 }
             }
         }
-        if (itemShouldBeActivate != null) { itemShouldBeActivate.cloestActivation(minDistance); }
+        if (item_should_be_active != null) { item_should_be_active.closestActivation(); }
         Invoke("computeClosestObject", stickyTime);
     }
     public void OnTriggerEnter(Collider other)
@@ -79,7 +121,6 @@ public class GameItemSensation : MonoBehaviour
         InteractableObject gameItem = other.GetComponent<InteractableObject>();
         if (gameItem != null)
         {
-            gameItem.inRange();
             inRangeItems.Add(other.gameObject);
         }
     }
@@ -89,7 +130,7 @@ public class GameItemSensation : MonoBehaviour
         InteractableObject gameItem = other.GetComponent<InteractableObject>();
         if (gameItem != null)
         {
-            gameItem.cloestDeactivation();
+            gameItem.closestDeactivation();
             gameItem.outRange();
             inRangeItems.Remove(other.gameObject);
             closest = null;
