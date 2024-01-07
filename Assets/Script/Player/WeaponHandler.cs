@@ -9,9 +9,9 @@ public class WeaponHandler : MonoBehaviour
 
     public string[] Name;
     public float[] Damage;
-    public Transform []Weapon;
-    public Transform []WeaponHandle;
-    public Transform []WeaponRestPose;
+    private Transform[] Weapon = new Transform[2];
+    public Transform []WeaponHandle = new Transform[2];
+    private Transform []WeaponRestPose = new Transform[2];
     public MeleeHandler MeleeHandlerRef;
 
     public struct WeaponInfo
@@ -21,13 +21,25 @@ public class WeaponHandler : MonoBehaviour
     }
 
     private Animator _anim;
-    private int _weaponType = 0;
+    public int WeaponType { get; private set; } = 0;
     private WeaponInfo[] _weaponInfo;
+    public bool WeaponDrawn { get; private set; } = false;
+
+    private void Awake()
+    {
+        
+    }
 
     void Start()
     {
         _anim = GetComponent<Animator>();
         _anim.SetInteger("WeaponType", 1);
+
+        Weapon[0] = Instantiate((Resources.Load("Prefab/Greatsword") as GameObject), new Vector3(0, 0, 0), Quaternion.identity).transform;
+        Weapon[1] = Instantiate((Resources.Load("Prefab/Godsword") as GameObject), new Vector3(0, 0, 0), Quaternion.identity).transform;
+        WeaponRestPose[0] = FindChildRecursive(transform.gameObject, "GreatswordRestPose").transform;
+        WeaponRestPose[1] = FindChildRecursive(transform.gameObject, "GodswordRestPose").transform;
+        Debug.Log(Weapon[0]);
         _weaponInfo = new WeaponInfo[Weapon.Length];
         for (int i = 0; i < Weapon.Length; i++)
         {
@@ -45,35 +57,46 @@ public class WeaponHandler : MonoBehaviour
     {
         if (action == Action.Equip)
         {
-            Weapon[_weaponType].SetParent(WeaponHandle[_weaponType]);
-           
+            Weapon[WeaponType].SetParent(WeaponHandle[WeaponType]);
+            WeaponDrawn = true;
         }
         else 
         {
-            Weapon[_weaponType].SetParent(WeaponRestPose[_weaponType]);
-            
+            Weapon[WeaponType].SetParent(WeaponRestPose[WeaponType]);
+            WeaponDrawn = false;
         }
 
-        Weapon[_weaponType].localRotation = Quaternion.identity;
-        Weapon[_weaponType].localPosition = Vector3.zero;
+        Weapon[WeaponType].localRotation = Quaternion.identity;
+        Weapon[WeaponType].localPosition = Vector3.zero;
 
         if (switchWeapon)
         {
-            Weapon[_weaponType].gameObject.SetActive(false);
-            _weaponType = (_weaponType + 1) % Weapon.Length;
-            _anim.SetInteger("WeaponType", _weaponType+1);
-            Weapon[_weaponType].gameObject.SetActive(true);
+            Weapon[WeaponType].gameObject.SetActive(false);
+            WeaponType = (WeaponType + 1) % Weapon.Length;
+            _anim.SetInteger("WeaponType", WeaponType+1);
+            Weapon[WeaponType].gameObject.SetActive(true);
         }
             
     }
 
     public Collider GetCollider()
     {
-        return Weapon[_weaponType].GetComponent<Collider>();
+        return Weapon[WeaponType].GetComponent<Collider>();
     }
 
     public WeaponInfo GetWeaponInfo()
     {
-        return _weaponInfo[_weaponType];
+        return _weaponInfo[WeaponType];
+    }
+
+    public GameObject FindChildRecursive(GameObject parent, string name)
+    {
+        if (parent.name == name) return parent;
+        foreach (Transform child in parent.transform)
+        {
+            GameObject result = FindChildRecursive(child.gameObject, name);
+            if (result != null) return result;
+        }
+        return null;
     }
 }

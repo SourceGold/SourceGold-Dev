@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Assets.Script;
 
 public class MeleeHandler : MonoBehaviour
 {
@@ -49,6 +50,10 @@ public class MeleeHandler : MonoBehaviour
         input.Player.MeleeAttack3.performed += StandingMeleeAttack3;
     }
 
+    private void Reset()
+    {
+    }
+
     void Update()
     {
         //if (_anim.GetBool("IsDamageOn"))
@@ -60,6 +65,8 @@ public class MeleeHandler : MonoBehaviour
 
     public void EquipWeapon(InputAction.CallbackContext context)
     {
+
+        if (_anim == null) return;
         if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
@@ -85,11 +92,13 @@ public class MeleeHandler : MonoBehaviour
             if (_anim.GetBool("CanAttack"))
             {
                 _anim.SetTrigger("Attack");
+                DataPersistenceManager.SaveGame("save1");
             }
             if (_anim.GetBool("IsAttacking"))
             {
                 _anim.SetBool("IsCombo", true);
             }
+            
         }
     }
 
@@ -115,6 +124,7 @@ public class MeleeHandler : MonoBehaviour
         {
             _anim.SetTrigger("Attack");
             _anim.SetInteger("AttackType", 3);
+            DataPersistenceManager.LoadGame("save1");
         }
     }
 

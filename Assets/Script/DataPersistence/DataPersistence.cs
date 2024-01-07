@@ -39,6 +39,7 @@ namespace Assets.Script
             DataPersistenceManager.SaveDataFile(fileName, this);
         }
 
+
         public virtual string GetSaveFileName()
         {
             return GetType().Name;

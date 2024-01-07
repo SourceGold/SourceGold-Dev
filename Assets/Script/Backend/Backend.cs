@@ -16,13 +16,13 @@ namespace Assets.Script.Backend
             GameEventLogger.LogEvent("Game Backend Awaken", EventLogType.SystemEvent);
             GameLoop = new GameSceneTest();
             GameLoop.InitializeStage();
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
 
         // test only
         public void Start()
         {
-            DataPersistenceManager.LoadGame(DataPersistenceManager._testSave);
+            //DataPersistenceManager.LoadGame(DataPersistenceManager._testSave);
         }
 
         public void SetNextStage(string stageName)

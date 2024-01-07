@@ -1892,7 +1892,6 @@ GameObject:
   - component: {fileID: 3405333476871669122}
   - component: {fileID: 559396764725585400}
   - component: {fileID: 8602645093617411545}
-  - component: {fileID: 6453145102613578987}
   m_Layer: 0
   m_Name: Player Bot
   m_TagString: Player
@@ -1997,15 +1996,9 @@ MonoBehaviour:
   Damage:
   - 2.5
   - 4
-  Weapon:
-  - {fileID: 0}
-  - {fileID: 0}
   WeaponHandle:
   - {fileID: 5608193983223233103}
   - {fileID: 901730687274407445}
-  WeaponRestPose:
-  - {fileID: 1798293944982011941}
-  - {fileID: 2078619796745118887}
   MeleeHandlerRef: {fileID: 3405333476871669122}
 --- !u!114 &8602645093617411545
 MonoBehaviour:
@@ -2019,7 +2012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13571ebdc4604b05be01bc0fbf84e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cam: {fileID: 0}
   _weaponStatus: 0
   _playerPosture: 1
   _locomotionState: 0
@@ -2034,19 +2026,6 @@ MonoBehaviour:
   _leftRightWalkingCoef: 2
   _jumpCoolDown: 0.15
   _runMode: 0
---- !u!114 &6453145102613578987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998707516784165002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeacb9c859021419f8a54af982ce29a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lockOnTransForm: {fileID: 0}
 --- !u!1 &7012922845065194391
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,7 +2114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7119155126568584037}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.57, z: 0}
+  m_LocalPosition: {x: -0, y: 1.167, z: 0.011}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
