@@ -952,6 +952,76 @@ Transform:
   m_Father: {fileID: 8528963580036832228}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3987686522500303506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2084369831555026659}
+  - component: {fileID: 7120936563866022651}
+  - component: {fileID: 6516627337609689354}
+  m_Layer: 8
+  m_Name: GameItemSensation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2084369831555026659
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3987686522500303506}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.51699996, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4414269351680752103}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7120936563866022651
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3987686522500303506}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Height: 0
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6516627337609689354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3987686522500303506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f167e4808e1ccbf49afe17cc818d6070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stickyTime: 0.25
+  forceActivationRange: 0.35
 --- !u!1 &4014028672248329869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,6 +2040,7 @@ Transform:
   - {fileID: 4524670426942614808}
   - {fileID: 8313760032920990036}
   - {fileID: 4425225758844774199}
+  - {fileID: 2084369831555026659}
   - {fileID: 4378398741407890965}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2074,19 +2145,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13571ebdc4604b05be01bc0fbf84e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponStatus: 0
-  _playerPosture: 1
-  _locomotionState: 0
-  _moveSpeed: 2
-  _walkSpeed: 1.75
-  _runSpeed: 3.5
   _rotateSpeed: 0.05
-  _jumpPower: 7
   _gravityMultiplier: 2
   _fallingMultiplier: 1.5
+  _jumpCoolDown: 0.15
+  _jumpPower: 7
   _leftRightRunningCoef: 3.5
   _leftRightWalkingCoef: 2
-  _jumpCoolDown: 0.15
+  _walkSpeed: 1.75
+  _runSpeed: 3.5
+  _cam: {fileID: 0}
   _runMode: 0
 --- !u!114 &6453145102613578987
 MonoBehaviour:

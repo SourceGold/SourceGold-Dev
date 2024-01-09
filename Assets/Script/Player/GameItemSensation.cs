@@ -55,19 +55,20 @@ public class GameItemSensation : MonoBehaviour
             Vector3 direction = item.transform.position - ray_start;
             Vector3 camera_view_direction = MainCamera.transform.forward;
         
-            float camera_to_object_distance = direction.sqrMagnitude;
+            float camera_to_object_distance = direction.sqrMagnitude + 0.25f;
             direction = direction.normalized;
             ray_start += 0.1f * direction;
 
             // check distance with the object
             RaycastHit hit;
             int layerMask = LayerMask.GetMask("Default", "Environment");
-            
+
+            // Turn off all activation
+            in_range_interactable.closestDeactivation();
+
             if (Physics.Raycast(ray_start, direction, out hit, camera_to_object_distance, (int)layerMask))
             {
                 Debug.DrawRay(ray_start, direction * hit.distance, Color.green, 0.5f);
-                // Turn off all activation
-                in_range_interactable.closestDeactivation();
 
                 // check in range
                 if (in_range_interactable.activationRange > 0 && hit.distance > in_range_interactable.activationRange) {
@@ -136,6 +137,7 @@ public class GameItemSensation : MonoBehaviour
             closest = null;
         }
     }
+
 
     public void pickupKeyPress(InputAction.CallbackContext context)
     {
