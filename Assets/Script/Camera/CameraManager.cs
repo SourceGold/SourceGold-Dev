@@ -37,11 +37,14 @@ public class CameraManager : MonoBehaviour
 
     List<CharacterManager> availableTargets = new List<CharacterManager>();
 
-    //private Animator _anim;
-
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
-    private const float _threshold = 0.01f;
+    private const float _threshold = 0.001f;
+    private const float sensitivityLowLimit = 0.1f;
+    private const float sensitivityHighLimit = 20f;
+    private readonly float sensitivityLowLog = (float)Math.Log10(sensitivityLowLimit);
+    private readonly float sensitivityHighLog = (float)Math.Log10(sensitivityHighLimit);
+    private float sensitivity;
     private Vector2 _input;
 
     private void Awake()
@@ -66,6 +69,9 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
+
+        float sensitivitySetting = GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity;
+        sensitivity = (float)Math.Pow(10, sensitivitySetting * (sensitivityHighLog - sensitivityLowLog) + sensitivityLowLog);
 
         input = FindObjectOfType<ControlManager>().InputMap;
         // register input action
@@ -120,7 +126,6 @@ public class CameraManager : MonoBehaviour
                 //Don't multiply mouse input by Time.deltaTime;
                 //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
                 float deltaTimeMultiplier = 1.0f;
-                float sensitivity = GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity + 0.5f;
                 if (GlobalSettings.globalSettings.userDefinedSettings.Control.RevertCameraMovements)
                     _input.y = -_input.y;
 
