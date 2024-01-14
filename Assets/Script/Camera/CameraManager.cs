@@ -1,3 +1,4 @@
+using Assets.Script.Backend;
 using Cinemachine;
 using System;
 using System.Collections;
@@ -113,16 +114,18 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-
             //if there is an input and camera position is not fixed
             if (_input.sqrMagnitude >= _threshold)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
                 float deltaTimeMultiplier = 1.0f;
+                float sensitivity = GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity + 0.5f;
+                if (GlobalSettings.globalSettings.userDefinedSettings.Control.RevertCameraMovements)
+                    _input.y = -_input.y;
 
-                _cinemachineTargetYaw += _input.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _input.x * deltaTimeMultiplier * sensitivity;
+                _cinemachineTargetPitch += _input.y * deltaTimeMultiplier * sensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
