@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stickyTime: 0.25
-  forceActivationRange: 0.35
+  forceActivationRange: 0.8
 --- !u!1 &4014028672248329869
 GameObject:
   m_ObjectHideFlags: 0
