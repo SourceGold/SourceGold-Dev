@@ -35,7 +35,7 @@ public class EnemyHealthBar : MonoBehaviour
     private bool _isFirstSetup = true;
     // Start is called before the first frame update
 
-    public Camera MainCamera;
+    private Camera MainCamera;
 
     private void Awake()
     {
