@@ -40,6 +40,7 @@ public class GameItemSensation : MonoBehaviour
     private void computeClosestObject()
     {
         InteractableObject item_should_be_active = null;
+        closest = null;
         float minimum_score = float.MaxValue;
         int should_be_active_priority = 0;
 
