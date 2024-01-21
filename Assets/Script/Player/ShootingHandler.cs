@@ -9,7 +9,7 @@ public class ShootingHandler : MonoBehaviour
     public float RateOfFire = 50f;
     private Camera Camera;
     public LayerMask aimColliderLayerMask;
-    private Transform spawnBulletPosition;
+    public Transform spawnBulletPosition;
     public Transform pfBulletProjectile;
     private InputMap input;
 
@@ -23,7 +23,7 @@ public class ShootingHandler : MonoBehaviour
     private void Awake()
     {
         Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
-        spawnBulletPosition = transform.Find("BulletPosition");
+        //spawnBulletPosition = transform.Find("BulletPosition");
     }
 
     public void handleShoot(InputAction.CallbackContext context)
