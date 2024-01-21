@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using UnityEngine.Windows;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class MenuController : MonoBehaviour
+public class InGamePauseController : MonoBehaviour
 {
     [SerializeField]
     private VisualTreeAsset _settingFrame;
@@ -28,6 +30,7 @@ public class MenuController : MonoBehaviour
 
     private VisualElement _mainPageButtons;
     private SettingsPage _settings;
+    private InputMap input;
 
     private void Awake()
     {
@@ -35,7 +38,11 @@ public class MenuController : MonoBehaviour
         var _playButton = _doc.rootVisualElement.Q<Button>("PlayButton");
         var _settingButton = _doc.rootVisualElement.Q<Button>("SettingButton");
         var _exitButton = _doc.rootVisualElement.Q<Button>("ExitButton");
-        _playButton.clicked += () => SceneManager.LoadScene("Scenes/Scene1");
+        _playButton.clicked += () => { 
+            _blackBox.style.display = DisplayStyle.None; 
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
+        };
         _exitButton.clicked += () => Application.Quit();
         _settingButton.clicked += SettingsButtonOnClicked;
 
@@ -44,18 +51,38 @@ public class MenuController : MonoBehaviour
         _mainPageButtons = _doc.rootVisualElement.Q<VisualElement>(name: "Buttons");
 
         _title = _doc.rootVisualElement.Q<Label>(name: "HeaderLabel");
-
+        _blackBox.style.display = DisplayStyle.None;
         _settings = new SettingsPage(BackButtonOnClicked, _settingFrame, _toggleBoxTemplate, _floatSliderTemplate, _intSliderTemplate, _enumFieldTemplate);
     }
 
     private void Start()
     {
+        input = FindObjectOfType<ControlManager>().InputMap;
+        input.Player.EscClick.performed += EscOnClick;
+    }
 
+    public void EscOnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (_blackBox.style.display == DisplayStyle.None)
+            {
+                BackButtonOnClicked();
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+                UnityEngine.Cursor.visible = true;
+                _blackBox.style.display = DisplayStyle.Flex;
+            } else
+            {
+                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                UnityEngine.Cursor.visible = false;
+                _blackBox.style.display = DisplayStyle.None;
+            }
+        }
     }
 
     private void SettingsButtonOnClicked()
     {
-        _blackBox.RemoveFromClassList("starting-page-background");
+        _blackBox.RemoveFromClassList("in-game-background");
         _blackBox.AddToClassList("setting-page-background");
         _title.text = "Settings";
 
@@ -67,10 +94,11 @@ public class MenuController : MonoBehaviour
     private void BackButtonOnClicked()
     {
         _blackBox.RemoveFromClassList("settingstarting-page-background");
-        _blackBox.AddToClassList("starting-page-background");
-        _title.text = "Source Gold\nImpact";
+        _blackBox.AddToClassList("in-game-background");
+        _title.text = "Game Pause";
 
-        _displayArea.Remove(_settings.getVisualElement());
+        if (_displayArea.Contains(_settings.getVisualElement()))
+            _displayArea.Remove(_settings.getVisualElement());
         _displayArea.Add(_mainPageButtons);
     }
 }
