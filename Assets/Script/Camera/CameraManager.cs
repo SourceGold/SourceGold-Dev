@@ -70,8 +70,7 @@ public class CameraManager : MonoBehaviour
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
 
-        float sensitivitySetting = GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity;
-        sensitivity = (float)Math.Pow(10, sensitivitySetting * (sensitivityHighLog - sensitivityLowLog) + sensitivityLowLog);
+        setSensitivity(GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity);
 
         input = FindObjectOfType<ControlManager>().InputMap;
         // register input action
@@ -102,6 +101,12 @@ public class CameraManager : MonoBehaviour
     public void Look(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
+    }
+
+    public void setSensitivity(float s)
+    {
+        float sensitivitySetting = s;
+        sensitivity = (float)Math.Pow(10, sensitivitySetting * (sensitivityHighLog - sensitivityLowLog) + sensitivityLowLog);
     }
 
     private void CameraRotation()
