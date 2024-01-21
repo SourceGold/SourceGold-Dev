@@ -5,5 +5,6 @@ public enum PlayerPosture
     Falling,
     Jumping,
     Landing,
-    LockedOn
+    LockedOn,
+    Aiming
 }

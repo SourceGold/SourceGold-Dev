@@ -10,7 +10,8 @@ public class MovementHandler : LocomotionManager
 {
     #region Instance: Camera
 
-    public Transform _cam;
+    private Transform _camT;
+    private Camera _cam;
     private Transform _currentLockOnTarget;
     protected override Transform CurrentLockOnTarget 
     {
@@ -58,6 +59,13 @@ public class MovementHandler : LocomotionManager
     {
         get { return _isJumping; }
         set { _isJumping = value; }
+    }
+
+    private bool _isAiming;
+    protected override bool IsAiming
+    {
+        get { return _isAiming; }
+        set { _isAiming = value; }
     }
 
     private bool _toggleLock;
@@ -111,16 +119,21 @@ public class MovementHandler : LocomotionManager
     #endregion
 
     private InputMap input;
+    private ShootingHandler _shootingHandler;
 
     // Start is called before the first frame update
     void Awake()
     {
+        //Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _isRunning = false;
+        IsAiming = false;
         _cameraManager = FindObjectOfType<CameraManager>();
-        _cam = _cameraManager.gameObject.GetComponent<Camera>().transform;
-        _transform = GetComponent<Transform>(); 
+        _cam = _cameraManager.gameObject.GetComponent<Camera>();
+        _camT = _cam.transform;
+        _transform = GetComponent<Transform>();
+        _shootingHandler = GetComponentInParent<ShootingHandler>();
     }
 
     // Start is called before the first frame update
@@ -156,9 +169,14 @@ public class MovementHandler : LocomotionManager
 
     public void ToggleAim(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting"))
         {
             _cameraManager.ToggleAim();
+            _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
+            if (_animator.GetBool("IsRangeStart"))
+                IsAiming = true;
+            else
+                IsAiming = false;
         }
     }
 
@@ -192,6 +210,14 @@ public class MovementHandler : LocomotionManager
             Quaternion targetRotation = Quaternion.LookRotation(dir);
             transform.rotation = targetRotation;
         }
+        else if (_playerPosture == PlayerPosture.Aiming)
+        {
+            Vector3 dir = _shootingHandler.GetHitPosition() - transform.position;
+            dir.Normalize();
+            dir.y = 0;
+            Quaternion targetRotation = Quaternion.LookRotation(dir);
+            transform.rotation = targetRotation;
+        }
         else if (_input.Equals(Vector2.zero))
             return;
         else
@@ -200,7 +226,7 @@ public class MovementHandler : LocomotionManager
             _direction.z = _input.y;
             Vector3 inputDirection = new Vector3(_input.x, 0.0f, _input.y).normalized;
 
-            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
+            var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + _camT.eulerAngles.y;
             Rotate(targetAngle);
         }
     }
