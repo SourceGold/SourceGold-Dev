@@ -11,6 +11,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class MenuController : MonoBehaviour
 {
+    public SettingsPage _settings;
     [SerializeField]
     private VisualTreeAsset _settingFrame;
     [SerializeField]
@@ -27,7 +28,7 @@ public class MenuController : MonoBehaviour
     private Label _title;
 
     private VisualElement _mainPageButtons;
-    private SettingsPage _settings;
+    
 
     private void Awake()
     {
@@ -59,8 +60,9 @@ public class MenuController : MonoBehaviour
         _blackBox.AddToClassList("setting-page-background");
         _title.text = "Settings";
 
-        _displayArea.Remove(_mainPageButtons);
-        _displayArea.Add(_settings.initializeSettings());
+        _settings.initializeSettings();
+        _displayArea.Remove(_mainPageButtons);    
+        _displayArea.Add(_settings.getRootElement());
 
         
     }
@@ -70,7 +72,7 @@ public class MenuController : MonoBehaviour
         _blackBox.AddToClassList("starting-page-background");
         _title.text = "Source Gold\nImpact";
 
-        _displayArea.Remove(_settings.getVisualElement());
+        _displayArea.Remove(_settings.getRootElement());
         _displayArea.Add(_mainPageButtons);
     }
 }

@@ -4,11 +4,12 @@ using UnityEngine;
 using Assets.Script.Backend;
 using UnityEngine.UIElements;
 using UnityEditor.UI;
+using System.Diagnostics.Tracing;
 
 public class SettingsPage
 {
     [SerializeField]
-    private VisualTreeAsset _toggleBoxTemplate;
+    public VisualTreeAsset _toggleBoxTemplate;
     [SerializeField]
     private VisualTreeAsset _floatSliderTemplate;
     [SerializeField]
@@ -16,10 +17,10 @@ public class SettingsPage
     [SerializeField]
     private VisualTreeAsset _enumFieldTemplate;
 
-    private VisualElement _settingsButtons;
+    private VisualElement _settingsRootElement;
     private ScrollView _settingsView;
-
-    public SettingsPage(System.Action BackButtonOnClicked,
+    private System.Action _backButtonOnClicked;
+    public SettingsPage(System.Action backButtonOnClicked,
         VisualTreeAsset settingFrame,
         VisualTreeAsset toggleBoxTemplate,
         VisualTreeAsset floatSliderTemplate,
@@ -30,37 +31,48 @@ public class SettingsPage
         _floatSliderTemplate = floatSliderTemplate;
         _intSliderTemplate = intSliderTemplate;
         _enumFieldTemplate = enumFieldTemplate;
+        _backButtonOnClicked = backButtonOnClicked;
 
-        _settingsButtons = settingFrame.CloneTree();
+        _settingsRootElement = settingFrame.CloneTree();
         Length settingheight = new Length(100, LengthUnit.Percent);
-        _settingsButtons.style.height = settingheight;
+        _settingsRootElement.style.height = settingheight;
 
-        _settingsView = _settingsButtons.Q<ScrollView>(name: "Scroll");
-        _settingsButtons.Q<Button>("GamePlayButton").clicked += () => { _settingsView.Clear(); addGamePlayButtons(_settingsView); };
-        _settingsButtons.Q<Button>("ControlButton").clicked += () => { _settingsView.Clear(); addControlButtons(_settingsView); };
-        _settingsButtons.Q<Button>("GraphicsButton").clicked += () => { _settingsView.Clear(); addGraphicsButtons(_settingsView); };
-        _settingsButtons.Q<Button>("AudioButton").clicked += () => { _settingsView.Clear(); addAudioButtons(_settingsView); };
+        _settingsView = _settingsRootElement.Q<ScrollView>(name: "Scroll");
+        _settingsRootElement.Q<Button>("GamePlayButton").clicked += () => { _settingsView.Clear(); addGamePlayButtons(_settingsView); };
+        _settingsRootElement.Q<Button>("ControlButton").clicked += () => { _settingsView.Clear(); addControlButtons(_settingsView); };
+        _settingsRootElement.Q<Button>("GraphicsButton").clicked += () => { _settingsView.Clear(); addGraphicsButtons(_settingsView); };
+        _settingsRootElement.Q<Button>("AudioButton").clicked += () => { _settingsView.Clear(); addAudioButtons(_settingsView); };
 
-        _settingsButtons.Q<Button>("SaveButton").clicked += () => { GlobalSettings.instance.SaveUserDefinedSettings(); };
-        _settingsButtons.Q<Button>("SaveAndReturnButton").clicked += () => { GlobalSettings.instance.SaveUserDefinedSettings(); BackButtonOnClicked(); };
-        _settingsButtons.Q<Button>("UndoAndReturnButton").clicked += () => { GlobalSettings.instance.LoadUserDefinedSettings(); BackButtonOnClicked(); };
-        _settingsButtons.Q<Button>("ResetToDefaultButton").clicked += () => {
+        _settingsRootElement.Q<Button>("SaveButton").clicked += () => { GlobalSettings.instance.SaveUserDefinedSettings(); sendValueChangeEvent(); };
+        _settingsRootElement.Q<Button>("SaveAndReturnButton").clicked += () => { GlobalSettings.instance.SaveUserDefinedSettings(); backButtonOnClicked(); sendValueChangeEvent(); };
+        _settingsRootElement.Q<Button>("UndoAndReturnButton").clicked += () => { GlobalSettings.instance.LoadUserDefinedSettings(); backButtonOnClicked(); sendValueChangeEvent(); };
+        _settingsRootElement.Q<Button>("ResetToDefaultButton").clicked += () => {
             GlobalSettings.instance.LoadUserDefinedDefaultSettings();
-            _settingsView.Clear();
-            addGamePlayButtons(_settingsView);
+            initializeSettings();
+            sendValueChangeEvent();
         };
     }
 
-    public VisualElement initializeSettings()
+    public void initializeSettings()
     {
         _settingsView.Clear();
         addGamePlayButtons(_settingsView);
-        return _settingsButtons;
+        
     }
 
-    public VisualElement getVisualElement()
+    public VisualElement getRootElement()
     {
-        return _settingsButtons;
+        return _settingsRootElement;
+    }
+    public void forceExitSettings()
+    {
+        GlobalSettings.instance.LoadUserDefinedSettings();
+        sendValueChangeEvent();
+    }
+
+    public void sendValueChangeEvent()
+    {
+        EventManager.TriggerEvent(GameEventTypes.SettingsPageChangeEvent);
     }
 
     private void addGamePlayButtons(ScrollView view)

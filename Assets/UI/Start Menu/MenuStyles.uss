@@ -142,7 +142,7 @@
     -unity-font-style: bold;
 }
 
-.in-game-background {
+.in-game-pause-background {
     padding-left: 20%;
     padding-right: 20%;
 }
