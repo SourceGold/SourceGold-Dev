@@ -40,11 +40,12 @@ public class CameraManager : MonoBehaviour
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
     private const float _threshold = 0.001f;
-    private const float sensitivityLowLimit = 0.1f;
+    private const float sensitivityLowLimit = 0.2f;
     private const float sensitivityHighLimit = 20f;
     private readonly float sensitivityLowLog = (float)Math.Log10(sensitivityLowLimit);
     private readonly float sensitivityHighLog = (float)Math.Log10(sensitivityHighLimit);
     private float sensitivity;
+    private bool invertCamera;
     private Vector2 _input;
 
     private void Awake()
@@ -64,13 +65,15 @@ public class CameraManager : MonoBehaviour
         AimCamera.Follow = CinemachineCameraTarget;
         LockCamera.gameObject.SetActive(false);
         AimCamera.gameObject.SetActive(false);
+
+        EventManager.StartListening(GameEventTypes.SettingsPageChangeEvent, applySetting);
     }
 
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
 
-        setSensitivity(GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity);
+        applySetting();
 
         input = FindObjectOfType<ControlManager>().InputMap;
         // register input action
@@ -103,10 +106,12 @@ public class CameraManager : MonoBehaviour
         _input = context.ReadValue<Vector2>();
     }
 
-    public void setSensitivity(float s)
+    public void applySetting()
     {
-        float sensitivitySetting = s;
+        float sensitivitySetting = GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity;
         sensitivity = (float)Math.Pow(10, sensitivitySetting * (sensitivityHighLog - sensitivityLowLog) + sensitivityLowLog);
+
+        invertCamera = GlobalSettings.globalSettings.userDefinedSettings.Control.RevertCameraMovements;
     }
 
     private void CameraRotation()
@@ -131,7 +136,7 @@ public class CameraManager : MonoBehaviour
                 //Don't multiply mouse input by Time.deltaTime;
                 //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
                 float deltaTimeMultiplier = 1.0f;
-                if (GlobalSettings.globalSettings.userDefinedSettings.Control.RevertCameraMovements)
+                if (invertCamera)
                     _input.y = -_input.y;
 
                 _cinemachineTargetYaw += _input.x * deltaTimeMultiplier * sensitivity;

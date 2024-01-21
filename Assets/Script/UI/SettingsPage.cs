@@ -138,7 +138,7 @@ public class SettingsPage
         toggle.value = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity;
         toggle.RegisterValueChangedCallback(x =>
         {
-            numberDisplay.text = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity.ToString("0.00");
+            numberDisplay.text = x.newValue.ToString("0.00");
         });
         var title = toggleBox.Q<Label>(name: "FloatSliderLabel");
         title.text = text;
@@ -158,7 +158,7 @@ public class SettingsPage
         toggle.value = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity;
         toggle.RegisterValueChangedCallback(x =>
         {
-            numberDisplay.text = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity.ToString();
+            numberDisplay.text = x.newValue.ToString();
         });
         var title = toggleBox.Q<Label>(name: "IntSliderLabel");
         title.text = text;
