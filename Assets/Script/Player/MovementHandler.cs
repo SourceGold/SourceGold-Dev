@@ -140,7 +140,7 @@ public class MovementHandler : LocomotionManager
         input.Player.LockOn.started += ToggleLockOn;
         input.Player.LockOn.performed += ToggleLockOn;
         input.Player.LockOn.canceled += ToggleLockOn;
-        //input.Player.Aim.performed                      += TriggerJump;
+        input.Player.Aim.performed += ToggleAim;
     }
 
     // Update is called once per frame
@@ -152,6 +152,14 @@ public class MovementHandler : LocomotionManager
     public void GetMoveInput(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
+    }
+
+    public void ToggleAim(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _cameraManager.ToggleAim();
+        }
     }
 
     public void ToggleRunning(InputAction.CallbackContext context)

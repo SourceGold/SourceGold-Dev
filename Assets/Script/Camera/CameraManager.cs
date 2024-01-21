@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,27 +48,29 @@ public class CameraManager : MonoBehaviour
         // reference initialization
         FollowCamera = gameObject.transform.Find("Follow Camera").GetComponent<CinemachineVirtualCamera>();
         LockCamera = gameObject.transform.Find("Lock Camera").GetComponent<CinemachineVirtualCamera>();
+        AimCamera = gameObject.transform.Find("Aim Camera").GetComponent<CinemachineVirtualCamera>();
+
+        Crosshair = gameObject.transform.Find("Crosshair").Find("crosshair_0");
 
         CinemachineCameraTarget = FindObjectOfType<PlayerManager>().transform.Find("Player Bot").Find("Follow Target");
-
 
         // Camera property initialization
         FollowCamera.Follow = CinemachineCameraTarget;
         LockCamera.Follow = CinemachineCameraTarget;
+        AimCamera.Follow = CinemachineCameraTarget;
         LockCamera.gameObject.SetActive(false);
-
-        
-        
+        AimCamera.gameObject.SetActive(false);
     }
 
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
-        //_anim = GetComponentInChildren<Animator>();
 
-        // register input action
         input = FindObjectOfType<ControlManager>().InputMap;
+        // register input action
+        input.Player.Look.started += Look;
         input.Player.Look.performed += Look;
+        input.Player.Look.canceled += Look;
     }
 
     private void LateUpdate()
@@ -75,15 +78,24 @@ public class CameraManager : MonoBehaviour
         CameraRotation();
     }
 
+    public void ToggleAim()
+    {
+        if (AimCamera.gameObject.activeSelf)
+        {
+            AimCamera.gameObject.SetActive(false);
+            Crosshair.gameObject.SetActive(false);
+        }
+        else
+        {
+            Crosshair.gameObject.SetActive(true);
+            AimCamera.gameObject.SetActive(true);
+        }
+    }
+
     public void Look(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawSphere(transform.position, 1);
-    //}
 
     private void CameraRotation()
     {
