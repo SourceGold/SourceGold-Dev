@@ -63,34 +63,20 @@ public class ShootingHandler : MonoBehaviour
         if (allowShoot && isShooting)
         {
             shootWait = 0;
-            //Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            //Ray ray = Camera.ScreenPointToRay(screenCenter);
-            //if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
-            //{
-            //    hitPosition = raycastHit.point;
-            //    Vector3 aimDir = (hitPosition - spawnBulletPosition.position).normalized;
-            //    Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
-            //}
-            try
-            {
-                Vector3 hitPosition = GetHitPosition();
-                Vector3 aimDir = (hitPosition - spawnBulletPosition.position).normalized;
-                Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
-            }
-            catch (InvalidOperationException ex)
-            {
-
-            }
+            Vector3 hitPosition = GetHitPosition();
+            Vector3 aimDir = (hitPosition - spawnBulletPosition.position).normalized;
+            Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
+     
         }
     }
 
     public Vector3 GetHitPosition() {
         Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.ScreenPointToRay(screenCenter);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
-            return raycastHit.point;
-        else
-            throw new InvalidOperationException("Cannot Shoot");
+        Vector3 hitPosition = ray.origin + ray.direction * 500f;
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 500f, aimColliderLayerMask))
+            hitPosition = raycastHit.point;
+        return hitPosition;
     }
 
 }
