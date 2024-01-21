@@ -287,8 +287,9 @@ public abstract class LocomotionManager : MonoBehaviour
     private void MoveAiming()
     {
         float h, v;
-        h = Input.x * _walkSpeed;
-        v = Input.y * _walkSpeed;
+        float targetSpeed = IsRunning ? _runSpeed : _walkSpeed;
+        h = Input.x * targetSpeed;
+        v = Input.y * targetSpeed;
 
         if (h != 0 && v != 0)
         {
