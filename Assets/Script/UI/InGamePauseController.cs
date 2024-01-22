@@ -108,6 +108,5 @@ public class InGamePauseController : MonoBehaviour
         if (_displayArea.Contains(_settings.getRootElement()))
             _displayArea.Remove(_settings.getRootElement());
         _displayArea.Add(_mainPageButtons);
-        // boradcast event
     }
 }
