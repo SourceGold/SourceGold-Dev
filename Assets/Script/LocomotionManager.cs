@@ -271,8 +271,8 @@ public abstract class LocomotionManager : MonoBehaviour
 
         if (h != 0 && v != 0)
         {
-            h *= 1.5f;
-            v *= 1.5f;
+            h *= (float)System.Math.Sqrt(2);
+            v *= (float)System.Math.Sqrt(2);
         }
 
 
@@ -293,15 +293,15 @@ public abstract class LocomotionManager : MonoBehaviour
 
         if (h != 0 && v != 0)
         {
-            h *= 1.5f;
-            v *= 1.5f;
+            h *= (float)System.Math.Sqrt(2);
+            v *= (float)System.Math.Sqrt(2);
         }
+        Debug.Log(h);
+        Debug.Log(v);
 
 
         _aimingHorizontalVelocity = Mathf.Lerp(_aimingHorizontalVelocity, h, 0.5f);
         _aimingVerticalVelocity = Mathf.Lerp(_aimingVerticalVelocity, v, 0.5f);
-        //if (_lockedHorizontalVelocity != 0)
-        //_lockedVerticalVelocity = 0;
         Animator.SetFloat("AimH", _aimingHorizontalVelocity);
         Animator.SetFloat("AimV", _aimingVerticalVelocity);
     }
