@@ -1,3 +1,4 @@
+using Assets.Script.Backend;
 using Cinemachine;
 using System;
 using System.Collections;
@@ -36,11 +37,15 @@ public class CameraManager : MonoBehaviour
 
     List<CharacterManager> availableTargets = new List<CharacterManager>();
 
-    //private Animator _anim;
-
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
-    private const float _threshold = 0.01f;
+    private const float _threshold = 0.001f;
+    private const float sensitivityLowLimit = 0.2f;
+    private const float sensitivityHighLimit = 20f;
+    private readonly float sensitivityLowLog = (float)Math.Log10(sensitivityLowLimit);
+    private readonly float sensitivityHighLog = (float)Math.Log10(sensitivityHighLimit);
+    private float sensitivity;
+    private bool invertCamera;
     private Vector2 _input;
 
     private void Awake()
@@ -60,11 +65,15 @@ public class CameraManager : MonoBehaviour
         AimCamera.Follow = CinemachineCameraTarget;
         LockCamera.gameObject.SetActive(false);
         AimCamera.gameObject.SetActive(false);
+
+        EventManager.StartListening(GameEventTypes.SettingsPageChangeEvent, applySetting);
     }
 
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
+
+        applySetting();
 
         input = FindObjectOfType<ControlManager>().InputMap;
         // register input action
@@ -97,6 +106,14 @@ public class CameraManager : MonoBehaviour
         _input = context.ReadValue<Vector2>();
     }
 
+    public void applySetting()
+    {
+        float sensitivitySetting = GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity;
+        sensitivity = (float)Math.Pow(10, sensitivitySetting * (sensitivityHighLog - sensitivityLowLog) + sensitivityLowLog);
+
+        invertCamera = GlobalSettings.globalSettings.userDefinedSettings.Control.RevertCameraMovements;
+    }
+
     private void CameraRotation()
     {
         if (currentState == CameraState.LockOn)
@@ -113,16 +130,17 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-
             //if there is an input and camera position is not fixed
             if (_input.sqrMagnitude >= _threshold)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
                 float deltaTimeMultiplier = 1.0f;
+                if (invertCamera)
+                    _input.y = -_input.y;
 
-                _cinemachineTargetYaw += _input.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _input.x * deltaTimeMultiplier * sensitivity;
+                _cinemachineTargetPitch += _input.y * deltaTimeMultiplier * sensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
