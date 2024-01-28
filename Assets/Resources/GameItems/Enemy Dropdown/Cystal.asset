@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34db6f963fbffa9448189e902576ef72, type: 3}
+  m_Name: Cystal
+  m_EditorClassIdentifier: 
+  itemName: Cystal
+  itemImage: {fileID: 0}
+  type: 3
+  englishDescription: {fileID: 11400000, guid: 0d85c43bd5a5c894cbdec6343487f9b4, type: 2}
+  chineseDescription: {fileID: 11400000, guid: 8b423073dc08b1343b036aa0d5328c52, type: 2}
