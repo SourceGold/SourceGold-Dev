@@ -91,7 +91,7 @@ public class PlayerManager : CharacterManager, IDataPersistence
             X = playerTranform.x,
             Y = playerTranform.y,
             Z = playerTranform.z,
-            WeaponType = _weaponHandler._weaponType,
+            WeaponType = _weaponHandler.WeaponType,
             WeaponDrawn = _weaponHandler.WeaponDrawn
         };
 

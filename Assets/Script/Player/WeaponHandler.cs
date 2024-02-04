@@ -21,7 +21,7 @@ public class WeaponHandler : MonoBehaviour
     }
 
     private Animator _anim;
-    public int _weaponType { get; private set; } = 0;
+    public int WeaponType { get; private set; } = 0;
     private WeaponInfo[] _weaponInfo;
     public bool WeaponDrawn { get; private set; } = false;
 
@@ -57,33 +57,33 @@ public class WeaponHandler : MonoBehaviour
     {
         if (action == Action.Equip)
         {
-            Weapon[_weaponType].SetParent(WeaponHandle[_weaponType]);
+            Weapon[WeaponType].SetParent(WeaponHandle[WeaponType]);
             WeaponDrawn = true;
         }
         else 
         {
-            Weapon[_weaponType].SetParent(WeaponRestPose[_weaponType]);
+            Weapon[WeaponType].SetParent(WeaponRestPose[WeaponType]);
             WeaponDrawn = false;
         }
 
-        Weapon[_weaponType].localRotation = Quaternion.identity;
-        Weapon[_weaponType].localPosition = Vector3.zero;
+        Weapon[WeaponType].localRotation = Quaternion.identity;
+        Weapon[WeaponType].localPosition = Vector3.zero;
 
         if (switchWeapon)
         {
-            SetWeapon((_weaponType + 1) % Weapon.Length);
+            SetWeapon((WeaponType + 1) % Weapon.Length);
         }
             
     }
 
     public Collider GetCollider()
     {
-        return Weapon[_weaponType].GetComponent<Collider>();
+        return Weapon[WeaponType].GetComponent<Collider>();
     }
 
     public WeaponInfo GetWeaponInfo()
     {
-        return _weaponInfo[_weaponType];
+        return _weaponInfo[WeaponType];
     }
 
     public GameObject FindChildRecursive(GameObject parent, string name)
@@ -99,12 +99,12 @@ public class WeaponHandler : MonoBehaviour
 
     public void SetWeapon(int weaponType)
     {
-        if (weaponType != _weaponType)
+        if (weaponType != this.WeaponType)
         {
-            Weapon[_weaponType].gameObject.SetActive(false);
-            _weaponType = weaponType;
-            _anim.SetInteger("WeaponType", _weaponType + 1);
-            Weapon[_weaponType].gameObject.SetActive(true);
+            Weapon[WeaponType].gameObject.SetActive(false);
+            WeaponType = weaponType;
+            _anim.SetInteger("WeaponType", WeaponType + 1);
+            Weapon[WeaponType].gameObject.SetActive(true);
         }
     }
 }
