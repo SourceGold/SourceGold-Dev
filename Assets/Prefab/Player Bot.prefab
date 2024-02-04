@@ -1236,6 +1236,7 @@ Transform:
   - {fileID: 8528963580036832228}
   - {fileID: 9160733363267746161}
   - {fileID: 3324994035463141702}
+  - {fileID: 2937432678485719112}
   m_Father: {fileID: 8911878555051150859}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2043,7 +2044,6 @@ Transform:
   - {fileID: 4425225758844774199}
   - {fileID: 2084369831555026659}
   - {fileID: 4378398741407890965}
-  - {fileID: 2937432678485719112}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2156,7 +2156,6 @@ MonoBehaviour:
   _leftRightWalkingCoef: 2
   _walkSpeed: 1.75
   _runSpeed: 3.5
-  _cam: {fileID: 0}
   _runMode: 0
 --- !u!114 &6453145102613578987
 MonoBehaviour:
@@ -2187,6 +2186,7 @@ MonoBehaviour:
   aimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 137
+  spawnBulletPosition: {fileID: 0}
   pfBulletProjectile: {fileID: 6863857337172796870, guid: b554a30b8ca61f54d91398a50dfb483e,
     type: 3}
 --- !u!1 &7012922845065194391
@@ -2840,12 +2840,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9051985095493442738}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.52, z: 0.376}
+  m_LocalRotation: {x: 0.5000008, y: -0.49999946, z: 0.5, w: -0.4999997}
+  m_LocalPosition: {x: 0.4314843, y: -0.71333086, z: -0.079386555}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4414269351680752103}
+  m_Father: {fileID: 1923750320319054706}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9210641876266770701

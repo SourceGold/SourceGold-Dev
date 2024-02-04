@@ -70,6 +70,13 @@ public class EnemyLocomotionManager : LocomotionManager
         set { _isJumping = value; }
     }
 
+    private bool _isAiming;
+    protected override bool IsAiming
+    {
+        get { return _isAiming; }
+        set { _isAiming = value; }
+    }
+
     private Vector2 _input;
     protected override Vector2 Input
     {

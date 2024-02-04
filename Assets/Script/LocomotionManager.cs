@@ -28,6 +28,8 @@ public abstract class LocomotionManager : MonoBehaviour
     protected abstract CameraManager CameraManager { get; set; }
 
     private float _standThreshold = 0.0f;
+    private float _lockedThreshold = 0.33f;
+    private float _aimThreashold = 0.66f;
     private float _midAirThreshold = 1.1f;
     private float _gravity = -9.8f;
     private float _currentVelocity;
@@ -37,6 +39,8 @@ public abstract class LocomotionManager : MonoBehaviour
     private float _horizontalVelocity;
     private float _lockedHorizontalVelocity;
     private float _lockedVerticalVelocity;
+    private float _aimingHorizontalVelocity;
+    private float _aimingVerticalVelocity;
     public abstract float VerticalVelocity { get; set; }
 
     private bool _isGrounded;
@@ -46,7 +50,9 @@ public abstract class LocomotionManager : MonoBehaviour
 
     protected abstract bool IsRunning { get; set; }
     protected abstract bool IsJumping { get; set; }
+    protected abstract bool IsAiming { get; set; }
     protected abstract bool ToggleLock { get; set; }
+
 
     protected abstract Vector2 Input { get; set; }
 
@@ -132,6 +138,10 @@ public abstract class LocomotionManager : MonoBehaviour
         else if (CurrentLockOnTarget != null)
         {
             PlayerPosture = PlayerPosture.LockedOn;
+        }
+        else if (IsAiming)
+        {
+            PlayerPosture = PlayerPosture.Aiming;
         }
         else
         {
@@ -261,8 +271,8 @@ public abstract class LocomotionManager : MonoBehaviour
 
         if (h != 0 && v != 0)
         {
-            h *= 1.5f;
-            v *= 1.5f;
+            h *= (float)System.Math.Sqrt(2);
+            v *= (float)System.Math.Sqrt(2);
         }
 
 
@@ -274,6 +284,26 @@ public abstract class LocomotionManager : MonoBehaviour
         Animator.SetFloat("LockedV", _lockedVerticalVelocity);
     }
 
+    private void MoveAiming()
+    {
+        float h, v;
+        float targetSpeed = IsRunning ? _runSpeed : _walkSpeed;
+        h = Input.x * targetSpeed;
+        v = Input.y * targetSpeed;
+
+        if (h != 0 && v != 0)
+        {
+            h *= (float)System.Math.Sqrt(2);
+            v *= (float)System.Math.Sqrt(2);
+        }
+
+
+        _aimingHorizontalVelocity = Mathf.Lerp(_aimingHorizontalVelocity, h, 0.5f);
+        _aimingVerticalVelocity = Mathf.Lerp(_aimingVerticalVelocity, v, 0.5f);
+        Animator.SetFloat("AimH", _aimingHorizontalVelocity);
+        Animator.SetFloat("AimV", _aimingVerticalVelocity);
+    }
+
     protected void SetupAnimator()
     {
         if (PlayerPosture == PlayerPosture.Stand || PlayerPosture == PlayerPosture.Landing)
@@ -283,8 +313,13 @@ public abstract class LocomotionManager : MonoBehaviour
         }
         else if (PlayerPosture == PlayerPosture.LockedOn)
         {
-            Animator.SetFloat("Posture", 0.5f, 0.1f, Time.deltaTime);
+            Animator.SetFloat("Posture", _lockedThreshold, 0.1f, Time.deltaTime);
             MoveLocked();
+        }
+        else if (PlayerPosture == PlayerPosture.Aiming)
+        {
+            Animator.SetFloat("Posture", _aimThreashold, 0.1f, Time.deltaTime);
+            MoveAiming();
         }
         else if (PlayerPosture == PlayerPosture.Jumping || PlayerPosture == PlayerPosture.Falling)
         {
