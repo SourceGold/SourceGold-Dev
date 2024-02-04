@@ -3,6 +3,7 @@ using Assets.Script.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Script
@@ -51,6 +52,10 @@ namespace Assets.Script
             GameEventLogger.LogEvent("Loading Game", EventLogType.SystemEvent);
             foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
             {
+                if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
+                {
+                    continue;
+                }
                 var fileName = $"{dataPersistenceObject.GetSaveFileName()}.yaml";
                 var fullSaveFileName = Path.Combine(saveName, fileName);
                 var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);
@@ -63,6 +68,10 @@ namespace Assets.Script
             GameEventLogger.LogEvent("Saving Game", EventLogType.SystemEvent);
             foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
             {
+                if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
+                {
+                    continue;
+                }
                 var fileName = $"{dataPersistenceObject.GetSaveFileName()}.yaml";
                 var fullSaveFileName = Path.Combine(saveName, fileName);
                 var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);

@@ -428,5 +428,9 @@ public class MovementHandler : MonoBehaviour
         }
     }
 
-   
+    public void Teleport(Vector3 DstGloblePosition)
+    {
+        var delta = DstGloblePosition - transform.position;
+        _characterController.Move(delta);
+    }
 }

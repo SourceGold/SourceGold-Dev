@@ -75,6 +75,7 @@ public class MeleeHandler : MonoBehaviour
 
     public void SwitchWeapon(InputAction.CallbackContext context)
     {
+        if (_anim == null) return;
         if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
         {
             _anim.SetBool("IsWeaponEquipped", false);
@@ -86,6 +87,7 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack1(InputAction.CallbackContext context)
     {
+        if (_anim == null) return;
         if (context.performed)
         {
             _anim.SetInteger("AttackType", 1);
@@ -104,6 +106,7 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack2Press(InputAction.CallbackContext context)
     {
+        if (_anim == null) return;
         if (context.performed && _anim.GetBool("CanAttack"))
         {
             _anim.SetTrigger("Attack");
@@ -114,12 +117,14 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack2Release(InputAction.CallbackContext context)
     {
+        if (_anim == null) return;
         if (context.performed)
             _anim.SetBool("AttackRelease", true);
     }
 
     public void StandingMeleeAttack3(InputAction.CallbackContext context)
     {
+        if (_anim == null) return;
         if (context.performed && _anim.GetBool("CanAttack"))
         {
             _anim.SetTrigger("Attack");
