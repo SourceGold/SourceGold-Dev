@@ -156,6 +156,11 @@ public class MovementHandler : MonoBehaviour
     }
     public void TriggerJump(InputAction.CallbackContext context)
     {
+        // TODO 
+        if (_animator == null)
+        {
+            return;
+        }
         _isJumping = context.ReadValueAsButton() && !_animator.GetBool("IsAttacking");
     }
 

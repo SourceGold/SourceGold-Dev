@@ -11,12 +11,14 @@ public class PlayerManager : CharacterManager, IDataPersistence
     private GameObject _player;
     private Transform _playerBot;
     private MovementHandler _movementHandler;
+    private Animator _anim;
 
     private void Awake()
     {
         MainCamera = FindObjectOfType<CameraManager>().GetComponent<Transform>();
         _weaponHandler = GetComponentInChildren<WeaponHandler>();
         _movementHandler = GetComponentInChildren<MovementHandler>();
+        _anim = GetComponentInChildren<Animator>();
     }
 
     // Start is called before the first frame update
@@ -64,15 +66,20 @@ public class PlayerManager : CharacterManager, IDataPersistence
         if (first)
         {
             first = false;
-            if (GameEventLogger.Instance.PlayerStats == null)
+            var playerStats = GameEventLogger.Instance.PlayerStats;
+            if (playerStats == null)
             {
                 return;
             }
-            Debug.Log(GameEventLogger.Instance.PlayerStats.X);
-            _movementHandler.Teleport(GameEventLogger.Instance.PlayerStats.V3Position());
-            //var pp = _player.transform.position;
-            //var newP = pp + new Vector3(-10f, 0f, 17f);
-            //_playerBot.transform.localPosition = newP;
+            //Debug.Log(playerStats.X);
+            _movementHandler.Teleport(playerStats.V3Position());
+
+            _weaponHandler.SetWeapon(playerStats.WeaponType);
+
+            if (playerStats.WeaponDrawn)
+            {
+                _anim.SetBool("IsWeaponEquipped", true);
+            }
 
         }
     }
@@ -140,7 +147,7 @@ public class PlayerManager : CharacterManager, IDataPersistence
             X = playerTranform.x,
             Y = playerTranform.y,
             Z = playerTranform.z,
-            WeaponType = _weaponHandler.WeaponType,
+            WeaponType = _weaponHandler._weaponType,
             WeaponDrawn = _weaponHandler.WeaponDrawn
         };
 
