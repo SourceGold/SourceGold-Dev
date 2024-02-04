@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b907693b08ad9ff41ab09da22788ea7a, type: 3}
   m_Name: Big Sward
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: BigSward
   itemImage: {fileID: 0}
-  type: 0
+  type: 1
+  maximum_count: 0
   englishDescription: {fileID: 0}
   chineseDescription: {fileID: 0}
-  type: 1

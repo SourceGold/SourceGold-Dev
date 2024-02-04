@@ -1,3 +1,4 @@
+using Assets.Script.Backend;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
@@ -22,5 +23,21 @@ public class InventoryCommand
     static void LogSelectedTransformName()
     {
         Debug.Log("Selected Transform is on " + Selection.activeTransform.gameObject.name + ".");
+    }
+
+    [MenuItem("Internal Controll/Add To Inventory")]
+    static void AddToInventory()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            InventoryItem aItem = new InventoryItem($"Cystal", level: i, currentCount: i);
+            Backend.GameLoop.GetInventory().AddItem(aItem);
+        }
+    }
+
+    [MenuItem("Internal Controll/Print Inventory")]
+    static void PrintToInventory()
+    {
+        Debug.Log(Backend.GameLoop.GetInventory());
     }
 }
