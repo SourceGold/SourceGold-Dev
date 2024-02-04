@@ -435,7 +435,8 @@ public class MovementHandler : MonoBehaviour
 
     public void Teleport(Vector3 DstGloblePosition)
     {
-        var delta = DstGloblePosition - transform.position;
-        _characterController.Move(delta);
+        _characterController.enabled = false;
+        transform.position = DstGloblePosition + new Vector3(0, 0.5f, 0);
+        _characterController.enabled = true;
     }
 }

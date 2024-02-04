@@ -94,6 +94,9 @@ public class MeleeHandler : MonoBehaviour
             if (_anim.GetBool("CanAttack"))
             {
                 _anim.SetTrigger("Attack");
+                // TODO: move to unity nav bar
+                // TODO: attack dmg is not working double check register and double reg (save load cause double register)
+                // TODO: attack dmg is not working even without S/L, need debug
                 DataPersistenceManager.SaveGame("save1");
             }
             if (_anim.GetBool("IsAttacking"))

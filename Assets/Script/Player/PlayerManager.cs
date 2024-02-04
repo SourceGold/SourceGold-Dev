@@ -26,79 +26,30 @@ public class PlayerManager : CharacterManager, IDataPersistence
     {
         Backend.GameLoop.RegisterGameObject(new PlayableCharacter(this.name));
         ((IDataPersistence)this).RegisterExistence();
-        //Debug.Log();
         _player = Resources.Load("Prefab/Player Bot") as GameObject;
         _playerBot = transform.Find("Player Bot");
-        //Debug.Log(GameEventLogger.Instance.PlayerStats);
-        //if (GameEventLogger.Instance.PlayerStats != null) {
-        //    _playerBot.transform.position = new Vector3(GameEventLogger.Instance.PlayerStats.X, GameEventLogger.Instance.PlayerStats.Y, GameEventLogger.Instance.PlayerStats.Z);
-        //    Debug.Log(GameEventLogger.Instance.PlayerStats.X);
-        //    var fileName = $"{GetSaveFileName()}.yaml";
-        //    var fullSaveFileName = Path.Combine("save1", fileName);
-        //    var fullPath = Path.Combine(Application.persistentDataPath, fullSaveFileName);
-        //    Debug.Log(DataPersistenceManager.LoadDataFile<PlayerSaveInfo>(fullPath).X);
-        //}
-        //Debug.Log(MainCamera);
-        first = true;
-    }
 
-    private void Reset()
-    {
-        //if (GameEventLogger.Instance.PlayerStats != null)
-        //{
-        //    _playerBot.transform.position = new Vector3(GameEventLogger.Instance.PlayerStats.X, GameEventLogger.Instance.PlayerStats.Y, GameEventLogger.Instance.PlayerStats.Z);
-        //    Debug.Log(GameEventLogger.Instance.PlayerStats.X);
-        //    var fileName = $"{GetSaveFileName()}.yaml";
-        //    var fullSaveFileName = Path.Combine("save1", fileName);
-        //    var fullPath = Path.Combine(Application.persistentDataPath, fullSaveFileName);
-        //    Debug.Log(DataPersistenceManager.LoadDataFile<PlayerSaveInfo>(fullPath).X);   
-        //}
-    }
+        var playerStats = Backend.Instance.PlayerStats;
+        if (playerStats == null)
+        {
+            return;
+        }
+        //Debug.Log(playerStats.X);
+        _movementHandler.Teleport(playerStats.V3Position());
 
-    private bool first = true;
+        _weaponHandler.SetWeapon(playerStats.WeaponType);
+
+        if (playerStats.WeaponDrawn)
+        {
+            _anim.SetBool("IsWeaponEquipped", true);
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
         // This is a test function to auto seft damage
         //AutoSelfDmg();
-        //live();
-        if (first)
-        {
-            first = false;
-            var playerStats = GameEventLogger.Instance.PlayerStats;
-            if (playerStats == null)
-            {
-                return;
-            }
-            //Debug.Log(playerStats.X);
-            _movementHandler.Teleport(playerStats.V3Position());
-
-            _weaponHandler.SetWeapon(playerStats.WeaponType);
-
-            if (playerStats.WeaponDrawn)
-            {
-                _anim.SetBool("IsWeaponEquipped", true);
-            }
-
-        }
-    }
-
-    public void live()
-    {
-        if (!_start)
-        {
-            Invoke("live2", 10.0f);
-            _start = true;
-        }
-
-    }
-
-    public void live2()
-    {
-        Debug.Log("Live");
-        Invoke("live2", 10);
-
     }
 
     private bool _start = false;
@@ -123,15 +74,8 @@ public class PlayerManager : CharacterManager, IDataPersistence
         var playerInfo = DataPersistenceManager.LoadDataFile<PlayerSaveInfo>(fileName);
         Debug.Log($"loaded info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");
 
-        //Instantiate(_player, new Vector3(-10, 2, 30), Quaternion.identity);
-        //if (transform.Find("Player Bot") != null)
-        //{
-        //    Destroy(transform.Find("Player Bot").gameObject);
-        //}
-        GameEventLogger.Instance.PlayerStats = playerInfo;
-        Debug.Log(GameEventLogger.Instance.PlayerStats);
+        Backend.Instance.PlayerStats = playerInfo;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //_playerBot.transform.position = new Vector3(playerInfo.X, playerInfo.Y, playerInfo.Z);
     }
 
 

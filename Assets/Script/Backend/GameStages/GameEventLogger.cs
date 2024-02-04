@@ -11,8 +11,6 @@ namespace Assets.Script.Backend
 
         public ConcurrentQueue<EventLogMessage> EventLog { get; private set; }
 
-        public PlayerSaveInfo PlayerStats = null;
-
         private static GameEventLogger _instance;
 
         public static GameEventLogger Instance
