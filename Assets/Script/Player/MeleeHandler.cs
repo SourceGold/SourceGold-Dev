@@ -50,10 +50,6 @@ public class MeleeHandler : MonoBehaviour
         input.Player.MeleeAttack3.performed += StandingMeleeAttack3;
     }
 
-    private void Reset()
-    {
-    }
-
     void Update()
     {
         //if (_anim.GetBool("IsDamageOn"))
@@ -132,6 +128,7 @@ public class MeleeHandler : MonoBehaviour
         {
             _anim.SetTrigger("Attack");
             _anim.SetInteger("AttackType", 3);
+            // TODO: move to unity nav bar
             DataPersistenceManager.LoadGame("save1");
         }
     }

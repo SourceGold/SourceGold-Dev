@@ -25,11 +25,6 @@ public class WeaponHandler : MonoBehaviour
     private WeaponInfo[] _weaponInfo;
     public bool WeaponDrawn { get; private set; } = false;
 
-    private void Awake()
-    {
-        
-    }
-
     void Start()
     {
         _anim = GetComponent<Animator>();

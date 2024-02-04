@@ -156,7 +156,8 @@ public class MovementHandler : MonoBehaviour
     }
     public void TriggerJump(InputAction.CallbackContext context)
     {
-        // TODO 
+        // TODO: check if this is disposed and animator is not running anymore.
+        // better to check it in some update method and add print/breakpoint to verify old object is disposed and no floating objects
         if (_animator == null)
         {
             return;
