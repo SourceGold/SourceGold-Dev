@@ -296,8 +296,6 @@ public abstract class LocomotionManager : MonoBehaviour
             h *= (float)System.Math.Sqrt(2);
             v *= (float)System.Math.Sqrt(2);
         }
-        Debug.Log(h);
-        Debug.Log(v);
 
 
         _aimingHorizontalVelocity = Mathf.Lerp(_aimingHorizontalVelocity, h, 0.5f);
