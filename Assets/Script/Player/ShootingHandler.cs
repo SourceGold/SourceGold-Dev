@@ -13,6 +13,8 @@ public class ShootingHandler : MonoBehaviour
     public Transform pfBulletProjectile;
     private InputMap input;
 
+    [HideInInspector] public bool IsMouseLeftDown;
+
     //private bool _isShooting = false;
     private bool isShooting = false;
     private float shootDelay { get { return 1 / RateOfFire; } }
@@ -24,16 +26,30 @@ public class ShootingHandler : MonoBehaviour
     {
         Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
         //spawnBulletPosition = transform.Find("BulletPosition");
+        IsMouseLeftDown = false;
     }
 
     public void handleShoot(InputAction.CallbackContext context)
     {
-        if (context.performed && !_anim.GetBool("RangeStarting") && _anim.GetBool("IsRangeReady"))
+        bool canShoot = !_anim.GetBool("RangeStarting") && _anim.GetBool("IsRangeReady");
+
+        if (context.performed && !canShoot)
         {
+            IsMouseLeftDown = true;
+
+        }
+        else if (context.canceled && !canShoot)
+        {
+            IsMouseLeftDown = false;    
+        }
+        else if (context.performed)
+        {
+            IsMouseLeftDown = true;
             isShooting = true;
         }
-        else if (context.canceled && !_anim.GetBool("RangeStarting") && _anim.GetBool("IsRangeReady"))
+        else if (context.canceled)
         {
+            IsMouseLeftDown = false;
             isShooting = false;
         }
 

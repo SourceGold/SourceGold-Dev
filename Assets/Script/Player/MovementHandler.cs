@@ -169,7 +169,7 @@ public class MovementHandler : LocomotionManager
 
     public void ToggleAim(InputAction.CallbackContext context)
     {
-        if (context.performed && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting"))
+        if (context.performed && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
         {
             _cameraManager.ToggleAim();
             _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
