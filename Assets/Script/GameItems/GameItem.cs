@@ -17,6 +17,7 @@ public class GameItem : ScriptableObject
     public string itemName;
     public Sprite itemImage;
     public GameItemType type;
+    public int maximum_count;
 
     public GameItemDescription englishDescription;
     public GameItemDescription chineseDescription;
