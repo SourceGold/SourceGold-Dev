@@ -8,10 +8,10 @@ namespace Assets.Script.Backend
         // this need to be public to do default serilize before we found a solution
         // commented code are for using default serilize option
         //public List<EventLogMessage> EventLog { get; private set; }
-        
+
         public ConcurrentQueue<EventLogMessage> EventLog { get; private set; }
 
-        public  PlayerSaveInfo  PlayerStats = null;
+        public PlayerSaveInfo PlayerStats = null;
 
         private static GameEventLogger _instance;
 
