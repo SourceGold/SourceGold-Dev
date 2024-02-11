@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7114504455073069712}
   - component: {fileID: 295683579874558529}
   - component: {fileID: 302033939507946664}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 186025786389597878}
   - component: {fileID: 7882203920919827379}
   - component: {fileID: 8360083517558845090}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 8990844122616162709}
   - component: {fileID: 46055215896558788}
   - component: {fileID: 6642709443611116122}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Torus.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 2030305580273309057}
   - component: {fileID: 4776653370218868472}
   - component: {fileID: 5154885382988616348}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Torus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7923407631977340516}
   - component: {fileID: 7238194562058041069}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: GodSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ Transform:
   - {fileID: 965445126608561976}
   - {fileID: 8990844122616162709}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7238194562058041069
 BoxCollider:
@@ -390,8 +390,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.0829427, y: 0.12592372, z: 0.21339345}
-  m_Center: {x: 0.6567503, y: -0.00008083764, z: 0.0031120845}
+  m_Size: {x: 2.4307806, y: 0.12592372, z: 0.21339345}
+  m_Center: {x: 0.482831, y: -0.0000808388, z: 0.003112085}
 --- !u!1 &4367452368212754703
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,7 +403,7 @@ GameObject:
   - component: {fileID: 965445126608561976}
   - component: {fileID: 7176015797277195228}
   - component: {fileID: 5841936916590709969}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Torus.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 6338415864057915697}
   - component: {fileID: 1578181003572697601}
   - component: {fileID: 4481241849130054062}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cylinder.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 6865427806009907091}
   - component: {fileID: 5541782669046972701}
   - component: {fileID: 4244979283105683755}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

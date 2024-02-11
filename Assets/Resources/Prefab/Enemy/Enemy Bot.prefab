@@ -511,7 +511,7 @@ Transform:
   m_GameObject: {fileID: 2374059574870064750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2781520008824209862}
@@ -1072,7 +1072,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3945129696820658287}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lock On Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
