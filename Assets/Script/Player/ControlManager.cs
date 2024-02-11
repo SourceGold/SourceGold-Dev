@@ -73,7 +73,7 @@ public class ControlManager : MonoBehaviour
         _setting.EscClick.performed += EscOnClick;
     }
 
-    private void ToggleInputActionMap()
+    public void ToggleInputActionMap()
     {
         if (_isSetting)
         {
