@@ -39,38 +39,15 @@ public class ControlManager : MonoBehaviour
     {
         _player.Enable();
 
-        _player.Move.started += GetMoveInput;
-        _player.Move.performed += GetMoveInput;
-        _player.Move.canceled += GetMoveInput;
-        _player.Run.started += ToggleRunning;
-        _player.Run.performed += ToggleRunning;
-        _player.Run.canceled += ToggleRunning;
-        _player.Jump.started += TriggerJump;
-        _player.Jump.performed += TriggerJump;
-        _player.Jump.canceled += TriggerJump;
-        _player.LockOn.started += ToggleLockOn;
-        _player.LockOn.performed += ToggleLockOn;
-        _player.LockOn.canceled += ToggleLockOn;
-        _player.Aim.performed += ToggleAim;
+        RegisterMovement();
 
+        RegisterMelee();
 
-        _player.EquipWeapon.performed += EquipWeapon;
-        _player.SwitchWeapon.performed += SwitchWeapon;
-        _player.StandingMeleeLight.performed += StandingMeleeLight;
-        _player.StandingMeleeHeavy.performed += StandingMeleeHeavy;
-        //_player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
-        //_player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
+        RegisterRanged();
 
-        _player.Shoot.started += HandleShoot;
-        _player.Shoot.performed += HandleShoot;
-        _player.Shoot.canceled += HandleShoot;
+        RegisterInteraction();
 
-        _player.SceneInteraction.performed += PickupKeyPress;
-
-        _player.EscClick.performed += EscOnClick;
-
-
-        _setting.EscClick.performed += EscOnClick;
+        RegisterUI();
     }
 
     public void ToggleInputActionMap()
@@ -90,6 +67,22 @@ public class ControlManager : MonoBehaviour
     }
 
     #region Movement Bindings
+    private void RegisterMovement()
+    {
+        _player.Move.started += GetMoveInput;
+        _player.Move.performed += GetMoveInput;
+        _player.Move.canceled += GetMoveInput;
+        _player.Run.started += ToggleRunning;
+        _player.Run.performed += ToggleRunning;
+        _player.Run.canceled += ToggleRunning;
+        _player.Jump.started += TriggerJump;
+        _player.Jump.performed += TriggerJump;
+        _player.Jump.canceled += TriggerJump;
+        _player.LockOn.started += ToggleLockOn;
+        _player.LockOn.performed += ToggleLockOn;
+        _player.LockOn.canceled += ToggleLockOn;
+        _player.Aim.performed += ToggleAim;
+    }
     private void GetMoveInput(InputAction.CallbackContext context)
     {
         _movementHandler.GetMoveInput(context.ReadValue<Vector2>());
@@ -114,6 +107,15 @@ public class ControlManager : MonoBehaviour
     #endregion
 
     #region Melee Bindings
+    private void RegisterMelee()
+    {
+        _player.EquipWeapon.performed += EquipWeapon;
+        _player.SwitchWeapon.performed += SwitchWeapon;
+        _player.StandingMeleeLight.performed += StandingMeleeLight;
+        _player.StandingMeleeHeavy.performed += StandingMeleeHeavy;
+        //_player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
+        //_player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
+    }
     private void EquipWeapon(InputAction.CallbackContext context)
     {
         _meleeHandler.EquipWeapon(context.performed);
@@ -141,6 +143,12 @@ public class ControlManager : MonoBehaviour
     #endregion
 
     #region Range Bindings
+    private void RegisterRanged()
+    {
+        _player.Shoot.started += HandleShoot;
+        _player.Shoot.performed += HandleShoot;
+        _player.Shoot.canceled += HandleShoot;
+    }
     private void HandleShoot(InputAction.CallbackContext context)
     {
         _shootingHandler.HandleShoot(context.performed, context.canceled);
@@ -148,6 +156,11 @@ public class ControlManager : MonoBehaviour
     #endregion
 
     #region Interaction Bindings
+    private void RegisterInteraction()
+    {
+        _player.SceneInteraction.performed += PickupKeyPress;
+    }
+
     private void PickupKeyPress(InputAction.CallbackContext context)
     {
         _gameItemSensationHandler.PickupKeyPress(context.performed);
@@ -155,6 +168,12 @@ public class ControlManager : MonoBehaviour
     #endregion
 
     #region UI Bindings
+    private void RegisterUI()
+    {
+        _player.EscClick.performed += EscOnClick;
+
+        _setting.EscClick.performed += EscOnClick;
+    }
     private void EscOnClick(InputAction.CallbackContext context)
     {
         _inGamePauseController.EscOnClick(context.performed);
