@@ -87,33 +87,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SkillMeleeAttack1",
-                    "type": "Button",
-                    "id": "7db8ba8d-fe83-470d-aa95-4c7e5558655c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Test",
-                    "type": "Button",
-                    "id": "f7893ace-4b1d-441d-af7f-a9e1f90ef05d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Test2",
-                    "type": "Button",
-                    "id": "e78d7a53-0285-4598-a45b-616cbe9beff3",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "LockOn",
                     "type": "Button",
                     "id": "ae6d4515-b41e-4d9c-acdd-2ef7c8d33030",
@@ -248,6 +221,17 @@
                 },
                 {
                     "name": "",
+                    "id": "a860d803-3967-413c-a10f-c64ac4be5a72",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MeleeAttack1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
                     "path": "<Keyboard>/k",
                     "interactions": "Press",
@@ -270,39 +254,6 @@
                 },
                 {
                     "name": "",
-                    "id": "b40f1a52-226f-4244-b6a1-6d49e72220cb",
-                    "path": "<Keyboard>/u",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SkillMeleeAttack1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "45953eb9-2e3f-47df-95ae-61608502ed4b",
-                    "path": "<Keyboard>/t",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Test",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "963cd176-60ec-4bfd-9d90-18133457e928",
-                    "path": "<Keyboard>/c",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Test2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "94ee573f-f84d-41d4-a1b8-6008421210ef",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
@@ -315,7 +266,7 @@
                 {
                     "name": "",
                     "id": "2721bb33-26c1-4b9c-822f-c2d5d150ec9a",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/l",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
@@ -337,7 +288,18 @@
                 {
                     "name": "",
                     "id": "2254fdc5-f977-4100-bb2d-aecba16438db",
-                    "path": "<Keyboard>/l",
+                    "path": "<Keyboard>/k",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MeleeAttack3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "46c6b1fd-f72f-4e2c-83ae-55580a23e4ce",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",

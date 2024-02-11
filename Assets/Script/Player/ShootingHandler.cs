@@ -25,40 +25,7 @@ public class ShootingHandler : MonoBehaviour
     private void Awake()
     {
         Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
-        //spawnBulletPosition = transform.Find("BulletPosition");
         IsMouseLeftDown = false;
-    }
-
-    public void handleShoot(InputAction.CallbackContext context)
-    {
-        bool canShoot = !_anim.GetBool("RangeStarting") && _anim.GetBool("IsRangeReady");
-
-        if (context.performed && !canShoot)
-        {
-            IsMouseLeftDown = true;
-
-        }
-        else if (context.canceled && !canShoot)
-        {
-            IsMouseLeftDown = false;    
-        }
-        else if (context.performed)
-        {
-            IsMouseLeftDown = true;
-            isShooting = true;
-        }
-        else if (context.canceled)
-        {
-            IsMouseLeftDown = false;
-            isShooting = false;
-        }
-
-        //if (context.started)
-        //    if (!isShooting)
-        //        isShooting = true;
-
-        //if (context.canceled)
-        //    isShooting = false;
     }
 
     // Start is called before the first frame update
@@ -66,9 +33,7 @@ public class ShootingHandler : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         input = FindObjectOfType<ControlManager>().InputMap;
-        input.Player.Shoot.started += handleShoot;
-        input.Player.Shoot.performed += handleShoot;
-        input.Player.Shoot.canceled += handleShoot;
+
         shootWait += shootDelay;
     }
 
@@ -83,6 +48,31 @@ public class ShootingHandler : MonoBehaviour
             Vector3 aimDir = (hitPosition - spawnBulletPosition.position).normalized;
             Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
      
+        }
+    }
+
+    public void HandleShoot(bool performed, bool canceled)
+    {
+        bool canShoot = !_anim.GetBool("RangeStarting") && _anim.GetBool("IsRangeReady");
+
+        if (performed && !canShoot)
+        {
+            IsMouseLeftDown = true;
+
+        }
+        else if (canceled && !canShoot)
+        {
+            IsMouseLeftDown = false;
+        }
+        else if (performed)
+        {
+            IsMouseLeftDown = true;
+            isShooting = true;
+        }
+        else if (canceled)
+        {
+            IsMouseLeftDown = false;
+            isShooting = false;
         }
     }
 

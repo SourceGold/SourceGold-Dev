@@ -30,7 +30,6 @@ public class InGamePauseController : MonoBehaviour
 
     private VisualElement _mainPageButtons;
     private SettingsPage _settings;
-    private InputMap inputSystem;
 
     private void Awake()
     {
@@ -62,14 +61,11 @@ public class InGamePauseController : MonoBehaviour
         // There might be a better place
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
-
-        inputSystem = FindObjectOfType<ControlManager>().InputMap;
-        inputSystem.Player.EscClick.performed += EscOnClick;
     }
 
-    public void EscOnClick(InputAction.CallbackContext context)
+    public void EscOnClick(bool performed)
     {
-        if (context.performed)
+        if (performed)
         {
             if (rootBackground.style.display == DisplayStyle.None)
             {
