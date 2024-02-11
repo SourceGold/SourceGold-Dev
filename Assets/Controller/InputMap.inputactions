@@ -374,6 +374,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Setting",
+            "id": "b885436f-8eb0-40a7-be06-4f4384f05815",
+            "actions": [
+                {
+                    "name": "Esc Click",
+                    "type": "Button",
+                    "id": "3420a6d5-fdcf-401c-8492-3afc5bcefe73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9412f988-c4f8-4bd4-ac3b-b0dda0c476bc",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Esc Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

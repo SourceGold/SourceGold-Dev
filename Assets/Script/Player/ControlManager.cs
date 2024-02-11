@@ -10,6 +10,9 @@ public class ControlManager : MonoBehaviour
     public InputMap InputMap;
 
     private InputMap.PlayerActions _player;
+    private InputMap.SettingActions _setting;
+    private bool _isSetting;
+
     private PlayerManager _playerManager;
     private MovementHandler _movementHandler;
     private MeleeHandler _meleeHandler;
@@ -21,7 +24,9 @@ public class ControlManager : MonoBehaviour
     {
         InputMap = new InputMap();
         _player = InputMap.Player;
-        InputMap.Player.Enable();
+        _setting = InputMap.Setting;
+        _isSetting = false;
+
         _playerManager = FindObjectOfType<PlayerManager>();
         _movementHandler = _playerManager.GetComponentInChildren<MovementHandler>();
         _meleeHandler = _playerManager.GetComponentInChildren<MeleeHandler>();
@@ -32,6 +37,8 @@ public class ControlManager : MonoBehaviour
 
     void Start()
     {
+        _player.Enable();
+
         _player.Move.started += GetMoveInput;
         _player.Move.performed += GetMoveInput;
         _player.Move.canceled += GetMoveInput;
@@ -61,6 +68,25 @@ public class ControlManager : MonoBehaviour
         _player.SceneInteraction.performed += PickupKeyPress;
 
         _player.EscClick.performed += EscOnClick;
+
+
+        _setting.EscClick.performed += EscOnClick;
+    }
+
+    private void ToggleInputActionMap()
+    {
+        if (_isSetting)
+        {
+            _isSetting = false;
+            _setting.Disable();
+            _player.Enable();
+        }
+        else
+        {
+            _isSetting = true;
+            _player.Disable();
+            _setting.Enable();
+        }
     }
 
     #region Movement Bindings
@@ -132,6 +158,7 @@ public class ControlManager : MonoBehaviour
     private void EscOnClick(InputAction.CallbackContext context)
     {
         _inGamePauseController.EscOnClick(context.performed);
+        ToggleInputActionMap();
     }
     #endregion
 }
