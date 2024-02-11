@@ -61,7 +61,7 @@ public class MeleeHandler : MonoBehaviour
     }
 
 
-    public void StandingMeleeAttack1(bool performed)
+    public void StandingMeleeLight(bool performed)
     {
         if (performed)
         {
@@ -77,23 +77,7 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-    public void StandingMeleeAttack2Press(bool performed)
-    {
-        if (performed && _anim.GetBool("CanAttack"))
-        {
-            _anim.SetTrigger("Attack");
-            _anim.SetInteger("AttackType", 2);
-            _anim.SetBool("AttackRelease", false);
-        }
-    }
-
-    public void StandingMeleeAttack2Release(bool performed)
-    {
-        if (performed)
-            _anim.SetBool("AttackRelease", true);
-    }
-
-    public void StandingMeleeAttack3(bool performed)
+    public void StandingMeleeHeavy(bool performed)
     {
         if (performed && _anim.GetBool("CanAttack"))
         {
@@ -101,6 +85,23 @@ public class MeleeHandler : MonoBehaviour
             _anim.SetInteger("AttackType", 3);
         }
     }
+
+    //public void StandingMeleeAttack2Press(bool performed)
+    //{
+    //    if (performed && _anim.GetBool("CanAttack"))
+    //    {
+    //        _anim.SetTrigger("Attack");
+    //        _anim.SetInteger("AttackType", 2);
+    //        _anim.SetBool("AttackRelease", false);
+    //    }
+    //}
+
+    //public void StandingMeleeAttack2Release(bool performed)
+    //{
+    //    if (performed)
+    //        _anim.SetBool("AttackRelease", true);
+    //}
+
 
 
     //private void CheckTrail()

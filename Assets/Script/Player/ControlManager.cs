@@ -49,10 +49,10 @@ public class ControlManager : MonoBehaviour
 
         _player.EquipWeapon.performed += EquipWeapon;
         _player.SwitchWeapon.performed += SwitchWeapon;
-        _player.MeleeAttack1.performed += StandingMeleeAttack1;
-        _player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
-        _player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
-        _player.MeleeAttack3.performed += StandingMeleeAttack3;
+        _player.StandingMeleeLight.performed += StandingMeleeLight;
+        _player.StandingMeleeHeavy.performed += StandingMeleeHeavy;
+        //_player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
+        //_player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
 
         _player.Shoot.started += HandleShoot;
         _player.Shoot.performed += HandleShoot;
@@ -96,22 +96,22 @@ public class ControlManager : MonoBehaviour
     {
         _meleeHandler.SwitchWeapon(context.performed);
     }
-    private void StandingMeleeAttack1(InputAction.CallbackContext context)
+    private void StandingMeleeLight(InputAction.CallbackContext context)
     {
-        _meleeHandler.StandingMeleeAttack1(context.performed);
+        _meleeHandler.StandingMeleeLight(context.performed);
     }
-    private void StandingMeleeAttack2Press(InputAction.CallbackContext context)
+    private void StandingMeleeHeavy(InputAction.CallbackContext context)
     {
-        _meleeHandler.StandingMeleeAttack2Press(context.performed);
+        _meleeHandler.StandingMeleeHeavy(context.performed);
     }
-    private void StandingMeleeAttack2Release(InputAction.CallbackContext context)
-    {
-        _meleeHandler.StandingMeleeAttack2Release(context.performed);
-    }
-    private void StandingMeleeAttack3(InputAction.CallbackContext context)
-    {
-        _meleeHandler.StandingMeleeAttack3(context.performed);
-    }
+    //private void StandingMeleeAttack2Press(InputAction.CallbackContext context)
+    //{
+    //    _meleeHandler.StandingMeleeAttack2Press(context.performed);
+    //}
+    //private void StandingMeleeAttack2Release(InputAction.CallbackContext context)
+    //{
+    //    _meleeHandler.StandingMeleeAttack2Release(context.performed);
+    //}
     #endregion
 
     #region Range Bindings

@@ -51,9 +51,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MeleeAttack1",
+                    "name": "StandingMeleeLight",
                     "type": "Button",
                     "id": "a937b8a9-b4a2-4dcd-8b44-4bfe27813f44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StandingMeleeHeavy",
+                    "type": "Button",
+                    "id": "f83b8cc6-a409-4bc8-903a-261124947c22",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -72,15 +81,6 @@
                     "name": "MeleeAttack2Release",
                     "type": "Button",
                     "id": "e747a9b9-f3cf-4894-b74b-4069c15e9edd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MeleeAttack3",
-                    "type": "Button",
-                    "id": "f83b8cc6-a409-4bc8-903a-261124947c22",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -215,7 +215,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "MeleeAttack1",
+                    "action": "StandingMeleeLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -226,14 +226,14 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "MeleeAttack1",
+                    "action": "StandingMeleeLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/l",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -282,28 +282,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2254fdc5-f977-4100-bb2d-aecba16438db",
-                    "path": "<Keyboard>/k",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MeleeAttack3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "46c6b1fd-f72f-4e2c-83ae-55580a23e4ce",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MeleeAttack3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -370,6 +348,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Esc Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2254fdc5-f977-4100-bb2d-aecba16438db",
+                    "path": "<Keyboard>/k",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeHeavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "46c6b1fd-f72f-4e2c-83ae-55580a23e4ce",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeHeavy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
