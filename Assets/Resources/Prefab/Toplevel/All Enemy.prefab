@@ -54,6 +54,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8045063321244916339}
     m_Modifications:
+    - target: {fileID: 483298864155846385, guid: aa896b7674c234f19a9b9030135e0a4e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 483298864155846385, guid: aa896b7674c234f19a9b9030135e0a4e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7222713431436143162, guid: aa896b7674c234f19a9b9030135e0a4e,
         type: 3}
       propertyPath: m_RootOrder
@@ -72,7 +82,7 @@ PrefabInstance:
     - target: {fileID: 7222713431436143162, guid: aa896b7674c234f19a9b9030135e0a4e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1.66
       objectReference: {fileID: 0}
     - target: {fileID: 7222713431436143162, guid: aa896b7674c234f19a9b9030135e0a4e,
         type: 3}
@@ -114,22 +124,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Human Enemy
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7022915064859107668, guid: aa896b7674c234f19a9b9030135e0a4e, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2890948841747104492, guid: aa896b7674c234f19a9b9030135e0a4e,
-        type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 7386219692139092391}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa896b7674c234f19a9b9030135e0a4e, type: 3}
---- !u!4 &66816941183957749 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2890948841747104492, guid: aa896b7674c234f19a9b9030135e0a4e,
-    type: 3}
-  m_PrefabInstance: {fileID: 2950938579952908313}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5534902612679660067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7222713431436143162, guid: aa896b7674c234f19a9b9030135e0a4e,

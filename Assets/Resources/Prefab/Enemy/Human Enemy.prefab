@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3887340149348272111}
   - component: {fileID: 2603395036823378752}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NavAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7222713431436143162}
-  - component: {fileID: 7022915064859107668}
   - component: {fileID: 7571696794992973008}
   - component: {fileID: 7233349312172440508}
   - component: {fileID: 7167369114644586254}
@@ -71,7 +70,7 @@ GameObject:
   - component: {fileID: 3019986435713426626}
   - component: {fileID: 913331385737105368}
   - component: {fileID: 1394397056474333235}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Human Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,21 +93,8 @@ Transform:
   - {fileID: 3887340149348272111}
   - {fileID: 8272379988187091124}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7022915064859107668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9184967814767266888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e3d3e56611ca4e78afb3ad2af201db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 0}
 --- !u!95 &7571696794992973008
 Animator:
   serializedVersion: 5
@@ -149,7 +135,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.8
-  m_Radius: 0.2
+  m_Radius: 0.35
   m_SlopeLimit: 45
   m_StepOffset: 0.1
   m_SkinWidth: 0.05
@@ -353,21 +339,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 491658732484078449, guid: 853790370f0b8458d8107c5d5681e874,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 491658732484078449, guid: 853790370f0b8458d8107c5d5681e874,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 491658732484078449, guid: 853790370f0b8458d8107c5d5681e874,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 491658732484078449, guid: 853790370f0b8458d8107c5d5681e874,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -421,13 +392,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Bot
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3296831053376171544, guid: 853790370f0b8458d8107c5d5681e874, type: 3}
-    - {fileID: 7243469942359830387, guid: 853790370f0b8458d8107c5d5681e874, type: 3}
-    - {fileID: 8497548209442806705, guid: 853790370f0b8458d8107c5d5681e874, type: 3}
-    - {fileID: 909982953710415290, guid: 853790370f0b8458d8107c5d5681e874, type: 3}
-    - {fileID: 8066362532950195252, guid: 853790370f0b8458d8107c5d5681e874, type: 3}
-    - {fileID: 5279666433320400066, guid: 853790370f0b8458d8107c5d5681e874, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
