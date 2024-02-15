@@ -180,6 +180,15 @@ public class MovementHandler : LocomotionManager
         }
     }
 
+    public void TriggerRoll(bool performed)
+    {
+        //if (performed && !_animator.GetBool("IsRolling") && _playerPosture == PlayerPosture.Stand && _input.magnitude != 0)
+        //{
+        //    _animator.SetBool("IsRolling", true);
+        //}
+
+    }
+
     #endregion
 
     protected override void Rotate()

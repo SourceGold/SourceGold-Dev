@@ -82,6 +82,7 @@ public class ControlManager : MonoBehaviour
         _player.LockOn.performed += ToggleLockOn;
         _player.LockOn.canceled += ToggleLockOn;
         _player.Aim.performed += ToggleAim;
+        _player.Roll.performed += TriggerRoll;
     }
     private void GetMoveInput(InputAction.CallbackContext context)
     {
@@ -103,6 +104,10 @@ public class ControlManager : MonoBehaviour
     private void ToggleAim(InputAction.CallbackContext context)
     {
         _movementHandler.ToggleAim(context.performed);
+    }
+    private void TriggerRoll(InputAction.CallbackContext context)
+    {
+        _movementHandler.TriggerRoll(context.performed);
     }
     #endregion
 
