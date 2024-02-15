@@ -26,6 +26,7 @@ public class MeleeHandler : MonoBehaviour
 
     public WeaponHandler WeaponHandlerRef;
     private Animator _anim;
+    private MovementHandler _movementHandler;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class MeleeHandler : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
+        _movementHandler = GetComponent<MovementHandler>();
     }
 
     void Update()
@@ -47,6 +49,7 @@ public class MeleeHandler : MonoBehaviour
         if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
+            _movementHandler.SetWeaponStatus(_anim.GetBool("IsWeaponEquipped"));
         }
     }
 

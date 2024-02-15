@@ -127,7 +127,7 @@ public class MovementHandler : LocomotionManager
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _isRunning = false;
-        IsAiming = false;
+        _isAiming = false;
         _cameraManager = FindObjectOfType<CameraManager>();
         _cam = _cameraManager.gameObject.GetComponent<Camera>();
         _camT = _cam.transform;
@@ -182,14 +182,22 @@ public class MovementHandler : LocomotionManager
 
     public void TriggerRoll(bool performed)
     {
-        //if (performed && !_animator.GetBool("IsRolling") && _playerPosture == PlayerPosture.Stand && _input.magnitude != 0)
-        //{
-        //    _animator.SetBool("IsRolling", true);
-        //}
+        if (performed && !_animator.GetBool("IsRolling") && _playerPosture == PlayerPosture.Stand && _input.magnitude != 0)
+        {
+            _animator.SetBool("IsRolling", true);
+        }
 
     }
 
     #endregion
+
+    public void SetWeaponStatus(bool equip)
+    {
+        if (equip)
+            _weaponStatus = WeaponStatus.Equipped;
+        else
+            _weaponStatus = WeaponStatus.Unequipped;
+    }
 
     protected override void Rotate()
     {
@@ -211,6 +219,10 @@ public class MovementHandler : LocomotionManager
             transform.rotation = targetRotation;
         }
         else if (_input.Equals(Vector2.zero))
+            return;
+        else if (_animator.GetBool("IsRolling"))
+            return;
+        else if (!_animator.GetCurrentAnimatorStateInfo(2).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(2).IsName("AttackIdle"))
             return;
         else
         {
