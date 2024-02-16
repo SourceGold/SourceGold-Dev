@@ -1682,7 +1682,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DogeBack
-  m_Speed: 2.8
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -6599820235775371348}
