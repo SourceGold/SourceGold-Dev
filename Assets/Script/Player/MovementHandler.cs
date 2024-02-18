@@ -84,7 +84,7 @@ public class MovementHandler : LocomotionManager
 
     private Vector3 _direction;
 
-    [SerializeField] private bool _runMode = true;
+    //[SerializeField] private bool _runMode = true;
 
     private Transform _transform;
     protected override Transform Transform
@@ -118,7 +118,6 @@ public class MovementHandler : LocomotionManager
     }
     #endregion
 
-    private InputMap input;
     private ShootingHandler _shootingHandler;
 
     // Start is called before the first frame update
@@ -139,21 +138,7 @@ public class MovementHandler : LocomotionManager
     // Start is called before the first frame update
     void Start()
     {
-        input = FindObjectOfType<ControlManager>().InputMap;
 
-        input.Player.Move.started += GetMoveInput;
-        input.Player.Move.performed += GetMoveInput;
-        input.Player.Move.canceled += GetMoveInput;
-        input.Player.Jump.started += TriggerJump;
-        input.Player.Jump.performed += TriggerJump;
-        input.Player.Jump.canceled += TriggerJump;
-        input.Player.Run.started += ToggleRunning;
-        input.Player.Run.performed += ToggleRunning;
-        input.Player.Run.canceled += ToggleRunning;
-        input.Player.LockOn.started += ToggleLockOn;
-        input.Player.LockOn.performed += ToggleLockOn;
-        input.Player.LockOn.canceled += ToggleLockOn;
-        input.Player.Aim.performed += ToggleAim;
     }
 
     // Update is called once per frame
@@ -162,14 +147,29 @@ public class MovementHandler : LocomotionManager
         PlayerUpdate();
     }
     #region Functions: Inputs
-    public void GetMoveInput(InputAction.CallbackContext context)
+    public void GetMoveInput(Vector2 moveInput)
     {
-        _input = context.ReadValue<Vector2>();
+        _input = moveInput;
     }
 
-    public void ToggleAim(InputAction.CallbackContext context)
+    public void ToggleRunning(bool performed)
     {
-        if (context.performed && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
+        _isRunning = performed ? !_isRunning : _isRunning;
+    }
+    public void TriggerJump(bool performed)
+    {
+        _isJumping = performed && !_animator.GetBool("IsAttacking");
+    }
+
+    public void ToggleLockOn(bool performed)
+    {
+        if (performed)
+            _toggleLock = true;
+    }
+
+    public void ToggleAim(bool performed)
+    {
+        if (performed && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
         {
             _cameraManager.ToggleAim();
             _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
@@ -178,23 +178,6 @@ public class MovementHandler : LocomotionManager
             else
                 IsAiming = false;
         }
-    }
-
-    public void ToggleRunning(InputAction.CallbackContext context)
-    {
-        if (_runMode)
-            _isRunning = context.performed ? !_isRunning : _isRunning;
-        else
-            _isRunning = context.ReadValueAsButton();
-    }
-    public void TriggerJump(InputAction.CallbackContext context)
-    {
-        _isJumping = context.ReadValueAsButton() && !_animator.GetBool("IsAttacking");
-    }
-    public void ToggleLockOn(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            _toggleLock = true;
     }
 
     #endregion

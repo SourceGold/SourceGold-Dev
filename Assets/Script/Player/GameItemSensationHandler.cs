@@ -6,7 +6,7 @@ using Unity.Loading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameItemSensation : MonoBehaviour
+public class GameItemSensationHandler : MonoBehaviour
 {
     
     List<GameObject> inRangeItems = new List<GameObject>();
@@ -17,14 +17,10 @@ public class GameItemSensation : MonoBehaviour
     float stickyTime;
     [SerializeField]
     float forceActivationRange = 0.35f;
-    private InputMap input;
     private float relativeZDistance;
     private Camera MainCamera;
     private void Start()
     {
-        input = FindObjectOfType<ControlManager>().InputMap;
-
-        input.Player.SceneInteraction.performed += pickupKeyPress;
         relativeZDistance = transform.localPosition.z;
         MainCamera = FindObjectOfType<CameraManager>().GetComponent<Camera>();
     }
@@ -140,9 +136,9 @@ public class GameItemSensation : MonoBehaviour
     }
 
 
-    public void pickupKeyPress(InputAction.CallbackContext context)
+    public void PickupKeyPress(bool performed)
     {
-        if (context.performed)
+        if (performed)
         {
             if (closest != null)
             {

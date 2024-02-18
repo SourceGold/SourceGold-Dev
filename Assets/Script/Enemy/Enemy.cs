@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
             {
                 var attackerName = other.GetComponentInParent<PlayerManager>().name;
                 //_anim.SetTrigger("Hit");
-                Debug.Log("Hit By Sword");
+                //Debug.Log("Hit By Sword");
 
                 Backend.GameLoop.ProcessDamage(new DamangeSource(){ SrcObjectName = attackerName }, new DamageTarget() { TgtObjectName = _name });
             } 

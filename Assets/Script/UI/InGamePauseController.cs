@@ -30,7 +30,8 @@ public class InGamePauseController : MonoBehaviour
 
     private VisualElement _mainPageButtons;
     private SettingsPage _settings;
-    private InputMap inputSystem;
+
+    private ControlManager _controlManager;
 
     private void Awake()
     {
@@ -39,10 +40,12 @@ public class InGamePauseController : MonoBehaviour
         var _settingButton = _doc.rootVisualElement.Q<Button>("SettingButton");
         var _exitButton = _doc.rootVisualElement.Q<Button>("ExitButton");
 
+        _controlManager = FindObjectOfType<ControlManager>();
         _playButton.clicked += () => { 
             rootBackground.style.display = DisplayStyle.None; 
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
+            _controlManager.ToggleInputActionMap();
         };
         _exitButton.clicked += () => Application.Quit();
         _settingButton.clicked += SettingsButtonOnClicked;
@@ -62,14 +65,11 @@ public class InGamePauseController : MonoBehaviour
         // There might be a better place
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
-
-        inputSystem = FindObjectOfType<ControlManager>().InputMap;
-        inputSystem.Player.EscClick.performed += EscOnClick;
     }
 
-    public void EscOnClick(InputAction.CallbackContext context)
+    public void EscOnClick(bool performed)
     {
-        if (context.performed)
+        if (performed)
         {
             if (rootBackground.style.display == DisplayStyle.None)
             {
