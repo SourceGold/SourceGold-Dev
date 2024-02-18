@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
+    private ControlSettings _controlSettings;
+    private GraphicsSettings _graphicsSettings;
 
     private Transform NearestLockOnTarget;
     private Transform CinemachineCameraTarget;
@@ -66,6 +68,7 @@ public class CameraManager : MonoBehaviour
         LockCamera.gameObject.SetActive(false);
         AimCamera.gameObject.SetActive(false);
 
+        
         EventManager.StartListening(GameEventTypes.SettingsPageChangeEvent, applySetting);
     }
 
@@ -73,6 +76,8 @@ public class CameraManager : MonoBehaviour
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
 
+        _controlSettings = GlobalSettings.globalSettings.userDefinedSettings.Control;
+        _graphicsSettings = GlobalSettings.globalSettings.userDefinedSettings.Graphics;
         applySetting();
 
         input = FindObjectOfType<ControlManager>().InputMap;
@@ -115,10 +120,11 @@ public class CameraManager : MonoBehaviour
 
     public void applySetting()
     {
-        float sensitivitySetting = GlobalSettings.globalSettings.userDefinedSettings.Control.MouseSensitivity;
+        float sensitivitySetting = _controlSettings.MouseSensitivity;
         sensitivity = (float)Math.Pow(10, sensitivitySetting * (sensitivityHighLog - sensitivityLowLog) + sensitivityLowLog);
+        invertCamera = _controlSettings.RevertCameraMovements;
 
-        invertCamera = GlobalSettings.globalSettings.userDefinedSettings.Control.RevertCameraMovements;
+        FollowCamera.m_Lens.FieldOfView = _graphicsSettings.VerticalFov;
     }
 
     private void CameraRotation()
