@@ -52,7 +52,6 @@
                 },
                 {
                     "name": "StandingMeleeLight",
-                    "name": "StandingMeleeLight",
                     "type": "Button",
                     "id": "a937b8a9-b4a2-4dcd-8b44-4bfe27813f44",
                     "expectedControlType": "Button",
@@ -63,16 +62,7 @@
                 {
                     "name": "StandingMeleeHeavy",
                     "type": "Button",
-                    "id": "f83b8cc6-a409-4bc8-903a-261124947c22",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "StandingMeleeHeavy",
-                    "type": "Button",
-                    "id": "f83b8cc6-a409-4bc8-903a-261124947c22",
+                    "id": "57e87d0c-fb5d-4e63-bb3b-80261b060ab9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -240,19 +230,7 @@
                 },
                 {
                     "name": "",
-                    "id": "a860d803-3967-413c-a10f-c64ac4be5a72",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "StandingMeleeLight",
-                    "action": "StandingMeleeLight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a860d803-3967-413c-a10f-c64ac4be5a72",
+                    "id": "fd33503e-2021-4a58-b34b-f1a4be9ca8ed",
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press",
                     "processors": "",
@@ -264,7 +242,6 @@
                 {
                     "name": "",
                     "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
-                    "path": "<Keyboard>/l",
                     "path": "<Keyboard>/l",
                     "interactions": "Press",
                     "processors": "",
@@ -287,7 +264,6 @@
                 {
                     "name": "",
                     "id": "2721bb33-26c1-4b9c-822f-c2d5d150ec9a",
-                    "path": "<Keyboard>/l",
                     "path": "<Keyboard>/l",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
@@ -375,30 +351,8 @@
                 },
                 {
                     "name": "",
-                    "id": "2254fdc5-f977-4100-bb2d-aecba16438db",
-                    "path": "<Keyboard>/k",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "StandingMeleeHeavy",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "46c6b1fd-f72f-4e2c-83ae-55580a23e4ce",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "StandingMeleeHeavy",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1984e75a-39e1-49a4-a743-5570b7d3c5f8",
-                    "path": "<Keyboard>/capsLock",
+                    "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -414,6 +368,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7aa82a14-3ec5-4cfa-800b-d3bcfd6881fb",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeHeavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbe6eeb9-69f2-4243-a03f-81eb6e6e5abe",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeHeavy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

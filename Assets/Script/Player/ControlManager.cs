@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem;
 
 public class ControlManager : MonoBehaviour
 {
@@ -21,30 +20,10 @@ public class ControlManager : MonoBehaviour
     private GameItemSensationHandler _gameItemSensationHandler;
     private InGamePauseController _inGamePauseController;
 
-    private InputMap.PlayerActions _player;
-    private InputMap.SettingActions _setting;
-    private bool _isSetting;
-
-    private PlayerManager _playerManager;
-    private MovementHandler _movementHandler;
-    private MeleeHandler _meleeHandler;
-    private ShootingHandler _shootingHandler;
-    private GameItemSensationHandler _gameItemSensationHandler;
-    private InGamePauseController _inGamePauseController;
 
     private void Awake()
     {
         InputMap = new InputMap();
-        _player = InputMap.Player;
-        _setting = InputMap.Setting;
-        _isSetting = false;
-
-        _playerManager = FindObjectOfType<PlayerManager>();
-        _movementHandler = _playerManager.GetComponentInChildren<MovementHandler>();
-        _meleeHandler = _playerManager.GetComponentInChildren<MeleeHandler>();
-        _shootingHandler = _playerManager.GetComponentInChildren<ShootingHandler>();
-        _gameItemSensationHandler = _playerManager.GetComponentInChildren<GameItemSensationHandler>();
-        _inGamePauseController = FindObjectOfType<InGamePauseController>();
         _player = InputMap.Player;
         _setting = InputMap.Setting;
         _isSetting = false;
@@ -113,7 +92,8 @@ public class ControlManager : MonoBehaviour
     }
     private void ToggleRunning(InputAction.CallbackContext context)
     {
-        _movementHandler.ToggleRunning(context.performed);
+        if (context.performed)
+            _movementHandler.ToggleRunning();
     }
     private void TriggerJump(InputAction.CallbackContext context)
     {
@@ -121,15 +101,18 @@ public class ControlManager : MonoBehaviour
     }
     private void ToggleLockOn(InputAction.CallbackContext context)
     {
-        _movementHandler.ToggleLockOn(context.performed);
+        if (context.performed)
+            _movementHandler.ToggleLockOn();
     }
     private void ToggleAim(InputAction.CallbackContext context)
     {
-        _movementHandler.ToggleAim(context.performed);
+        if (context.performed)
+            _movementHandler.ToggleAim();
     }
     private void TriggerRoll(InputAction.CallbackContext context)
     {
-        _movementHandler.TriggerRoll(context.performed);
+        if (context.performed)
+            _movementHandler.TriggerRoll();
     }
     #endregion
 
@@ -145,19 +128,23 @@ public class ControlManager : MonoBehaviour
     }
     private void EquipWeapon(InputAction.CallbackContext context)
     {
-        _meleeHandler.EquipWeapon(context.performed);
+        if (context.performed)
+            _meleeHandler.EquipWeapon();
     }
     private void SwitchWeapon(InputAction.CallbackContext context)
     {
-        _meleeHandler.SwitchWeapon(context.performed);
+        if (context.performed)
+            _meleeHandler.SwitchWeapon();
     }
     private void StandingMeleeLight(InputAction.CallbackContext context)
     {
-        _meleeHandler.StandingMeleeLight(context.performed);
+        if (context.performed)
+            _meleeHandler.StandingMeleeLight();
     }
     private void StandingMeleeHeavy(InputAction.CallbackContext context)
     {
-        _meleeHandler.StandingMeleeHeavy(context.performed);
+        if (context.performed)
+            _meleeHandler.StandingMeleeHeavy();
     }
     //private void StandingMeleeAttack2Press(InputAction.CallbackContext context)
     //{
@@ -190,7 +177,8 @@ public class ControlManager : MonoBehaviour
 
     private void PickupKeyPress(InputAction.CallbackContext context)
     {
-        _gameItemSensationHandler.PickupKeyPress(context.performed);
+        if (context.performed)
+            _gameItemSensationHandler.PickupKeyPress();
     }
     #endregion
 
@@ -203,10 +191,11 @@ public class ControlManager : MonoBehaviour
     }
     private void EscOnClick(InputAction.CallbackContext context)
     {
-        _inGamePauseController.EscOnClick(context.performed);
-        ToggleInputActionMap();
-        _inGamePauseController.EscOnClick(context.performed);
-        ToggleInputActionMap();
+        if (context.performed)
+        {
+            _inGamePauseController.EscOnClick();
+            ToggleInputActionMap();
+        } 
     }
     #endregion
 }

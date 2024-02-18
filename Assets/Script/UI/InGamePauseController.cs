@@ -67,23 +67,20 @@ public class InGamePauseController : MonoBehaviour
         UnityEngine.Cursor.visible = false;
     }
 
-    public void EscOnClick(bool performed)
+    public void EscOnClick()
     {
-        if (performed)
+        if (rootBackground.style.display == DisplayStyle.None)
         {
-            if (rootBackground.style.display == DisplayStyle.None)
-            {
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
-                UnityEngine.Cursor.visible = true;
-                rootBackground.style.display = DisplayStyle.Flex;
-            } else
-            {
-                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-                UnityEngine.Cursor.visible = false;
-                rootBackground.style.display = DisplayStyle.None;
-                _settings.forceExitSettings();
-                ResetToPauseMenu();
-            }
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            rootBackground.style.display = DisplayStyle.Flex;
+        } else
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
+            rootBackground.style.display = DisplayStyle.None;
+            _settings.forceExitSettings();
+            ResetToPauseMenu();
         }
     }
 

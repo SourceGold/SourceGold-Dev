@@ -51,22 +51,18 @@ public class MeleeHandler : MonoBehaviour
 
     }
 
-    public void EquipWeapon(bool performed)
-    public void EquipWeapon(bool performed)
+    public void EquipWeapon()
     {
-        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
-        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
+        if (!_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
             _movementHandler.SetWeaponStatus(_anim.GetBool("IsWeaponEquipped"));
         }
     }
 
-    public void SwitchWeapon(bool performed)
-    public void SwitchWeapon(bool performed)
+    public void SwitchWeapon()
     {
-        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
-        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
+        if (!_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
         {
             _anim.SetBool("IsWeaponEquipped", false);
             _anim.SetBool("Switch", true);
@@ -74,33 +70,26 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-
-    public void StandingMeleeLight(bool performed)
-    public void StandingMeleeLight(bool performed)
+    public void StandingMeleeLight()
     {
-        if (performed)
-        if (performed)
+            
+        if (_anim.GetBool("CanAttack"))
         {
             _anim.SetInteger("AttackType", 1);
-            if (_anim.GetBool("CanAttack"))
-            {
-                _anim.SetTrigger("Attack");
-            }
-            if (_anim.GetBool("IsAttacking"))
-            {
-                _anim.SetBool("IsCombo", true);
-            }
-        }
-    }
-
-    public void StandingMeleeHeavy(bool performed)
-    public void StandingMeleeHeavy(bool performed)
-    {
-        if (performed && _anim.GetBool("CanAttack"))
-        if (performed && _anim.GetBool("CanAttack"))
-        {
             _anim.SetTrigger("Attack");
+        }
+        if (_anim.GetBool("IsAttacking"))
+        {
+            _anim.SetBool("IsCombo", true);
+        }
+    }
+
+    public void StandingMeleeHeavy()
+    {
+        if (_anim.GetBool("CanAttack"))
+        {
             _anim.SetInteger("AttackType", 3);
+            _anim.SetTrigger("Attack");    
         }
     }
 
@@ -113,22 +102,6 @@ public class MeleeHandler : MonoBehaviour
     //        _anim.SetBool("AttackRelease", false);
     //    }
     //}
-    //public void StandingMeleeAttack2Press(bool performed)
-    //{
-    //    if (performed && _anim.GetBool("CanAttack"))
-    //    {
-    //        _anim.SetTrigger("Attack");
-    //        _anim.SetInteger("AttackType", 2);
-    //        _anim.SetBool("AttackRelease", false);
-    //    }
-    //}
-
-    //public void StandingMeleeAttack2Release(bool performed)
-    //{
-    //    if (performed)
-    //        _anim.SetBool("AttackRelease", true);
-    //}
-
 
     //public void StandingMeleeAttack2Release(bool performed)
     //{

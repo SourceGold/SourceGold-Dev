@@ -154,24 +154,24 @@ public class MovementHandler : LocomotionManager
         _input = moveInput;
     }
 
-    public void ToggleRunning(bool performed)
+    public void ToggleRunning()
     {
-        _isRunning = performed ? !_isRunning : _isRunning;
+        _isRunning = !_isRunning;
     }
     public void TriggerJump(bool performed)
     {
         _isJumping = performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("IsAttacking");
     }
 
-    public void ToggleLockOn(bool performed)
+    public void ToggleLockOn()
     {
-        if (performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack"))
+        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack"))
             _toggleLock = true;
     }
 
-    public void ToggleAim(bool performed)
+    public void ToggleAim()
     {
-        if (performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
+        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
         {
             _cameraManager.ToggleAim();
             _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
@@ -182,16 +182,16 @@ public class MovementHandler : LocomotionManager
         }
     }
 
-    public void TriggerRoll(bool performed)
+    public void TriggerRoll()
     {
-        if (performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand && _input.magnitude != 0)
+        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand)
         {
             _animator.SetBool("IsRolling", true);
         }
-        else if (performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand && _weaponStatus == WeaponStatus.Equipped)
-        {
-            _animator.SetBool("IsDodgeBack", true);
-        }
+        //else if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand && _weaponStatus == WeaponStatus.Equipped)
+        //{
+        //    _animator.SetBool("IsDodgeBack", true);
+        //}
 
 
     }

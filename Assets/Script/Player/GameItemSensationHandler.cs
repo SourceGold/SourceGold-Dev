@@ -136,20 +136,18 @@ public class GameItemSensationHandler : MonoBehaviour
     }
 
 
-    public void PickupKeyPress(bool performed)
+    public void PickupKeyPress()
     {
-        if (performed)
-        {
-            if (closest != null)
-            {
-                InteractableObject gameItem = closest.GetComponent<InteractableObject>();
-                gameItem.playerInteract();
 
-                // TODO: double check how it is been deleted
-                inRangeItems.Remove(closest);
-                Destroy(closest);
-                closest = null;
-            }
+        if (closest != null)
+        {
+            InteractableObject gameItem = closest.GetComponent<InteractableObject>();
+            gameItem.playerInteract();
+
+            // TODO: double check how it is been deleted
+            inRangeItems.Remove(closest);
+            Destroy(closest);
+            closest = null;
         }
     }
 
