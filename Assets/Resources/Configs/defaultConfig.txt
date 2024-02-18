@@ -11,3 +11,4 @@ control_settings:
     press_to_speed_up: true
 graphics_settings: 
     visual_quality: 1
+    vertical_fov: 60

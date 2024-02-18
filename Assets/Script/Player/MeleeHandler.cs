@@ -9,10 +9,17 @@ public class MeleeHandler : MonoBehaviour
 
 
     //public bool DebugTrail = false;
+    //public bool DebugTrail = false;
     //public LayerMask hitLayers;
 
     //[SerializeField] GameObject hitVFX;
 
+    //public struct BufferObj
+    //{
+    //    public Vector3 position;
+    //    public Quaternion rotation;
+    //    public Vector3 size;
+    //}
     //public struct BufferObj
     //{
     //    public Vector3 position;
@@ -26,6 +33,7 @@ public class MeleeHandler : MonoBehaviour
 
     public WeaponHandler WeaponHandlerRef;
     private Animator _anim;
+    private MovementHandler _movementHandler;
 
     private void Awake()
     {
@@ -35,6 +43,7 @@ public class MeleeHandler : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
+        _movementHandler = GetComponent<MovementHandler>();
     }
 
     void Update()
@@ -42,17 +51,18 @@ public class MeleeHandler : MonoBehaviour
 
     }
 
-    public void EquipWeapon(bool performed)
+    public void EquipWeapon()
     {
-        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
+        if (!_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
+            _movementHandler.SetWeaponStatus(_anim.GetBool("IsWeaponEquipped"));
         }
     }
 
-    public void SwitchWeapon(bool performed)
+    public void SwitchWeapon()
     {
-        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
+        if (!_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
         {
             _anim.SetBool("IsWeaponEquipped", false);
             _anim.SetBool("Switch", true);
@@ -60,29 +70,26 @@ public class MeleeHandler : MonoBehaviour
         }
     }
 
-
-    public void StandingMeleeLight(bool performed)
+    public void StandingMeleeLight()
     {
-        if (performed)
+            
+        if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsRolling"))
         {
             _anim.SetInteger("AttackType", 1);
-            if (_anim.GetBool("CanAttack"))
-            {
-                _anim.SetTrigger("Attack");
-            }
-            if (_anim.GetBool("IsAttacking"))
-            {
-                _anim.SetBool("IsCombo", true);
-            }
+            _anim.SetTrigger("Attack");
+        }
+        if (_anim.GetBool("IsAttacking"))
+        {
+            _anim.SetBool("IsCombo", true);
         }
     }
 
-    public void StandingMeleeHeavy(bool performed)
+    public void StandingMeleeHeavy()
     {
-        if (performed && _anim.GetBool("CanAttack"))
+        if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsRolling"))
         {
-            _anim.SetTrigger("Attack");
             _anim.SetInteger("AttackType", 3);
+            _anim.SetTrigger("Attack");    
         }
     }
 
@@ -136,7 +143,20 @@ public class MeleeHandler : MonoBehaviour
     //            Gizmos.color = Color.black;
     //            Gizmos.matrix = Matrix4x4.TRS(bo.position, bo.rotation, Vector3.one);
     //            Gizmos.DrawWireCube(Vector3.zero, bo.size);
+    //private void OnDrawGizmos()
+    //{
+    //    Debug.Log("Draw");
+    //    if (DebugTrail)
+    //    {
+    //        foreach (BufferObj bo in _trailList)
+    //        {
+    //            Gizmos.color = Color.black;
+    //            Gizmos.matrix = Matrix4x4.TRS(bo.position, bo.rotation, Vector3.one);
+    //            Gizmos.DrawWireCube(Vector3.zero, bo.size);
 
+    //        }
+    //    }
+    //}
     //        }
     //    }
     //}

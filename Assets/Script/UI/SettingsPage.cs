@@ -83,7 +83,7 @@ public class SettingsPage
 
     private void addControlButtons(ScrollView view)
     {
-        setupToggleBox(view, GlobalSettings.instance.userDefinedSettings.Control.PressToSpeedUp, "Press to speed up")
+        setupToggleBox(view, GlobalSettings.instance.userDefinedSettings.Control.PressToSpeedUp, "Toggle to Run")
             .RegisterValueChangedCallback(x => { GlobalSettings.instance.userDefinedSettings.Control.PressToSpeedUp = x.newValue; });
 
         setupToggleBox(view, GlobalSettings.instance.userDefinedSettings.Control.RevertCameraMovements, "Revert Camera Up and Down")
@@ -97,6 +97,9 @@ public class SettingsPage
     {
         setupEnumField(view, GlobalSettings.instance.userDefinedSettings.Graphics.VisualQuality, "Visual quality")
             .RegisterValueChangedCallback(x => { GlobalSettings.instance.userDefinedSettings.Graphics.VisualQuality = (visualQuality)x.newValue; });
+
+        setupFloatSlider(view, GlobalSettings.instance.userDefinedSettings.Graphics.VerticalFov, "Vertical Fov", 50.0f, 80.0f)
+            .RegisterValueChangedCallback(x => { GlobalSettings.instance.userDefinedSettings.Graphics.VerticalFov = x.newValue; });
     }
 
     private void addAudioButtons(ScrollView view)
@@ -135,7 +138,7 @@ public class SettingsPage
 
         toggle.lowValue = min;
         toggle.highValue = max;
-        toggle.value = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity;
+        toggle.value = _entry;
         toggle.RegisterValueChangedCallback(x =>
         {
             numberDisplay.text = x.newValue.ToString("0.00");
@@ -155,7 +158,7 @@ public class SettingsPage
 
         toggle.lowValue = min;
         toggle.highValue = max;
-        toggle.value = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity;
+        toggle.value = _entry;
         toggle.RegisterValueChangedCallback(x =>
         {
             numberDisplay.text = x.newValue.ToString();

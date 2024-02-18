@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Assets.Script.Backend;
 
 public class MovementHandler : LocomotionManager
 {
@@ -85,6 +86,7 @@ public class MovementHandler : LocomotionManager
     private Vector3 _direction;
 
     //[SerializeField] private bool _runMode = true;
+    //[SerializeField] private bool _runMode = true;
 
     private Transform _transform;
     protected override Transform Transform
@@ -127,7 +129,7 @@ public class MovementHandler : LocomotionManager
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _isRunning = false;
-        IsAiming = false;
+        _isAiming = false;
         _cameraManager = FindObjectOfType<CameraManager>();
         _cam = _cameraManager.gameObject.GetComponent<Camera>();
         _camT = _cam.transform;
@@ -152,24 +154,34 @@ public class MovementHandler : LocomotionManager
         _input = moveInput;
     }
 
-    public void ToggleRunning(bool performed)
+    public void ToggleRunning(InputAction.CallbackContext context)
     {
-        _isRunning = performed ? !_isRunning : _isRunning;
+        if (GlobalSettings.globalSettings.userDefinedSettings.Control.PressToSpeedUp)
+        {
+            _isRunning = context.performed ? !_isRunning : _isRunning;
+        }
+        else 
+        {
+            if (context.performed)
+                _isRunning = true;
+            if (context.canceled)
+                _isRunning = false;
+        }
     }
     public void TriggerJump(bool performed)
     {
-        _isJumping = performed && !_animator.GetBool("IsAttacking");
+        _isJumping = performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("IsAttacking");
     }
 
-    public void ToggleLockOn(bool performed)
+    public void ToggleLockOn()
     {
-        if (performed)
+        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack"))
             _toggleLock = true;
     }
 
-    public void ToggleAim(bool performed)
+    public void ToggleAim()
     {
-        if (performed && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
+        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
         {
             _cameraManager.ToggleAim();
             _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
@@ -180,7 +192,29 @@ public class MovementHandler : LocomotionManager
         }
     }
 
+    public void TriggerRoll()
+    {
+        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand)
+        {
+            _animator.SetBool("IsRolling", true);
+        }
+        //else if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand && _weaponStatus == WeaponStatus.Equipped)
+        //{
+        //    _animator.SetBool("IsDodgeBack", true);
+        //}
+
+
+    }
+
     #endregion
+
+    public void SetWeaponStatus(bool equip)
+    {
+        if (equip)
+            _weaponStatus = WeaponStatus.Equipped;
+        else
+            _weaponStatus = WeaponStatus.Unequipped;
+    }
 
     protected override void Rotate()
     {
@@ -202,6 +236,10 @@ public class MovementHandler : LocomotionManager
             transform.rotation = targetRotation;
         }
         else if (_input.Equals(Vector2.zero))
+            return;
+        else if (_animator.GetBool("IsRolling"))
+            return;
+        else if (!_animator.GetCurrentAnimatorStateInfo(2).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(2).IsName("AttackIdle"))
             return;
         else
         {
