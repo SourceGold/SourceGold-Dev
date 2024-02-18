@@ -138,7 +138,7 @@ public class SettingsPage
 
         toggle.lowValue = min;
         toggle.highValue = max;
-        toggle.value = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity;
+        toggle.value = _entry;
         toggle.RegisterValueChangedCallback(x =>
         {
             numberDisplay.text = x.newValue.ToString("0.00");
@@ -158,7 +158,7 @@ public class SettingsPage
 
         toggle.lowValue = min;
         toggle.highValue = max;
-        toggle.value = GlobalSettings.instance.userDefinedSettings.Control.MouseSensitivity;
+        toggle.value = _entry;
         toggle.RegisterValueChangedCallback(x =>
         {
             numberDisplay.text = x.newValue.ToString();
