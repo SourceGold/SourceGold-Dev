@@ -83,7 +83,7 @@ public class SettingsPage
 
     private void addControlButtons(ScrollView view)
     {
-        setupToggleBox(view, GlobalSettings.instance.userDefinedSettings.Control.PressToSpeedUp, "Press to speed up")
+        setupToggleBox(view, GlobalSettings.instance.userDefinedSettings.Control.PressToSpeedUp, "Toggle to Run")
             .RegisterValueChangedCallback(x => { GlobalSettings.instance.userDefinedSettings.Control.PressToSpeedUp = x.newValue; });
 
         setupToggleBox(view, GlobalSettings.instance.userDefinedSettings.Control.RevertCameraMovements, "Revert Camera Up and Down")

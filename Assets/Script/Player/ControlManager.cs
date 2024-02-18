@@ -92,8 +92,7 @@ public class ControlManager : MonoBehaviour
     }
     private void ToggleRunning(InputAction.CallbackContext context)
     {
-        if (context.performed)
-            _movementHandler.ToggleRunning();
+        _movementHandler.ToggleRunning(context);
     }
     private void TriggerJump(InputAction.CallbackContext context)
     {

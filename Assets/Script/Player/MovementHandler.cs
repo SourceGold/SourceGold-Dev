@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Assets.Script.Backend;
 
 public class MovementHandler : LocomotionManager
 {
@@ -140,7 +141,6 @@ public class MovementHandler : LocomotionManager
     void Start()
     {
 
-
     }
 
     // Update is called once per frame
@@ -154,9 +154,19 @@ public class MovementHandler : LocomotionManager
         _input = moveInput;
     }
 
-    public void ToggleRunning()
+    public void ToggleRunning(InputAction.CallbackContext context)
     {
-        _isRunning = !_isRunning;
+        if (GlobalSettings.globalSettings.userDefinedSettings.Control.PressToSpeedUp)
+        {
+            _isRunning = context.performed ? !_isRunning : _isRunning;
+        }
+        else 
+        {
+            if (context.performed)
+                _isRunning = true;
+            if (context.canceled)
+                _isRunning = false;
+        }
     }
     public void TriggerJump(bool performed)
     {

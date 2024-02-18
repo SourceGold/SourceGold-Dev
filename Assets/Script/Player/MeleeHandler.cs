@@ -73,7 +73,7 @@ public class MeleeHandler : MonoBehaviour
     public void StandingMeleeLight()
     {
             
-        if (_anim.GetBool("CanAttack"))
+        if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsRolling"))
         {
             _anim.SetInteger("AttackType", 1);
             _anim.SetTrigger("Attack");
@@ -86,7 +86,7 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeHeavy()
     {
-        if (_anim.GetBool("CanAttack"))
+        if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsRolling"))
         {
             _anim.SetInteger("AttackType", 3);
             _anim.SetTrigger("Attack");    
