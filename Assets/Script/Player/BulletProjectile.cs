@@ -9,8 +9,8 @@ public class BulletProjectile : MonoBehaviour
     public Transform vfxHitRed;
     public float BulletSpeed = 200f;
     public float VanishTime = 4f;
-    private LayerMask enemyLayer;
-
+    public LayerMask collisionLayer;
+    public string sourceName;
     private Rigidbody bulletRigidbody;
 
     private void Awake()
@@ -22,7 +22,6 @@ public class BulletProjectile : MonoBehaviour
     {
         bulletRigidbody.velocity = transform.forward * BulletSpeed;
         Destroy(gameObject, VanishTime);
-        enemyLayer = LayerMask.GetMask(new string[]{"Enemy"});
     }
 
     private void FixedUpdate()
@@ -30,15 +29,12 @@ public class BulletProjectile : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit, BulletSpeed * Time.fixedDeltaTime))
         {
-            if (hit.transform.gameObject.tag != "Border") // check border
+            Instantiate(vfxHitRed, hit.point, Quaternion.identity);
+            if (collisionLayer == 1 << hit.transform.gameObject.layer)
             {
-                Instantiate(vfxHitRed, hit.point, Quaternion.identity);
-                Destroy(gameObject);
-                if (enemyLayer == 1 << hit.transform.gameObject.layer)
-                {
-                    Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = "Player" },
-                        new DamageTarget() { TgtObjectName = hit.transform.name });
-                }
+                Debug.Log(hit.transform.name);
+                Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = sourceName },
+                    new DamageTarget() { TgtObjectName = hit.transform.name });
             }
         }
     }

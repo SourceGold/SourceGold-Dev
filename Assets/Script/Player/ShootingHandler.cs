@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,9 +11,8 @@ public class ShootingHandler : MonoBehaviour
     private Camera Camera;
     public LayerMask aimColliderLayerMask;
     public Transform spawnBulletPosition;
-    public Transform pfBulletProjectile;
+    private UnityEngine.Object pfBulletProjectile;
     private InputMap input;
-
     [HideInInspector] public bool IsMouseLeftDown;
 
     //private bool _isShooting = false;
@@ -21,16 +21,18 @@ public class ShootingHandler : MonoBehaviour
     private float shootWait = 0;
     private bool allowShoot { get { return shootWait >= shootDelay; } }
     private Animator _anim;
-
+    private LayerMask enemyLayer;
     private void Awake()
     {
         Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
+        pfBulletProjectile = Resources.Load("Prefab/Player/pfBulletProjectile");
         IsMouseLeftDown = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        enemyLayer = LayerMask.GetMask("Enemy");
         _anim = GetComponent<Animator>();
         input = FindObjectOfType<ControlManager>().InputMap;
 
@@ -46,8 +48,9 @@ public class ShootingHandler : MonoBehaviour
             shootWait = 0;
             Vector3 hitPosition = GetHitPosition();
             Vector3 aimDir = (hitPosition - spawnBulletPosition.position).normalized;
-            Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up));
-     
+            var bullet = Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<BulletProjectile>();
+            bullet.collisionLayer = enemyLayer;
+            bullet.sourceName = "Player";
         }
     }
 

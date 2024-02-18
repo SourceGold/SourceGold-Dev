@@ -14,6 +14,7 @@ public class PlayerManager : CharacterManager
     void Start()
     {
         Backend.GameLoop.RegisterGameObject(new PlayableCharacter(this.name));
+        Backend.GameLoop.RegisterGameObject(new PlayableCharacter("Player Bot"));
         //Debug.Log(MainCamera);
     }
 
