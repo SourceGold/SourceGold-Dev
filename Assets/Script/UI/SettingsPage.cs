@@ -97,6 +97,9 @@ public class SettingsPage
     {
         setupEnumField(view, GlobalSettings.instance.userDefinedSettings.Graphics.VisualQuality, "Visual quality")
             .RegisterValueChangedCallback(x => { GlobalSettings.instance.userDefinedSettings.Graphics.VisualQuality = (visualQuality)x.newValue; });
+
+        setupFloatSlider(view, GlobalSettings.instance.userDefinedSettings.Graphics.VerticalFov, "Vertical Fov", 50.0f, 80.0f)
+            .RegisterValueChangedCallback(x => { GlobalSettings.instance.userDefinedSettings.Graphics.VerticalFov = x.newValue; });
     }
 
     private void addAudioButtons(ScrollView view)
