@@ -26,16 +26,15 @@ public class BulletProjectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, BulletSpeed * Time.fixedDeltaTime))
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, BulletSpeed * Time.fixedDeltaTime))
         {
             Instantiate(vfxHitRed, hit.point, Quaternion.identity);
             if (collisionLayer == 1 << hit.transform.gameObject.layer)
             {
-                Debug.Log(hit.transform.name);
                 Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = sourceName },
-                    new DamageTarget() { TgtObjectName = hit.transform.name });
+                    new DamageTarget() { TgtObjectName = hit.transform.parent.name });
             }
+            Destroy(gameObject);
         }
     }
 
