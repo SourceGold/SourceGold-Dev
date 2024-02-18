@@ -52,8 +52,18 @@
                 },
                 {
                     "name": "StandingMeleeLight",
+                    "name": "StandingMeleeLight",
                     "type": "Button",
                     "id": "a937b8a9-b4a2-4dcd-8b44-4bfe27813f44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StandingMeleeHeavy",
+                    "type": "Button",
+                    "id": "f83b8cc6-a409-4bc8-903a-261124947c22",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -236,12 +246,25 @@
                     "processors": "",
                     "groups": "",
                     "action": "StandingMeleeLight",
+                    "action": "StandingMeleeLight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a860d803-3967-413c-a10f-c64ac4be5a72",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
+                    "path": "<Keyboard>/l",
                     "path": "<Keyboard>/l",
                     "interactions": "Press",
                     "processors": "",
@@ -264,6 +287,7 @@
                 {
                     "name": "",
                     "id": "2721bb33-26c1-4b9c-822f-c2d5d150ec9a",
+                    "path": "<Keyboard>/l",
                     "path": "<Keyboard>/l",
                     "interactions": "Press(behavior=1)",
                     "processors": "",

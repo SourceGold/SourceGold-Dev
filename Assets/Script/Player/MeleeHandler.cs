@@ -9,10 +9,17 @@ public class MeleeHandler : MonoBehaviour
 
 
     //public bool DebugTrail = false;
+    //public bool DebugTrail = false;
     //public LayerMask hitLayers;
 
     //[SerializeField] GameObject hitVFX;
 
+    //public struct BufferObj
+    //{
+    //    public Vector3 position;
+    //    public Quaternion rotation;
+    //    public Vector3 size;
+    //}
     //public struct BufferObj
     //{
     //    public Vector3 position;
@@ -45,7 +52,9 @@ public class MeleeHandler : MonoBehaviour
     }
 
     public void EquipWeapon(bool performed)
+    public void EquipWeapon(bool performed)
     {
+        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
@@ -54,7 +63,9 @@ public class MeleeHandler : MonoBehaviour
     }
 
     public void SwitchWeapon(bool performed)
+    public void SwitchWeapon(bool performed)
     {
+        if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
         if (performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
         {
             _anim.SetBool("IsWeaponEquipped", false);
@@ -65,7 +76,9 @@ public class MeleeHandler : MonoBehaviour
 
 
     public void StandingMeleeLight(bool performed)
+    public void StandingMeleeLight(bool performed)
     {
+        if (performed)
         if (performed)
         {
             _anim.SetInteger("AttackType", 1);
@@ -81,7 +94,9 @@ public class MeleeHandler : MonoBehaviour
     }
 
     public void StandingMeleeHeavy(bool performed)
+    public void StandingMeleeHeavy(bool performed)
     {
+        if (performed && _anim.GetBool("CanAttack"))
         if (performed && _anim.GetBool("CanAttack"))
         {
             _anim.SetTrigger("Attack");
@@ -98,6 +113,22 @@ public class MeleeHandler : MonoBehaviour
     //        _anim.SetBool("AttackRelease", false);
     //    }
     //}
+    //public void StandingMeleeAttack2Press(bool performed)
+    //{
+    //    if (performed && _anim.GetBool("CanAttack"))
+    //    {
+    //        _anim.SetTrigger("Attack");
+    //        _anim.SetInteger("AttackType", 2);
+    //        _anim.SetBool("AttackRelease", false);
+    //    }
+    //}
+
+    //public void StandingMeleeAttack2Release(bool performed)
+    //{
+    //    if (performed)
+    //        _anim.SetBool("AttackRelease", true);
+    //}
+
 
     //public void StandingMeleeAttack2Release(bool performed)
     //{
@@ -139,7 +170,20 @@ public class MeleeHandler : MonoBehaviour
     //            Gizmos.color = Color.black;
     //            Gizmos.matrix = Matrix4x4.TRS(bo.position, bo.rotation, Vector3.one);
     //            Gizmos.DrawWireCube(Vector3.zero, bo.size);
+    //private void OnDrawGizmos()
+    //{
+    //    Debug.Log("Draw");
+    //    if (DebugTrail)
+    //    {
+    //        foreach (BufferObj bo in _trailList)
+    //        {
+    //            Gizmos.color = Color.black;
+    //            Gizmos.matrix = Matrix4x4.TRS(bo.position, bo.rotation, Vector3.one);
+    //            Gizmos.DrawWireCube(Vector3.zero, bo.size);
 
+    //        }
+    //    }
+    //}
     //        }
     //    }
     //}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem;
 
 public class ControlManager : MonoBehaviour
 {
@@ -20,9 +21,30 @@ public class ControlManager : MonoBehaviour
     private GameItemSensationHandler _gameItemSensationHandler;
     private InGamePauseController _inGamePauseController;
 
+    private InputMap.PlayerActions _player;
+    private InputMap.SettingActions _setting;
+    private bool _isSetting;
+
+    private PlayerManager _playerManager;
+    private MovementHandler _movementHandler;
+    private MeleeHandler _meleeHandler;
+    private ShootingHandler _shootingHandler;
+    private GameItemSensationHandler _gameItemSensationHandler;
+    private InGamePauseController _inGamePauseController;
+
     private void Awake()
     {
         InputMap = new InputMap();
+        _player = InputMap.Player;
+        _setting = InputMap.Setting;
+        _isSetting = false;
+
+        _playerManager = FindObjectOfType<PlayerManager>();
+        _movementHandler = _playerManager.GetComponentInChildren<MovementHandler>();
+        _meleeHandler = _playerManager.GetComponentInChildren<MeleeHandler>();
+        _shootingHandler = _playerManager.GetComponentInChildren<ShootingHandler>();
+        _gameItemSensationHandler = _playerManager.GetComponentInChildren<GameItemSensationHandler>();
+        _inGamePauseController = FindObjectOfType<InGamePauseController>();
         _player = InputMap.Player;
         _setting = InputMap.Setting;
         _isSetting = false;
@@ -181,6 +203,8 @@ public class ControlManager : MonoBehaviour
     }
     private void EscOnClick(InputAction.CallbackContext context)
     {
+        _inGamePauseController.EscOnClick(context.performed);
+        ToggleInputActionMap();
         _inGamePauseController.EscOnClick(context.performed);
         ToggleInputActionMap();
     }

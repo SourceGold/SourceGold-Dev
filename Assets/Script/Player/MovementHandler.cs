@@ -85,6 +85,7 @@ public class MovementHandler : LocomotionManager
     private Vector3 _direction;
 
     //[SerializeField] private bool _runMode = true;
+    //[SerializeField] private bool _runMode = true;
 
     private Transform _transform;
     protected override Transform Transform
@@ -138,6 +139,7 @@ public class MovementHandler : LocomotionManager
     // Start is called before the first frame update
     void Start()
     {
+
 
     }
 
