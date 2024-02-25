@@ -144,6 +144,7 @@ namespace Assets.Script.Backend
     public class GraphicsSettings
     {
         public visualQuality VisualQuality { get; set; }
+        public float VerticalFov { get; set; }
         public Dictionary<string, int> SettingInt { get; set; }
         public Dictionary<string, bool> SettingBool { get; set; }
     }

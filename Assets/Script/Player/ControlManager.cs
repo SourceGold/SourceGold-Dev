@@ -20,6 +20,7 @@ public class ControlManager : MonoBehaviour
     private GameItemSensationHandler _gameItemSensationHandler;
     private InGamePauseController _inGamePauseController;
 
+
     private void Awake()
     {
         InputMap = new InputMap();
@@ -82,6 +83,7 @@ public class ControlManager : MonoBehaviour
         _player.LockOn.performed += ToggleLockOn;
         _player.LockOn.canceled += ToggleLockOn;
         _player.Aim.performed += ToggleAim;
+        _player.Roll.performed += TriggerRoll;
     }
     private void GetMoveInput(InputAction.CallbackContext context)
     {
@@ -90,7 +92,7 @@ public class ControlManager : MonoBehaviour
     }
     private void ToggleRunning(InputAction.CallbackContext context)
     {
-        _movementHandler.ToggleRunning(context.performed);
+        _movementHandler.ToggleRunning(context);
     }
     private void TriggerJump(InputAction.CallbackContext context)
     {
@@ -98,11 +100,18 @@ public class ControlManager : MonoBehaviour
     }
     private void ToggleLockOn(InputAction.CallbackContext context)
     {
-        _movementHandler.ToggleLockOn(context.performed);
+        if (context.performed)
+            _movementHandler.ToggleLockOn();
     }
     private void ToggleAim(InputAction.CallbackContext context)
     {
-        _movementHandler.ToggleAim(context.performed);
+        if (context.performed)
+            _movementHandler.ToggleAim();
+    }
+    private void TriggerRoll(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _movementHandler.TriggerRoll();
     }
     #endregion
 
@@ -118,19 +127,23 @@ public class ControlManager : MonoBehaviour
     }
     private void EquipWeapon(InputAction.CallbackContext context)
     {
-        _meleeHandler.EquipWeapon(context.performed);
+        if (context.performed)
+            _meleeHandler.EquipWeapon();
     }
     private void SwitchWeapon(InputAction.CallbackContext context)
     {
-        _meleeHandler.SwitchWeapon(context.performed);
+        if (context.performed)
+            _meleeHandler.SwitchWeapon();
     }
     private void StandingMeleeLight(InputAction.CallbackContext context)
     {
-        _meleeHandler.StandingMeleeLight(context.performed);
+        if (context.performed)
+            _meleeHandler.StandingMeleeLight();
     }
     private void StandingMeleeHeavy(InputAction.CallbackContext context)
     {
-        _meleeHandler.StandingMeleeHeavy(context.performed);
+        if (context.performed)
+            _meleeHandler.StandingMeleeHeavy();
     }
     //private void StandingMeleeAttack2Press(InputAction.CallbackContext context)
     //{
@@ -163,7 +176,8 @@ public class ControlManager : MonoBehaviour
 
     private void PickupKeyPress(InputAction.CallbackContext context)
     {
-        _gameItemSensationHandler.PickupKeyPress(context.performed);
+        if (context.performed)
+            _gameItemSensationHandler.PickupKeyPress();
     }
     #endregion
 
@@ -176,8 +190,11 @@ public class ControlManager : MonoBehaviour
     }
     private void EscOnClick(InputAction.CallbackContext context)
     {
-        _inGamePauseController.EscOnClick(context.performed);
-        ToggleInputActionMap();
+        if (context.performed)
+        {
+            _inGamePauseController.EscOnClick();
+            ToggleInputActionMap();
+        } 
     }
     #endregion
 }
