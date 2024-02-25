@@ -11,6 +11,8 @@
         public static GameEventType GetItemReachedMaxCountEvent => new GameEventType(nameof(GetItemReachedMaxCountEvent));
 
         public static GameEventType GetNotEnoughStatsEvent(string stats) => new GameEventType($"NotEnough{stats}Event");
+
+        public static GameEventType SettingsPageChangeEvent => new GameEventType(nameof(SettingsPageChangeEvent));
     }
 
     public class GameEventType

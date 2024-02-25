@@ -1,4 +1,6 @@
+using Assets.Script.Backend;
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
+    private ControlSettings _controlSettings;
+    private GraphicsSettings _graphicsSettings;
 
     private Transform NearestLockOnTarget;
     private Transform CinemachineCameraTarget;
@@ -35,11 +39,15 @@ public class CameraManager : MonoBehaviour
 
     List<CharacterManager> availableTargets = new List<CharacterManager>();
 
-    //private Animator _anim;
-
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
-    private const float _threshold = 0.01f;
+    private const float _threshold = 0.001f;
+    private const float sensitivityLowLimit = 0.2f;
+    private const float sensitivityHighLimit = 20f;
+    private readonly float sensitivityLowLog = (float)Math.Log10(sensitivityLowLimit);
+    private readonly float sensitivityHighLog = (float)Math.Log10(sensitivityHighLimit);
+    private float sensitivity;
+    private bool invertCamera;
     private Vector2 _input;
 
     private void Awake()
@@ -47,27 +55,43 @@ public class CameraManager : MonoBehaviour
         // reference initialization
         FollowCamera = gameObject.transform.Find("Follow Camera").GetComponent<CinemachineVirtualCamera>();
         LockCamera = gameObject.transform.Find("Lock Camera").GetComponent<CinemachineVirtualCamera>();
+        AimCamera = gameObject.transform.Find("Aim Camera").GetComponent<CinemachineVirtualCamera>();
+
+        Crosshair = gameObject.transform.Find("Crosshair").Find("crosshair_0");
 
         CinemachineCameraTarget = FindObjectOfType<PlayerManager>().transform.Find("Player Bot").Find("Follow Target");
-
 
         // Camera property initialization
         FollowCamera.Follow = CinemachineCameraTarget;
         LockCamera.Follow = CinemachineCameraTarget;
+        AimCamera.Follow = CinemachineCameraTarget;
         LockCamera.gameObject.SetActive(false);
+        AimCamera.gameObject.SetActive(false);
 
         
-        
+        EventManager.StartListening(GameEventTypes.SettingsPageChangeEvent, applySetting);
     }
 
     private void Start()
     {
         _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
-        //_anim = GetComponentInChildren<Animator>();
 
-        // register input action
+        _controlSettings = GlobalSettings.globalSettings.userDefinedSettings.Control;
+        _graphicsSettings = GlobalSettings.globalSettings.userDefinedSettings.Graphics;
+        applySetting();
+
         input = FindObjectOfType<ControlManager>().InputMap;
+        // register input action
+        input.Player.Look.started += Look;
         input.Player.Look.performed += Look;
+        input.Player.Look.canceled += Look;
+
+        _cinemachineTargetPitch = 12f;
+    }
+
+    private void Update()
+    {
+        //Debug.LogFormat("(Yaw: {0}, Pitch: {1})", _cinemachineTargetYaw, _cinemachineTargetPitch);
     }
 
     private void LateUpdate()
@@ -75,15 +99,33 @@ public class CameraManager : MonoBehaviour
         CameraRotation();
     }
 
+    public void ToggleAim()
+    {
+        if (AimCamera.gameObject.activeSelf)
+        {
+            AimCamera.gameObject.SetActive(false);
+            Crosshair.gameObject.SetActive(false);
+        }
+        else
+        {
+            Crosshair.gameObject.SetActive(true);
+            AimCamera.gameObject.SetActive(true);
+        }
+    }
+
     public void Look(InputAction.CallbackContext context)
     {
         _input = context.ReadValue<Vector2>();
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawSphere(transform.position, 1);
-    //}
+    public void applySetting()
+    {
+        float sensitivitySetting = _controlSettings.MouseSensitivity;
+        sensitivity = (float)Math.Pow(10, sensitivitySetting * (sensitivityHighLog - sensitivityLowLog) + sensitivityLowLog);
+        invertCamera = _controlSettings.RevertCameraMovements;
+
+        FollowCamera.m_Lens.FieldOfView = _graphicsSettings.VerticalFov;
+    }
 
     private void CameraRotation()
     {
@@ -101,16 +143,17 @@ public class CameraManager : MonoBehaviour
         }
         else
         {
-
             //if there is an input and camera position is not fixed
             if (_input.sqrMagnitude >= _threshold)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
                 float deltaTimeMultiplier = 1.0f;
+                if (invertCamera)
+                    _input.y = -_input.y;
 
-                _cinemachineTargetYaw += _input.x * deltaTimeMultiplier;
-                _cinemachineTargetPitch += _input.y * deltaTimeMultiplier;
+                _cinemachineTargetYaw += _input.x * deltaTimeMultiplier * sensitivity;
+                _cinemachineTargetPitch += _input.y * deltaTimeMultiplier * sensitivity;
             }
 
             // clamp our rotations so our values are limited 360 degrees
@@ -167,7 +210,6 @@ public class CameraManager : MonoBehaviour
                 NearestLockOnTarget = availableTargets[i].transform;
             }
         }
-
 
         return NearestLockOnTarget;
     }

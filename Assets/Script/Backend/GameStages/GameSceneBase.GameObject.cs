@@ -212,7 +212,7 @@ namespace Assets.Script.Backend
 
         protected virtual PlayableCharacterStats LoadCharacterStats(string parentName)
         {
-            return new PlayableCharacterStats(parentName, maxMagicPoint: 100, maxHitPoint: 100, maxStamina: 100, baseAttack: 30, baseDefense: 10);
+            return new PlayableCharacterStats(parentName, maxMagicPoint: 100, maxHitPoint: 100, maxStamina: 100, baseAttack: 15, baseDefense: 10);
         }
 
         protected virtual GameObjectEnvironmentalStats LoadDefaultEnvironmentalStats(bool isEnemy = false)

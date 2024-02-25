@@ -1,5 +1,5 @@
 {
-    "name": "PlayerControl",
+    "name": "InputMap",
     "maps": [
         {
             "name": "Player",
@@ -51,9 +51,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MeleeAttack1",
+                    "name": "StandingMeleeLight",
                     "type": "Button",
                     "id": "a937b8a9-b4a2-4dcd-8b44-4bfe27813f44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StandingMeleeHeavy",
+                    "type": "Button",
+                    "id": "57e87d0c-fb5d-4e63-bb3b-80261b060ab9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -72,42 +81,6 @@
                     "name": "MeleeAttack2Release",
                     "type": "Button",
                     "id": "e747a9b9-f3cf-4894-b74b-4069c15e9edd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MeleeAttack3",
-                    "type": "Button",
-                    "id": "f83b8cc6-a409-4bc8-903a-261124947c22",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SkillMeleeAttack1",
-                    "type": "Button",
-                    "id": "7db8ba8d-fe83-470d-aa95-4c7e5558655c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Test",
-                    "type": "Button",
-                    "id": "f7893ace-4b1d-441d-af7f-a9e1f90ef05d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Test2",
-                    "type": "Button",
-                    "id": "e78d7a53-0285-4598-a45b-616cbe9beff3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -148,6 +121,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SceneInteraction",
+                    "type": "Button",
+                    "id": "4d7ce13f-e0e7-476d-a7a5-8f8e50317663",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Esc Click",
+                    "type": "Button",
+                    "id": "c0939b64-5cfc-4059-b7f1-4c8764d66d0e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "aa0b3605-2ce6-46d9-b117-4a073801acce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -224,14 +224,25 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "MeleeAttack1",
+                    "action": "StandingMeleeLight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd33503e-2021-4a58-b34b-f1a4be9ca8ed",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "7723d09f-f39f-4491-9e7b-26f29608be87",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/l",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
@@ -252,52 +263,8 @@
                 },
                 {
                     "name": "",
-                    "id": "b40f1a52-226f-4244-b6a1-6d49e72220cb",
-                    "path": "<Keyboard>/u",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SkillMeleeAttack1",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "45953eb9-2e3f-47df-95ae-61608502ed4b",
-                    "path": "<Keyboard>/t",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Test",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "963cd176-60ec-4bfd-9d90-18133457e928",
-                    "path": "<Keyboard>/c",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Test2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "94ee573f-f84d-41d4-a1b8-6008421210ef",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "2721bb33-26c1-4b9c-822f-c2d5d150ec9a",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/l",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
@@ -313,17 +280,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchWeapon",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "2254fdc5-f977-4100-bb2d-aecba16438db",
-                    "path": "<Keyboard>/l",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MeleeAttack3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -368,6 +324,100 @@
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f5d5b7a-6d7f-4d53-b0ba-52e922a71c3d",
+                    "path": "<Keyboard>/f",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SceneInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "396f15ba-8c14-478b-94fc-0d0024e34880",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Esc Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1984e75a-39e1-49a4-a743-5570b7d3c5f8",
+                    "path": "<Keyboard>/capsLock",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94ee573f-f84d-41d4-a1b8-6008421210ef",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7aa82a14-3ec5-4cfa-800b-d3bcfd6881fb",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeHeavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbe6eeb9-69f2-4243-a03f-81eb6e6e5abe",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StandingMeleeHeavy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Setting",
+            "id": "b885436f-8eb0-40a7-be06-4f4384f05815",
+            "actions": [
+                {
+                    "name": "Esc Click",
+                    "type": "Button",
+                    "id": "3420a6d5-fdcf-401c-8492-3afc5bcefe73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9412f988-c4f8-4bd4-ac3b-b0dda0c476bc",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Esc Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
