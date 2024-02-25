@@ -21,9 +21,15 @@ namespace Assets.Script
             DataPersistenceManager.AddDataPersistenceObject(this);
         }
 
+        /// <summary>
+        /// Method to remove registration 
+        /// of existing object from DataPersistenceManager when 
+        /// the scene is destroyed or reloaded, must call in object's
+        /// OnDestory method to avoid double registration when reload
+        /// </summary>
         void Dispose()
         {
-            DataPersistenceManager.MarkRemoveDataPersistenceObjectAfterLoad(this);
+            DataPersistenceManager.RemoveDataPersistenceObject(this);
         }
     }
 }

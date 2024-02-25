@@ -42,7 +42,7 @@ namespace Assets.Script
             Instance._dataPersistenceObjects.Add(dataPersistence.GetHashCode(), dataPersistence);
         }
 
-        private static void RemoveDataPersistenceObject(IDataPersistence dataPersistence)
+        public static void RemoveDataPersistenceObject(IDataPersistence dataPersistence)
         {
             Instance._dataPersistenceObjects.Remove(dataPersistence.GetHashCode());
         }

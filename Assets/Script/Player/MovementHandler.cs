@@ -156,12 +156,6 @@ public class MovementHandler : MonoBehaviour
     }
     public void TriggerJump(InputAction.CallbackContext context)
     {
-        // TODO: check if this is disposed and animator is not running anymore.
-        // better to check it in some update method and add print/breakpoint to verify old object is disposed and no floating objects
-        if (_animator == null)
-        {
-            return;
-        }
         _isJumping = context.ReadValueAsButton() && !_animator.GetBool("IsAttacking");
     }
 
@@ -439,5 +433,21 @@ public class MovementHandler : MonoBehaviour
         _characterController.enabled = false;
         transform.position = DstGloblePosition + new Vector3(0, 0.5f, 0);
         _characterController.enabled = true;
+    }
+
+    public void OnDestroy()
+    {
+        input.Player.Move.started -= GetMoveInput;
+        input.Player.Move.performed -= GetMoveInput;
+        input.Player.Move.canceled -= GetMoveInput;
+        input.Player.Jump.started -= TriggerJump;
+        input.Player.Jump.performed -= TriggerJump;
+        input.Player.Jump.canceled -= TriggerJump;
+        input.Player.Run.started -= ToggleRunning;
+        input.Player.Run.performed -= ToggleRunning;
+        input.Player.Run.canceled -= ToggleRunning;
+        input.Player.LockOn.started -= ToggleLockOn;
+        input.Player.LockOn.performed -= ToggleLockOn;
+        input.Player.LockOn.canceled -= ToggleLockOn;
     }
 }

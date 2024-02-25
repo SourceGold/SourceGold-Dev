@@ -74,10 +74,13 @@ public class PlayerManager : CharacterManager, IDataPersistence
         Debug.Log($"loaded info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");
 
         Backend.Instance.PlayerStats = playerInfo;
-        ((IDataPersistence)this).Dispose();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void OnDestroy()
+    {
+        ((IDataPersistence)this).Dispose();
+    }
 
     public void SaveData(string fileName)
     {
