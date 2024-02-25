@@ -10,7 +10,7 @@ using static Cinemachine.DocumentationSortingAttribute;
 public class Inventory
 {
     private int _itemMaxCount;
-    private List<InventoryItem> _items { get; set; }
+    public List<InventoryItem> _items { get; set; }
 
     public Inventory(int itemMaxCount)
     {

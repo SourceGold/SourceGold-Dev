@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Button text="&#10;" display-tooltip-when-elided="true" name="inventoryItem" class="inventoryItem">
+        <ui:VisualElement name="contentHolder" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); overflow: visible; padding-top: 0; height: 0; flex-shrink: 0; border-top-width: 2px;">
+            <ui:VisualElement name="icon" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Icons/Backpack/round-potion&apos;); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 70px; height: 70px; align-self: center; flex-shrink: 0; opacity: 0.6; overflow: visible; visibility: visible; translate: 0 0;" />
+        </ui:VisualElement>
+        <ui:Label tabindex="-1" text="LV 3" display-tooltip-when-elided="true" name="levelText" style="color: rgb(255, 212, 6); height: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 2px; padding-right: 2px; padding-top: 0; padding-bottom: 0; font-size: 12px; translate: 0 -48px; background-color: rgba(149, 250, 6, 0.33); -unity-font-style: bold; flex-shrink: 1; width: auto; align-items: flex-start; align-self: flex-start;" />
+        <ui:Label tabindex="-1" text="&#10;" display-tooltip-when-elided="true" name="newItemDot" style="background-color: rgb(255, 69, 3); width: 8px; height: 8px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; align-self: flex-end; translate: 0 -63px;" />
+        <ui:Label tabindex="-1" text="10" display-tooltip-when-elided="true" name="count" style="position: relative; height: auto; -unity-text-align: lower-center; margin-top: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; justify-content: flex-end; -unity-font-style: bold; color: rgb(116, 16, 0); translate: 0 1px; font-size: 16px;" />
+    </ui:Button>
+</ui:UXML>
