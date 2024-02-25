@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3750158739923652375}
   - component: {fileID: 2642488398310819111}
   - component: {fileID: 7002529275199061475}
+  - component: {fileID: 5535009374368460740}
   m_Layer: 7
   m_Name: Ranged Enemy
   m_TagString: Untagged
@@ -30,9 +31,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6902773904276025703}
   - {fileID: 2477088894208346709}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &2642488398310819111
 MonoBehaviour:
@@ -59,13 +61,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c123c142072ff714599c3a1eea4a368f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RateOfFire: 2
+  RateOfFire: 10
   Head: {fileID: 8644539845056669743}
   SpawnBulletPosition: {fileID: 1300749417567166795}
   DetectionAngle: 50
   DetectionRadius: 25
   AimRotationSpeed: 5
   ReleaseLockTime: 0.5
+--- !u!143 &5535009374368460740
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8182778860404832566}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1001 &2644415876080869668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,49 +164,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 491658732484078449, guid: 853790370f0b8458d8107c5d5681e874,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6902773904276025703}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2374059574870064750, guid: 853790370f0b8458d8107c5d5681e874,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4128542168540486413}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 853790370f0b8458d8107c5d5681e874, type: 3}
---- !u!1 &306386201081454410 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2374059574870064750, guid: 853790370f0b8458d8107c5d5681e874,
-    type: 3}
-  m_PrefabInstance: {fileID: 2644415876080869668}
-  m_PrefabAsset: {fileID: 0}
---- !u!143 &4128542168540486413
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 306386201081454410}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!4 &1300749417567166795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3945129696820658287, guid: 853790370f0b8458d8107c5d5681e874,
@@ -203,7 +191,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2477088894208346709}
+    m_TransformParent: {fileID: 3750158739923652375}
     m_Modifications:
     - target: {fileID: 1513044251547233149, guid: fb70c76232890614b9d2361ad51765c3,
         type: 3}

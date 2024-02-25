@@ -32,7 +32,7 @@ public class BulletProjectile : MonoBehaviour
             if (collisionLayer == 1 << hit.transform.gameObject.layer)
             {
                 Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = sourceName },
-                    new DamageTarget() { TgtObjectName = hit.transform.parent.name });
+                    new DamageTarget() { TgtObjectName = hit.transform.name == "Player Bot" ? "Player" : hit.transform.name });
             }
             Destroy(gameObject);
         }

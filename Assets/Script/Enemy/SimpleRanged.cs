@@ -53,9 +53,6 @@ public class SimpleRanged : MonoBehaviour
     bool InSight(Transform target)
     {
         Debug.DrawRay(Head.position, target.position - Head.position);
-        RaycastHit hit;
-        Debug.Log(Physics.Raycast(Head.position, target.position - Head.position, out hit, DetectionRadius));
-        Debug.Log(hit.transform);
         return Physics.Raycast(Head.position, target.position - Head.position, DetectionRadius, PlayerMask);
     }
 
@@ -69,7 +66,6 @@ public class SimpleRanged : MonoBehaviour
             Vector3 lockTargetDirection = c.transform.position - Head.position;
             float distanceFromTarget = Vector3.Distance(Head.position, c.transform.position);
             float targetAngle = Vector3.Angle(lockTargetDirection, transform.forward);
-            Debug.Log(distanceFromTarget);
             if (/*InSight(c.transform) &&*/ shortestDistance > distanceFromTarget && targetAngle < DetectionAngle && targetAngle > -DetectionAngle)
             {
                 shortestDistance = distanceFromTarget;
