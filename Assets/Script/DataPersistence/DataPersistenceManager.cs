@@ -49,23 +49,6 @@ namespace Assets.Script
 
         private static List<IDataPersistence> _tempDataPersistenceObjectsToRemoveOnLoad { get; set; } = new List<IDataPersistence>();
 
-        private static void RemoveDataPersistenceObjectAfterLoad()
-        {
-            if (_tempDataPersistenceObjectsToRemoveOnLoad.Count > 0)
-            {
-                foreach (var obj in _tempDataPersistenceObjectsToRemoveOnLoad)
-                {
-                    RemoveDataPersistenceObject(obj);
-                }
-            }
-            _tempDataPersistenceObjectsToRemoveOnLoad = new List<IDataPersistence>();
-        }
-
-        public static void MarkRemoveDataPersistenceObjectAfterLoad(IDataPersistence dataPersistence)
-        {
-            _tempDataPersistenceObjectsToRemoveOnLoad.Add(dataPersistence);
-        }
-
         public void NewGame()
         {
 
@@ -85,7 +68,6 @@ namespace Assets.Script
                 var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);
                 dataPersistenceObject.LoadData(fullPath);
             }
-            RemoveDataPersistenceObjectAfterLoad();
         }
 
         public static void SaveGame(string saveName)
