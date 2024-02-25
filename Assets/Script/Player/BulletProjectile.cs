@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Assets.Script.Backend;
+using System;
+using Unity.VisualScripting;
 
 public class BulletProjectile : MonoBehaviour
 {
     public Transform vfxHitRed;
     public float BulletSpeed = 200f;
     public float VanishTime = 4f;
-    public LayerMask collisionLayer;
-    public string sourceName;
+    public LayerMask CollisionLayer;
+    public string SourceName;
     private Rigidbody bulletRigidbody;
 
     private void Awake()
@@ -24,17 +26,51 @@ public class BulletProjectile : MonoBehaviour
         Destroy(gameObject, VanishTime);
     }
 
+    private void Hit(RaycastHit hit)
+    {
+        Instantiate(vfxHitRed, hit.point, Quaternion.identity);
+        if (CollisionLayer == 1 << hit.transform.gameObject.layer)
+        {
+            Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = SourceName },
+                new DamageTarget() { TgtObjectName = hit.transform.name == "Player Bot" ? "Player" : hit.transform.name });
+        }
+        Destroy(gameObject); 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.name == "Player Bot")
+        {
+            if (!other.transform.GetComponent<Animator>().GetBool("IsInvincible"))
+                Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = "Player" },
+                    new DamageTarget() { TgtObjectName = "Player" });
+        }
+    }
+
     private void FixedUpdate()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, BulletSpeed * Time.fixedDeltaTime))
+        float maxDistance = BulletSpeed * Time.fixedDeltaTime;
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, maxDistance))
         {
-            Instantiate(vfxHitRed, hit.point, Quaternion.identity);
-            if (collisionLayer == 1 << hit.transform.gameObject.layer)
+            if (hit.transform.name == "Player Bot")
             {
-                Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = sourceName },
-                    new DamageTarget() { TgtObjectName = hit.transform.name == "Player Bot" ? "Player" : hit.transform.name });
+                if (hit.transform.GetComponent<Animator>().GetBool("IsInvincible"))
+                {
+                    if (Physics.Raycast(hit.point, transform.forward, out RaycastHit nextHit, 
+                        maxDistance - Vector3.Distance(hit.point, transform.position), ~LayerMask.GetMask("Player")))
+                    {
+                        Hit(nextHit);
+                    }
+                }
+                else
+                {
+                    Hit(hit);
+                }
             }
-            Destroy(gameObject);
+            else
+            {
+                Hit(hit);
+            }
         }
     }
 

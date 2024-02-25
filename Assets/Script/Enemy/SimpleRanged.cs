@@ -14,6 +14,7 @@ public class SimpleRanged : MonoBehaviour
     public float DetectionRadius = 15f;
     public float AimRotationSpeed = 5f;
     public float ReleaseLockTime = 0.5f;
+    public float BulletSpeed = 200f;
 
     private Object pfBulletProjectile;
     private bool IsShooting { get {return LockedTarget != null; } }
@@ -26,7 +27,7 @@ public class SimpleRanged : MonoBehaviour
 
     private void Awake()
     {
-        pfBulletProjectile = Resources.Load("Prefab/Player/pfBulletProjectile");
+        pfBulletProjectile = Resources.Load("Prefab/Player/pfSimpleEnemyBulletProjectile");
     }
 
     // Start is called before the first frame update
@@ -45,8 +46,9 @@ public class SimpleRanged : MonoBehaviour
         {
             ShootWait = 0;
             var bullet = Instantiate(pfBulletProjectile, SpawnBulletPosition.position, transform.rotation).GetComponent<BulletProjectile>();
-            bullet.collisionLayer = PlayerMask;
-            bullet.sourceName = transform.name;
+            bullet.CollisionLayer = PlayerMask;
+            bullet.SourceName = transform.name;
+            bullet.BulletSpeed = BulletSpeed;
         }
     }
 
@@ -69,7 +71,7 @@ public class SimpleRanged : MonoBehaviour
             if (/*InSight(c.transform) &&*/ shortestDistance > distanceFromTarget && targetAngle < DetectionAngle && targetAngle > -DetectionAngle)
             {
                 shortestDistance = distanceFromTarget;
-                LockedTarget = c.transform;
+                LockedTarget = c.transform.Find("Follow Target");
                 noTarget = false;
             }
         }
@@ -82,6 +84,6 @@ public class SimpleRanged : MonoBehaviour
 
         if (LockedTarget)
             transform.rotation = Quaternion.Lerp(transform.rotation, 
-                Quaternion.LookRotation(LockedTarget.position - transform.position), AimRotationSpeed * Time.deltaTime);
+                Quaternion.LookRotation(LockedTarget.position - SpawnBulletPosition.position), AimRotationSpeed * Time.deltaTime);
     }
 }

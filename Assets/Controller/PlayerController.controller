@@ -1797,6 +1797,22 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-1883592006005945562
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ed85d8b1c00f4f76b156a6aee693691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paramName: IsInvincible
+  setDefaultState: 1
+  Start: 0
+  End: 0.5
 --- !u!114 &-1881017573636548533
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2493,22 +2509,6 @@ MonoBehaviour:
   setDefaultState: 1
   Start: 0.26
   End: 0.45
---- !u!114 &1467670527951927065
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ed85d8b1c00f4f76b156a6aee693691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  paramName: IsInvincible
-  setDefaultState: 1
-  Start: 0
-  End: 0.3
 --- !u!114 &1584829943545712252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2826,7 +2826,7 @@ AnimatorState:
   m_Transitions:
   - {fileID: -2174242744237800049}
   m_StateMachineBehaviours:
-  - {fileID: 1467670527951927065}
+  - {fileID: -1883592006005945562}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
