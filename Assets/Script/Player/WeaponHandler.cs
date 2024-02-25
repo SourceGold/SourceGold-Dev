@@ -26,6 +26,9 @@ public class WeaponHandler : MonoBehaviour
 
     void Start()
     {
+        // TODO:
+        // SL weapon status
+        // Falling position
         _anim = GetComponent<Animator>();
         _anim.SetInteger("WeaponType", 1);
         _weaponInfo = new WeaponInfo[Weapon.Length];

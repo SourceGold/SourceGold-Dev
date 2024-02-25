@@ -51,6 +51,15 @@ public class ControlManager : MonoBehaviour
         RegisterUI();
     }
 
+    void OnDestroy()
+    {
+        DisposeMovement();
+
+        DisposeMelee();
+
+        DisposeRanged();
+    }
+
     public void ToggleInputActionMap()
     {
         if (_isSetting)
@@ -85,6 +94,25 @@ public class ControlManager : MonoBehaviour
         _player.Aim.performed += ToggleAim;
         _player.Roll.performed += TriggerRoll;
     }
+
+    private void DisposeMovement()
+    {
+        _player.Move.started -= GetMoveInput;
+        _player.Move.performed -= GetMoveInput;
+        _player.Move.canceled -= GetMoveInput;
+        _player.Run.started -= ToggleRunning;
+        _player.Run.performed -= ToggleRunning;
+        _player.Run.canceled -= ToggleRunning;
+        _player.Jump.started -= TriggerJump;
+        _player.Jump.performed -= TriggerJump;
+        _player.Jump.canceled -= TriggerJump;
+        _player.LockOn.started -= ToggleLockOn;
+        _player.LockOn.performed -= ToggleLockOn;
+        _player.LockOn.canceled -= ToggleLockOn;
+        _player.Aim.performed -= ToggleAim;
+        _player.Roll.performed -= TriggerRoll;
+    }
+
     private void GetMoveInput(InputAction.CallbackContext context)
     {
         _movementHandler.GetMoveInput(context.ReadValue<Vector2>());
@@ -125,6 +153,17 @@ public class ControlManager : MonoBehaviour
         //_player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
         //_player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
     }
+
+    private void DisposeMelee()
+    {
+        _player.EquipWeapon.performed -= EquipWeapon;
+        _player.SwitchWeapon.performed -= SwitchWeapon;
+        _player.StandingMeleeLight.performed -= StandingMeleeLight;
+        _player.StandingMeleeHeavy.performed -= StandingMeleeHeavy;
+        //_player.MeleeAttack2Press.performed -= StandingMeleeAttack2Press;
+        //_player.MeleeAttack2Release.performed -= StandingMeleeAttack2Release;
+    }
+
     private void EquipWeapon(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -162,6 +201,14 @@ public class ControlManager : MonoBehaviour
         _player.Shoot.performed += HandleShoot;
         _player.Shoot.canceled += HandleShoot;
     }
+
+    private void DisposeRanged()
+    {
+        _player.Shoot.started -= HandleShoot;
+        _player.Shoot.performed -= HandleShoot;
+        _player.Shoot.canceled -= HandleShoot;
+    }
+
     private void HandleShoot(InputAction.CallbackContext context)
     {
         _shootingHandler.HandleShoot(context.performed, context.canceled);
