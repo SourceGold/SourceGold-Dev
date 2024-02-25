@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : CharacterManager, IDataPersistence
 {
     [HideInInspector] public Transform MainCamera;
-    private WeaponHandler _weaponHandler;
+    public WeaponHandler _weaponHandler;
     private MovementHandler _movementHandler;
     private Animator _anim;
 
@@ -32,7 +32,6 @@ public class PlayerManager : CharacterManager, IDataPersistence
         }
 
         _movementHandler.Teleport(playerStats.V3Position());
-        _weaponHandler.SetWeapon(playerStats.WeaponType);
 
         if (playerStats.WeaponDrawn)
         {
@@ -89,8 +88,6 @@ public class PlayerManager : CharacterManager, IDataPersistence
             X = playerTranform.x,
             Y = playerTranform.y,
             Z = playerTranform.z,
-            WeaponType = _weaponHandler.WeaponType,
-            WeaponDrawn = _weaponHandler.WeaponDrawn
         };
 
         Debug.Log($"saved info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");
