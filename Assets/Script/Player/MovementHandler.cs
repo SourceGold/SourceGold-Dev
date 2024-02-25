@@ -428,5 +428,26 @@ public class MovementHandler : MonoBehaviour
         }
     }
 
-   
+    public void Teleport(Vector3 DstGloblePosition)
+    {
+        _characterController.enabled = false;
+        transform.position = DstGloblePosition + new Vector3(0, 0.5f, 0);
+        _characterController.enabled = true;
+    }
+
+    public void OnDestroy()
+    {
+        input.Player.Move.started -= GetMoveInput;
+        input.Player.Move.performed -= GetMoveInput;
+        input.Player.Move.canceled -= GetMoveInput;
+        input.Player.Jump.started -= TriggerJump;
+        input.Player.Jump.performed -= TriggerJump;
+        input.Player.Jump.canceled -= TriggerJump;
+        input.Player.Run.started -= ToggleRunning;
+        input.Player.Run.performed -= ToggleRunning;
+        input.Player.Run.canceled -= ToggleRunning;
+        input.Player.LockOn.started -= ToggleLockOn;
+        input.Player.LockOn.performed -= ToggleLockOn;
+        input.Player.LockOn.canceled -= ToggleLockOn;
+    }
 }

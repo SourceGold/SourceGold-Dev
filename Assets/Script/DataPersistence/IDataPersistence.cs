@@ -1,4 +1,6 @@
-﻿namespace Assets.Script
+﻿using System;
+
+namespace Assets.Script
 {
     public interface IDataPersistence
     {
@@ -17,6 +19,17 @@
         void RegisterExistence()
         {
             DataPersistenceManager.AddDataPersistenceObject(this);
+        }
+
+        /// <summary>
+        /// Method to remove registration 
+        /// of existing object from DataPersistenceManager when 
+        /// the scene is destroyed or reloaded, must call in object's
+        /// OnDestory method to avoid double registration when reload
+        /// </summary>
+        void Dispose()
+        {
+            DataPersistenceManager.RemoveDataPersistenceObject(this);
         }
     }
 }

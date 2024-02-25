@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Assets.Script;
+using UnityEngine.Windows;
 
 public class MeleeHandler : MonoBehaviour
 {
@@ -60,6 +62,7 @@ public class MeleeHandler : MonoBehaviour
 
     public void EquipWeapon(InputAction.CallbackContext context)
     {
+
         if (context.performed && !_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
@@ -79,17 +82,24 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack1(InputAction.CallbackContext context)
     {
+        Debug.Log("new StandingMeleeAttack3 save");
+        Debug.Log(this);
         if (context.performed)
         {
             _anim.SetInteger("AttackType", 1);
             if (_anim.GetBool("CanAttack"))
             {
                 _anim.SetTrigger("Attack");
+                // TODO: move to unity nav bar
+                // TODO: attack dmg is not working double check register and double reg (save load cause double register)
+                // TODO: attack dmg is not working even without S/L, need debug
+                DataPersistenceManager.SaveGame("save1");
             }
             if (_anim.GetBool("IsAttacking"))
             {
                 _anim.SetBool("IsCombo", true);
             }
+            
         }
     }
 
@@ -111,10 +121,14 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack3(InputAction.CallbackContext context)
     {
+        Debug.Log("new StandingMeleeAttack3 load");
+        Debug.Log(this);
         if (context.performed && _anim.GetBool("CanAttack"))
         {
             _anim.SetTrigger("Attack");
             _anim.SetInteger("AttackType", 3);
+            // TODO: move to unity nav bar
+            DataPersistenceManager.LoadGame("save1");
         }
     }
 
@@ -141,6 +155,17 @@ public class MeleeHandler : MonoBehaviour
         if (context.performed && _anim.GetBool("IsAttacking"))
         {
         }
+    }
+
+    void OnDestroy()
+    {
+        input.Player.MeleeAttack1.performed -= StandingMeleeAttack1;
+        input.Player.MeleeAttack2Press.performed -= StandingMeleeAttack2Press;
+        input.Player.EquipWeapon.performed -= EquipWeapon;
+        input.Player.SkillMeleeAttack1.performed -= SkillMeleeAttack1;
+        input.Player.SwitchWeapon.performed -= SwitchWeapon;
+        input.Player.MeleeAttack2Release.performed -= StandingMeleeAttack2Release;
+        input.Player.MeleeAttack3.performed -= StandingMeleeAttack3;
     }
 
     //private void CheckTrail()

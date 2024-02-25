@@ -3,13 +3,14 @@ using Assets.Script.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Script
 {
     public class DataPersistenceManager
     {
-        private List<IDataPersistence> _dataPersistenceObjects { get; set; }
+        private Dictionary<int, IDataPersistence> _dataPersistenceObjects { get; set; }
 
         private string _rootDataPath { get; set; }
 
@@ -26,7 +27,7 @@ namespace Assets.Script
         public DataPersistenceManager()
         {
             _rootDataPath = Application.persistentDataPath;
-            _dataPersistenceObjects = new List<IDataPersistence>();
+            _dataPersistenceObjects = new Dictionary<int, IDataPersistence>();
             if (_instance != null)
             {
                 throw new InvalidOperationException("Found more than one Data Persistence Manager in the scene");
@@ -38,8 +39,15 @@ namespace Assets.Script
 
         public static void AddDataPersistenceObject(IDataPersistence dataPersistence)
         {
-            Instance._dataPersistenceObjects.Add(dataPersistence);
+            Instance._dataPersistenceObjects.Add(dataPersistence.GetHashCode(), dataPersistence);
         }
+
+        public static void RemoveDataPersistenceObject(IDataPersistence dataPersistence)
+        {
+            Instance._dataPersistenceObjects.Remove(dataPersistence.GetHashCode());
+        }
+
+        private static List<IDataPersistence> _tempDataPersistenceObjectsToRemoveOnLoad { get; set; } = new List<IDataPersistence>();
 
         public void NewGame()
         {
@@ -49,8 +57,12 @@ namespace Assets.Script
         public static void LoadGame(string saveName)
         {
             GameEventLogger.LogEvent("Loading Game", EventLogType.SystemEvent);
-            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
+            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects.Values)
             {
+                if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
+                {
+                    continue;
+                }
                 var fileName = $"{dataPersistenceObject.GetSaveFileName()}.yaml";
                 var fullSaveFileName = Path.Combine(saveName, fileName);
                 var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);
@@ -61,8 +73,12 @@ namespace Assets.Script
         public static void SaveGame(string saveName)
         {
             GameEventLogger.LogEvent("Saving Game", EventLogType.SystemEvent);
-            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
+            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects.Values)
             {
+                if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
+                {
+                    continue;
+                }
                 var fileName = $"{dataPersistenceObject.GetSaveFileName()}.yaml";
                 var fullSaveFileName = Path.Combine(saveName, fileName);
                 var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);
