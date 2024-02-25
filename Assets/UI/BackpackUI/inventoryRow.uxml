@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Template name="inventoryItem" src="project://database/Assets/UI/BackpackUI/inventoryItem.uxml?fileID=9197481963319205126&amp;guid=018824d49604f3b4cbe580b439fd8ccb&amp;type=3#inventoryItem" />
+    <ui:VisualElement name="rowOfInventory" class="inventoryRow">
+        <ui:Instance template="inventoryItem" name="inventoryItem" />
+        <ui:Instance template="inventoryItem" name="inventoryItem" />
+        <ui:Instance template="inventoryItem" name="inventoryItem" />
+        <ui:Instance template="inventoryItem" name="inventoryItem" />
+        <ui:Instance template="inventoryItem" name="inventoryItem" />
+    </ui:VisualElement>
+</ui:UXML>
