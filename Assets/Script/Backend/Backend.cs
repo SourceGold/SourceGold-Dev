@@ -6,7 +6,7 @@
 
         public PlayerSaveInfo PlayerStats = null;
 
-        public void Awake()
+        public new void Awake()
         {
             GameEventLogger.LogEvent("Game Backend Awaken", EventLogType.SystemEvent);
             GameLoop = new GameSceneTest();

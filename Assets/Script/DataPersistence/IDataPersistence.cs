@@ -1,4 +1,6 @@
-﻿namespace Assets.Script
+﻿using System;
+
+namespace Assets.Script
 {
     public interface IDataPersistence
     {
@@ -17,6 +19,11 @@
         void RegisterExistence()
         {
             DataPersistenceManager.AddDataPersistenceObject(this);
+        }
+
+        void Dispose()
+        {
+            DataPersistenceManager.MarkRemoveDataPersistenceObjectAfterLoad(this);
         }
     }
 }

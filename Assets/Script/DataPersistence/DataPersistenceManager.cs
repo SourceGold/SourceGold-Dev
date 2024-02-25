@@ -10,7 +10,7 @@ namespace Assets.Script
 {
     public class DataPersistenceManager
     {
-        private List<IDataPersistence> _dataPersistenceObjects { get; set; }
+        private Dictionary<int, IDataPersistence> _dataPersistenceObjects { get; set; }
 
         private string _rootDataPath { get; set; }
 
@@ -27,7 +27,7 @@ namespace Assets.Script
         public DataPersistenceManager()
         {
             _rootDataPath = Application.persistentDataPath;
-            _dataPersistenceObjects = new List<IDataPersistence>();
+            _dataPersistenceObjects = new Dictionary<int, IDataPersistence>();
             if (_instance != null)
             {
                 throw new InvalidOperationException("Found more than one Data Persistence Manager in the scene");
@@ -39,7 +39,31 @@ namespace Assets.Script
 
         public static void AddDataPersistenceObject(IDataPersistence dataPersistence)
         {
-            Instance._dataPersistenceObjects.Add(dataPersistence);
+            Instance._dataPersistenceObjects.Add(dataPersistence.GetHashCode(), dataPersistence);
+        }
+
+        private static void RemoveDataPersistenceObject(IDataPersistence dataPersistence)
+        {
+            Instance._dataPersistenceObjects.Remove(dataPersistence.GetHashCode());
+        }
+
+        private static List<IDataPersistence> _tempDataPersistenceObjectsToRemoveOnLoad { get; set; } = new List<IDataPersistence>();
+
+        private static void RemoveDataPersistenceObjectAfterLoad()
+        {
+            if (_tempDataPersistenceObjectsToRemoveOnLoad.Count > 0)
+            {
+                foreach (var obj in _tempDataPersistenceObjectsToRemoveOnLoad)
+                {
+                    RemoveDataPersistenceObject(obj);
+                }
+            }
+            _tempDataPersistenceObjectsToRemoveOnLoad = new List<IDataPersistence>();
+        }
+
+        public static void MarkRemoveDataPersistenceObjectAfterLoad(IDataPersistence dataPersistence)
+        {
+            _tempDataPersistenceObjectsToRemoveOnLoad.Add(dataPersistence);
         }
 
         public void NewGame()
@@ -50,7 +74,7 @@ namespace Assets.Script
         public static void LoadGame(string saveName)
         {
             GameEventLogger.LogEvent("Loading Game", EventLogType.SystemEvent);
-            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
+            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects.Values)
             {
                 if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
                 {
@@ -61,12 +85,13 @@ namespace Assets.Script
                 var fullPath = Path.Combine(Instance._rootDataPath, fullSaveFileName);
                 dataPersistenceObject.LoadData(fullPath);
             }
+            RemoveDataPersistenceObjectAfterLoad();
         }
 
         public static void SaveGame(string saveName)
         {
             GameEventLogger.LogEvent("Saving Game", EventLogType.SystemEvent);
-            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects)
+            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects.Values)
             {
                 if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
                 {
