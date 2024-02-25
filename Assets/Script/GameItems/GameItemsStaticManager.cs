@@ -10,6 +10,7 @@ public class GameItemsStaticManager : Singleton<GameItemsStaticManager>
     void Start()
     {
         AllGameItems allGameItems = Resources.Load<AllGameItems>("GameItems/AvaliableItems");
+        Debug.Log(allGameItems);
         foreach (GameItem item in allGameItems.gameItems)
         {
             print(item.itemName);
@@ -20,7 +21,6 @@ public class GameItemsStaticManager : Singleton<GameItemsStaticManager>
 
     public GameItem GetGameItem(string name)
     {
-        print(gameItemsStatic.Keys);
         if (gameItemsStatic.TryGetValue(name, out var existingItem)) {
             return existingItem;
         } else

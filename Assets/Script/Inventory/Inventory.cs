@@ -51,6 +51,7 @@ public class Inventory
 
         _items.Add(inventoryItem);
         GameEventLogger.LogEvent($"Creating new item: {inventoryItem} added to inventory");
+        EventManager.TriggerEvent(GameEventTypes.InventoryChangeEvent);
         return 0;
         
     }
@@ -69,7 +70,7 @@ public class Inventory
                 return _items[i].CurrentCount;
             }
         }
-
+        EventManager.TriggerEvent(GameEventTypes.InventoryChangeEvent);
         throw new Exception($"Item Id: {inventoryItem} not found in inventory");
     }
     
