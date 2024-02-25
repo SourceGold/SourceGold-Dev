@@ -82,8 +82,6 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack1(InputAction.CallbackContext context)
     {
-        Debug.Log("new StandingMeleeAttack3 save");
-        Debug.Log(this);
         if (context.performed)
         {
             _anim.SetInteger("AttackType", 1);
@@ -121,8 +119,6 @@ public class MeleeHandler : MonoBehaviour
 
     public void StandingMeleeAttack3(InputAction.CallbackContext context)
     {
-        Debug.Log("new StandingMeleeAttack3 load");
-        Debug.Log(this);
         if (context.performed && _anim.GetBool("CanAttack"))
         {
             _anim.SetTrigger("Attack");

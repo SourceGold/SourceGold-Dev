@@ -65,7 +65,7 @@ public class PlayerManager : CharacterManager, IDataPersistence
     public void LoadData(string fileName)
     {
         var playerInfo = DataPersistenceManager.LoadDataFile<PlayerSaveInfo>(fileName);
-        Debug.Log($"loaded info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");
+        //Debug.Log($"loaded info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");
 
         Backend.Instance.PlayerStats = playerInfo;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -90,7 +90,7 @@ public class PlayerManager : CharacterManager, IDataPersistence
             Z = playerTranform.z,
         };
 
-        Debug.Log($"saved info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");
+        //Debug.Log($"saved info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");
         DataPersistenceManager.SaveDataFile(fileName, playerInfo);
     }
 
