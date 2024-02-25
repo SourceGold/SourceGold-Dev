@@ -30,9 +30,8 @@ public class PlayerManager : CharacterManager, IDataPersistence
         {
             return;
         }
-        //Debug.Log(playerStats.X);
-        _movementHandler.Teleport(playerStats.V3Position());
 
+        _movementHandler.Teleport(playerStats.V3Position());
         _weaponHandler.SetWeapon(playerStats.WeaponType);
 
         if (playerStats.WeaponDrawn)
