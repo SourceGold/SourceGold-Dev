@@ -6,6 +6,8 @@
             <ui:VisualElement name="Buttons" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); height: auto; width: auto; justify-content: center; align-items: stretch; flex-direction: column-reverse; transform-origin: center; align-self: center; padding-bottom: 0; display: flex; visibility: visible; overflow: visible;">
                 <ui:Button text="Exit" display-tooltip-when-elided="true" name="ExitButton" class="menu-button" />
                 <ui:Button text="Settings" display-tooltip-when-elided="true" name="SettingButton" class="menu-button" />
+                <ui:Button text="Load" display-tooltip-when-elided="true" name="LoadButton" class="menu-button" style="height: 48px; width: 204px;" />
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="SaveButton" class="menu-button" style="height: 48px; width: 204px;" />
                 <ui:Button text="Resume" display-tooltip-when-elided="true" name="PlayButton" class="menu-button" style="height: 48px; width: 204px;" />
             </ui:VisualElement>
         </ui:VisualElement>
