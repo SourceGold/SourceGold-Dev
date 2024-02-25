@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class EnemyManager : CharacterManager
 {
-    EnemyLocomotionManager _enemyLocomotionManager;
+    private EnemyLocomotionManager _enemyLocomotionManager;
+    public EnemyLocomotionManager EnemyLocomotionManager
+    {
+        get { return _enemyLocomotionManager; }
+    }
+
     private bool _isPerformingAction;
     public bool IsPerformingAction
     {
@@ -54,7 +59,11 @@ public class EnemyManager : CharacterManager
 
     private void FixedUpdate()
     {
-        HandleCurrentAction();
+        // HandleCurrentAction();
+
+
+
+        ProcessStateMachine();
     }
 
     private void HandleCurrentAction()
@@ -68,4 +77,23 @@ public class EnemyManager : CharacterManager
         }
     }
 
+
+
+
+
+
+
+
+    [Header("Current State")]
+    [SerializeField] AiState _currentState;
+
+    private void ProcessStateMachine()
+    {
+        AiState nextState = _currentState?.Tick(this);
+
+        if (nextState != null)
+        {
+            _currentState = nextState;
+        }
+    }
 }

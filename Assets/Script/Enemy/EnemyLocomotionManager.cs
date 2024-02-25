@@ -17,7 +17,8 @@ public class EnemyLocomotionManager : LocomotionManager
     [SerializeField] private CharacterStats _currentTarget;
     public CharacterStats CurrentTarget 
     { 
-        get { return _currentTarget; } 
+        get { return _currentTarget; }
+        set { _currentTarget = value; }
     }
 
     [SerializeField] private LayerMask _detectionLayer;
@@ -28,7 +29,7 @@ public class EnemyLocomotionManager : LocomotionManager
     }
 
     private Transform _transform;
-    protected override Transform Transform 
+    public override Transform Transform 
     {
         get { return _transform; }
         set { _transform = value; }
@@ -91,7 +92,7 @@ public class EnemyLocomotionManager : LocomotionManager
     }
 
     private Transform _currentLockOnTarget;
-    protected override Transform CurrentLockOnTarget 
+    public override Transform CurrentLockOnTarget 
     {
         get { return _currentLockOnTarget; }
         set { _currentLockOnTarget = value; }

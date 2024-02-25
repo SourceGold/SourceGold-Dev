@@ -14,7 +14,7 @@ public class MovementHandler : LocomotionManager
     private Transform _camT;
     private Camera _cam;
     private Transform _currentLockOnTarget;
-    protected override Transform CurrentLockOnTarget 
+    public override Transform CurrentLockOnTarget 
     {
         get { return _currentLockOnTarget; }
         set { _currentLockOnTarget = value; }
@@ -89,7 +89,7 @@ public class MovementHandler : LocomotionManager
     //[SerializeField] private bool _runMode = true;
 
     private Transform _transform;
-    protected override Transform Transform
+    public override Transform Transform
     {
         get { return _transform; }
         set { _transform = value; }

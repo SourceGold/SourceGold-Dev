@@ -11,7 +11,7 @@ public abstract class LocomotionManager : MonoBehaviour
     [HideInInspector] public abstract PlayerPosture PlayerPosture { get; set; }
     [HideInInspector] public abstract LocomotionState LocomotionState { get; set; }
 
-    protected abstract Transform Transform { get; set; }
+    public abstract Transform Transform { get; set; }
     protected abstract Animator Animator { get; set; }
     public abstract CharacterController CharacterController { get; set; }
     [SerializeField] private float _rotateSpeed = 15f;
@@ -24,7 +24,7 @@ public abstract class LocomotionManager : MonoBehaviour
     [SerializeField] private float _walkSpeed = 1.75f;
     [SerializeField] private float _runSpeed = 3.5f;
 
-    protected abstract Transform CurrentLockOnTarget { get; set; }
+    public abstract Transform CurrentLockOnTarget { get; set; }
     protected abstract CameraManager CameraManager { get; set; }
 
     private float _standThreshold = 0.0f;
