@@ -25,6 +25,7 @@ public class Backpack : MonoBehaviour
     {
         playerInventory = Backend.GameLoop.PlayerInventory;
         putItemIntoUI();
+        EventManager.StartListening(GameEventTypes.InventoryChangeEvent, putItemIntoUI);
     }
 
     // Update is called once per frame
@@ -38,17 +39,25 @@ public class Backpack : MonoBehaviour
         _backpackScoll.Clear();
         int current_count = 0;
         VisualElement oneRow = _itemBoxTemplate.CloneTree();
-        _backpackScoll.Add(oneRow);
+        VisualElement rowBox = oneRow.Q<VisualElement>("rowOfInventory");
+        _backpackScoll.Add(rowBox);
         foreach (var item in playerInventory._items)
         {
             VisualElement oneItem = _itemTemplate.CloneTree();
-            oneRow.Add(oneItem);
+            VisualElement sprite = oneItem.Q<VisualElement>("icon");
+            var count = oneItem.Q<Label>(name: "count");
+            var level = oneItem.Q<Label>(name: "levelText");
+            count.text = item.CurrentCount.ToString();
+            level.text = "LV " + item.level.ToString();
+            sprite.style.backgroundImage = new StyleBackground(item.staticInfo.itemImage);
+            rowBox.Add(oneItem);
             current_count++;
             if (current_count == 5)
             {
                 current_count = 0;
                 oneRow = _itemBoxTemplate.CloneTree();
-                _backpackScoll.Add(oneRow);
+                rowBox = oneRow.Q<VisualElement>("rowOfInventory");
+                _backpackScoll.Add(rowBox);
             }
         }
 

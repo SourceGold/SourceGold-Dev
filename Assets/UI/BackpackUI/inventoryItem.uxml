@@ -1,4 +1,5 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/BackpackUI/Backpack.uss?fileID=7433441132597879392&amp;guid=82a92f395ff7f974d9275d666a23c41f&amp;type=3#Backpack" />
     <ui:Button text="&#10;" display-tooltip-when-elided="true" name="inventoryItem" class="inventoryItem">
         <ui:VisualElement name="contentHolder" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); overflow: visible; padding-top: 0; height: 0; flex-shrink: 0; border-top-width: 2px;">
             <ui:VisualElement name="icon" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Icons/Backpack/round-potion&apos;); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; width: 70px; height: 70px; align-self: center; flex-shrink: 0; opacity: 0.6; overflow: visible; visibility: visible; translate: 0 0;" />

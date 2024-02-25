@@ -1,6 +1,7 @@
 using Assets.Script.Backend;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEditor.Rendering.Universal;
@@ -25,14 +26,18 @@ public class InventoryCommand
         Debug.Log("Selected Transform is on " + Selection.activeTransform.gameObject.name + ".");
     }
 
+    static int number = 0;
     [MenuItem("Internal Controll/Add To Inventory")]
     static void AddToInventory()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = number; i < number + 2; i++)
         {
             InventoryItem aItem = new InventoryItem($"Cystal", level: i, currentCount: i);
+            InventoryItem bItem = new InventoryItem($"BigSward", level: i, currentCount: i);
             Backend.GameLoop.GetInventory().AddItem(aItem);
+            Backend.GameLoop.GetInventory().AddItem(bItem);
         }
+        number += 3;
     }
 
     [MenuItem("Internal Controll/Print Inventory")]
