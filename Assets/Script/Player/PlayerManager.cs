@@ -8,8 +8,6 @@ public class PlayerManager : CharacterManager, IDataPersistence
 {
     [HideInInspector] public Transform MainCamera;
     private WeaponHandler _weaponHandler;
-    private GameObject _player;
-    private Transform _playerBot;
     private MovementHandler _movementHandler;
     private Animator _anim;
 
@@ -26,8 +24,6 @@ public class PlayerManager : CharacterManager, IDataPersistence
     {
         Backend.GameLoop.RegisterGameObject(new PlayableCharacter(this.name));
         ((IDataPersistence)this).RegisterExistence();
-        _player = Resources.Load("Prefab/Player Bot") as GameObject;
-        _playerBot = transform.Find("Player Bot");
 
         var playerStats = Backend.Instance.PlayerStats;
         if (playerStats == null)
