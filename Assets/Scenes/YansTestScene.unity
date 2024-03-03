@@ -913,6 +913,8 @@ MonoBehaviour:
     type: 3}
   _itemBoxTemplate: {fileID: 9197481963319205126, guid: 2d38169a8695f78438ca50137072586a,
     type: 3}
+  _rightClickTemplate: {fileID: 9197481963319205126, guid: 607fd6a32c7335b49ad273919ea17736,
+    type: 3}
 --- !u!114 &1617742872
 MonoBehaviour:
   m_ObjectHideFlags: 0
