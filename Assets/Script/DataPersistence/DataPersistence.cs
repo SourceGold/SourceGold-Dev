@@ -12,10 +12,7 @@ namespace Assets.Script
             }
         }
 
-        public void Restart()
-        {
-
-        }
+        public abstract void Restart();
 
         public virtual void LoadData(string fileName)
         {

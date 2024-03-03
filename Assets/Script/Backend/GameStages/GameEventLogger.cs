@@ -39,6 +39,11 @@ namespace Assets.Script.Backend
             //Instance.EventLog.Add(new EventLogMessage(message, eventLogType));
         }
 
+        public override void Restart()
+        {
+            LogEvent("Scene Restarted", EventLogType.GameEvent);
+        }
+
         public override void LoadData(string fileName)
         {
             var logs = DataPersistenceManager.LoadDataFile<List<EventLogMessage>>(fileName);
