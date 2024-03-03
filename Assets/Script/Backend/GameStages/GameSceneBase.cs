@@ -21,7 +21,7 @@ namespace Assets.Script.Backend
 
         public void InitializeStage()
         {
-            PlayerInventory = new Inventory(100);
+            InitializeStageInventory();
             InitializeCharacters();
         }
     }
