@@ -41,6 +41,30 @@
     padding-bottom: 0;
 }
 
+.inventoryItemActive {
+    border-left-color: rgb(244, 255, 71);
+    border-right-color: rgb(244, 255, 71);
+    border-top-color: rgb(244, 255, 71);
+    border-bottom-color: rgb(244, 255, 71);
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 96px;
+    height: 96px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    margin-right: 6px;
+    margin-left: 6px;
+}
+
+.inventoryItemActive:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 .inventoryRow {
     flex-grow: 0;
     background-color: rgba(0, 0, 0, 0);

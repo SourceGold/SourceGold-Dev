@@ -1,6 +1,7 @@
 using Assets.Script.Backend;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
@@ -9,6 +10,8 @@ public class Backpack : MonoBehaviour
 {
     [SerializeField]
     public VisualTreeAsset _itemTemplate;
+    [SerializeField]
+    public VisualTreeAsset _emptyItemTemplate;
     [SerializeField]
     public VisualTreeAsset _itemBoxTemplate;
     [SerializeField]
@@ -24,11 +27,13 @@ public class Backpack : MonoBehaviour
 
 
     private Inventory playerInventory;
+    private List<int> quickAccessList;
+
     private VisualElement menuArea;
     private VisualElement rootElement;
 
     private VisualElement buttonContainer;
-
+    private VisualElement activatedInventoryItem;
    private void HandleNotRightClick(MouseUpEvent evt)
     {
         var targetElement = evt.target as VisualElement;
@@ -63,6 +68,33 @@ public class Backpack : MonoBehaviour
         buttonContainer.style.left = localPos.x + 5;
     }
 
+    private void HandleLeftClick(MouseUpEvent evt, InventoryItem item)
+    {
+        if (evt.button != (int)MouseButton.LeftMouse)
+            return;
+
+        var targetElement = evt.target as VisualElement;
+        if (targetElement == null)
+            return;
+
+        activatedInventoryItem.RemoveFromClassList("inventoryItemActive");
+        activatedInventoryItem.AddToClassList("inventoryItem");
+
+        if (targetElement.name == "inventoryItem")
+        {
+            activatedInventoryItem = targetElement;
+            targetElement.RemoveFromClassList("inventoryItem");
+            targetElement.AddToClassList("inventoryItemActive");
+        }
+
+        if (item.isNew)
+        {
+            item.isNew = false;
+            VisualElement newItemDot = targetElement.Q<Label>("newItemDot");
+            newItemDot.style.visibility = Visibility.Hidden;
+        }
+    }
+
     private void Awake()
     {
         UIDocument _doc = GetComponent<UIDocument>();
@@ -78,6 +110,7 @@ public class Backpack : MonoBehaviour
     void Start()
     {
         playerInventory = Backend.GameLoop.PlayerInventory;
+        quickAccessList = Backend.GameLoop.quickAccessItems;
         putItemIntoUI();
         EventManager.StartListening(GameEventTypes.InventoryChangeEvent, putItemIntoUI);
     }
@@ -86,6 +119,21 @@ public class Backpack : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void putItemsIntoQuickAccess()
+    {
+        foreach (int itemID in quickAccessList) 
+        {
+            if (itemID == -1)
+            {
+                // add as empty
+            } else
+            {
+                var item = playerInventory._items[quickAccessList[itemID]];
+
+            }
+        }
     }
 
     private void putItemIntoUI()
@@ -97,13 +145,7 @@ public class Backpack : MonoBehaviour
         _backpackScoll.Add(rowBox);
         foreach (var item in playerInventory._items)
         {
-            VisualElement oneItem = _itemTemplate.CloneTree();
-            VisualElement sprite = oneItem.Q<VisualElement>("icon");
-            var count = oneItem.Q<Label>(name: "count");
-            var level = oneItem.Q<Label>(name: "levelText");
-            count.text = item.CurrentCount.ToString();
-            level.text = "LV " + item.level.ToString();
-            sprite.style.backgroundImage = new StyleBackground(item.staticInfo.itemImage);
+            VisualElement oneItem = constructOneInventoryItem(item);
             rowBox.Add(oneItem);
             oneItem.RegisterCallback<MouseUpEvent>(HandleRightClick, TrickleDown.TrickleDown);
 
@@ -117,5 +159,27 @@ public class Backpack : MonoBehaviour
             }
         }
 
+    }
+
+    private VisualElement constructOneInventoryItem(InventoryItem item)
+    {
+        VisualElement   oneItem = _itemTemplate.CloneTree();
+
+        VisualElement   sprite = oneItem.Q<VisualElement>("icon");
+        VisualElement   newItemDot = oneItem.Q<Label>("newItemDot");
+
+        var             count = oneItem.Q<Label>(name: "count");
+        var             level = oneItem.Q<Label>(name: "levelText");
+
+        count.text = item.CurrentCount.ToString();
+        level.text = "LV " + item.level.ToString();
+        sprite.style.backgroundImage = new StyleBackground(item.staticInfo.itemImage);
+        if (item.isNew)
+            newItemDot.style.visibility = Visibility.Visible;
+        else
+            newItemDot.style.visibility = Visibility.Hidden;
+
+        oneItem.RegisterCallback<MouseUpEvent, InventoryItem>(HandleLeftClick, item, TrickleDown.TrickleDown);
+        return oneItem;
     }
 }
