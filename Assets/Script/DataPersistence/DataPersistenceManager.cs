@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Script
 {
@@ -49,9 +50,18 @@ namespace Assets.Script
 
         private static List<IDataPersistence> _tempDataPersistenceObjectsToRemoveOnLoad { get; set; } = new List<IDataPersistence>();
 
-        public void NewGame()
+        public static void NewGame()
         {
+            
+        }
 
+        public static void RestartGame()
+        {
+            foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects.Values)
+            {
+                dataPersistenceObject.Restart();
+            }
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         public static void LoadGame(string saveName)

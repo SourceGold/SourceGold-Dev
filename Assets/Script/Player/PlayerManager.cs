@@ -33,6 +33,7 @@ public class PlayerManager : CharacterManager, IDataPersistence
 
         _movementHandler.Teleport(playerStats.V3Position());
 
+        _weaponHandler.SwitchWeapon(playerStats.WeaponType);
         if (playerStats.WeaponDrawn)
         {
             _anim.SetBool("IsWeaponEquipped", true);
@@ -62,6 +63,11 @@ public class PlayerManager : CharacterManager, IDataPersistence
         Invoke("SelfDmg", 10.0f);
     }
 
+    public void Restart()
+    {
+        Backend.Instance.PlayerStats = null;
+    }
+
     public void LoadData(string fileName)
     {
         var playerInfo = DataPersistenceManager.LoadDataFile<PlayerSaveInfo>(fileName);
@@ -88,6 +94,8 @@ public class PlayerManager : CharacterManager, IDataPersistence
             X = playerTranform.x,
             Y = playerTranform.y,
             Z = playerTranform.z,
+            WeaponDrawn = _anim.GetBool("IsWeaponReady"),
+            WeaponType = _anim.GetInteger("WeaponType")
         };
 
         //Debug.Log($"saved info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");

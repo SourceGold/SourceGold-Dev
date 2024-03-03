@@ -8,6 +8,8 @@ namespace Assets.Script
 
         void SaveData(string fileName);
 
+        void Restart();
+
         string GetSaveFileName();
 
         /// <summary>

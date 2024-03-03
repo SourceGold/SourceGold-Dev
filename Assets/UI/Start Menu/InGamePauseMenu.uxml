@@ -8,6 +8,7 @@
                 <ui:Button text="Settings" display-tooltip-when-elided="true" name="SettingButton" class="menu-button" />
                 <ui:Button text="Load" display-tooltip-when-elided="true" name="LoadButton" class="menu-button" style="height: 48px; width: 204px;" />
                 <ui:Button text="Save" display-tooltip-when-elided="true" name="SaveButton" class="menu-button" style="height: 48px; width: 204px;" />
+                <ui:Button text="Restart" display-tooltip-when-elided="true" name="RestartButton" class="menu-button" style="height: 48px; width: 204px;" />
                 <ui:Button text="Resume" display-tooltip-when-elided="true" name="PlayButton" class="menu-button" style="height: 48px; width: 204px;" />
             </ui:VisualElement>
         </ui:VisualElement>

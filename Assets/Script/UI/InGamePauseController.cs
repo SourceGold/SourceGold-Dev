@@ -1,6 +1,7 @@
 using Assets.Script;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class InGamePauseController : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class InGamePauseController : MonoBehaviour
         var _exitButton = _doc.rootVisualElement.Q<Button>("ExitButton");
         var _saveButton = _doc.rootVisualElement.Q<Button>("SaveButton");
         var _loadButton = _doc.rootVisualElement.Q<Button>("LoadButton");
+        var _restartButton = _doc.rootVisualElement.Q<Button>("RestartButton");
 
         _controlManager = FindObjectOfType<ControlManager>();
         _playButton.clicked += () =>
@@ -45,6 +47,8 @@ public class InGamePauseController : MonoBehaviour
         _settingButton.clicked += SettingsButtonOnClicked;
         _saveButton.clicked += () => DataPersistenceManager.SaveGame(DataPersistenceManager._testSave);
         _loadButton.clicked += () => DataPersistenceManager.LoadGame(DataPersistenceManager._testSave);
+        _restartButton.clicked += () => DataPersistenceManager.RestartGame();
+
 
         rootBackground = _doc.rootVisualElement.Q<VisualElement>(name: "BlackBoxHolder");
         _displayArea = _doc.rootVisualElement.Q<VisualElement>(name: "BlackBox");

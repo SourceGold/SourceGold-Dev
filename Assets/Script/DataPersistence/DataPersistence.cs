@@ -12,6 +12,11 @@ namespace Assets.Script
             }
         }
 
+        public void Restart()
+        {
+
+        }
+
         public virtual void LoadData(string fileName)
         {
             BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
