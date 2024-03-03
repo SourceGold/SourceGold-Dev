@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="ButtonContainer" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: 128px; flex-shrink: 0; height: auto; translate: 0 0; display: flex; visibility: visible; position: absolute; left: 0;">
+        <ui:Button text="Q" display-tooltip-when-elided="true" name="QButton" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+        <ui:Button text="W" display-tooltip-when-elided="true" name="WButton" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+        <ui:Button text="E" display-tooltip-when-elided="true" name="EButton" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+        <ui:Button text="R" display-tooltip-when-elided="true" name="RButton" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+    </ui:VisualElement>
+</ui:UXML>
