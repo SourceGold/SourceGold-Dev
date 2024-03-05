@@ -9,9 +9,10 @@ using UnityEngine.UIElements;
 
 public class SimpleRanged : MonoBehaviour
 {
+    public bool IsTurret;
     public float RateOfFire = 10f;
     public Transform Head;
-    public Transform SpawnBulletPosition;
+    public Transform []SpawnBulletPosition;
     public float DetectionAngle = 30f;
     public float DetectionRadius = 15f;
     [Tooltip("Degree per second")]
@@ -42,7 +43,7 @@ public class SimpleRanged : MonoBehaviour
     {
         ShootWait += ShootDelay;
         PlayerMask = LayerMask.GetMask("Player");
-        BulletPositionHeight = SpawnBulletPosition.transform.position.y - transform.position.y;
+        BulletPositionHeight = SpawnBulletPosition[0].transform.position.y - transform.position.y;
     }
 
     // Update is called once per frame
@@ -53,10 +54,14 @@ public class SimpleRanged : MonoBehaviour
         if (AllowShoot && IsShooting)
         {
             ShootWait = 0;
-            var bullet = Instantiate(pfBulletProjectile, SpawnBulletPosition.position, transform.rotation).GetComponent<BulletProjectile>();
-            bullet.CollisionLayer = PlayerMask;
-            bullet.SourceName = transform.name;
-            bullet.BulletSpeed = BulletSpeed;
+            foreach (var spawn in SpawnBulletPosition)
+            {
+                var spawnRotation = IsTurret ? spawn.rotation : transform.rotation;
+                var bullet = Instantiate(pfBulletProjectile, spawn.position, spawnRotation).GetComponent<BulletProjectile>();
+                bullet.CollisionLayer = PlayerMask;
+                bullet.SourceName = transform.name;
+                bullet.BulletSpeed = BulletSpeed;
+            }   
         }
     }
 
@@ -107,7 +112,7 @@ public class SimpleRanged : MonoBehaviour
                 LockedTarget = null;
         }
 
-        if (LockedTarget)
+        if (LockedTarget && !IsTurret)
         {
             Vector3 euler = Quaternion.LookRotation(LockedTarget.position - transform.position).eulerAngles;
             if (shortestDistance > BulletPositionHeight)
