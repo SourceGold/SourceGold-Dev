@@ -22,7 +22,7 @@ public class HeadAim : MonoBehaviour
     void Start()
     {
         var data = _multiAimConstraint.data.sourceObjects;
-        data.SetTransform(0, _playerBot);
+        data.SetTransform(0, _playerBot.Find("Follow Target"));
         _multiAimConstraint.data.sourceObjects = data;
         _rigBuilder.Build();
     }
