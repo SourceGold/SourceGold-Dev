@@ -280,12 +280,7 @@ PrefabInstance:
     - target: {fileID: 9184967814767266888, guid: aa896b7674c234f19a9b9030135e0a4e,
         type: 3}
       propertyPath: m_Name
-      value: Human Enemy1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9184967814767266888, guid: aa896b7674c234f19a9b9030135e0a4e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: Human Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
