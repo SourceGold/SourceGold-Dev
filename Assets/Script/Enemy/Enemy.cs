@@ -43,8 +43,10 @@ public class Enemy : MonoBehaviour
 
     private void DeathHandler()
     {
-        _anim.SetBool("IsDead", true);
-        //this.gameObject.SetActive(false);
+        if (_anim)
+            _anim.SetBool("IsDead", true);
+        else
+            this.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
