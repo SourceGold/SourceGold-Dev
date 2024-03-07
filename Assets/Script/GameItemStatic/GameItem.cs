@@ -17,14 +17,9 @@ public class GameItem : ScriptableObject
     public string itemName;
     public Sprite itemImage;
     public GameItemType type;
+    public int max_level;
     public int maximum_count;
 
     public GameItemDescription englishDescription;
     public GameItemDescription chineseDescription;
-}
-
-[CreateAssetMenu(fileName = "New GameItem", menuName = "GameItem/List of all items")]
-public class AllGameItems : ScriptableObject
-{
-    public List<GameItem> gameItems;
 }

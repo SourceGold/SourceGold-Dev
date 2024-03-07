@@ -20,10 +20,7 @@ public class Backpack : MonoBehaviour
     public VisualElement _backpackScoll;
     public VisualElement button;
 
-    public VisualElement _activatedObjectSprite;
-    public VisualElement _activatedObjectLevel;
-    public VisualElement _descriptionText;
-    public VisualElement _additionalDescriptionRegion;
+    
 
 
     private Inventory playerInventory;
@@ -34,7 +31,18 @@ public class Backpack : MonoBehaviour
 
     private VisualElement buttonContainer;
     private VisualElement activatedInventoryItem;
-   private void HandleNotRightClick(MouseUpEvent evt)
+
+    #region activatedItemRegion
+    [SerializeField]
+    public VisualTreeAsset activeElementAdditionalDesciptionTemplate;
+
+    private VisualElement _activatedItemSprite;
+    private Label _activatedItemLevel;
+    private Label _activatedItemText;
+    private Label _activatedItemName;
+    private VisualElement _activatedItemAdditionalDescriptionField;
+    #endregion
+    private void HandleNotRightClick(MouseUpEvent evt)
     {
         var targetElement = evt.target as VisualElement;
         if (buttonContainer != null && !buttonContainer.Contains(targetElement))
@@ -77,16 +85,22 @@ public class Backpack : MonoBehaviour
         if (targetElement == null)
             return;
 
-        activatedInventoryItem.RemoveFromClassList("inventoryItemActive");
-        activatedInventoryItem.AddToClassList("inventoryItem");
+        if (activatedInventoryItem != null)
+        {
+            activatedInventoryItem.RemoveFromClassList("inventoryItemActive");
+            activatedInventoryItem.AddToClassList("inventoryItem");
+        }
+        print(targetElement.name);
 
         if (targetElement.name == "inventoryItem")
         {
             activatedInventoryItem = targetElement;
             targetElement.RemoveFromClassList("inventoryItem");
             targetElement.AddToClassList("inventoryItemActive");
-        }
 
+            constructActiveItemView(item);
+        }
+        
         if (item.isNew)
         {
             item.isNew = false;
@@ -102,7 +116,12 @@ public class Backpack : MonoBehaviour
         button = _doc.rootVisualElement.Q<Button>("consumableButton");
         menuArea = _doc.rootVisualElement.Q<VisualElement>("MenuArea");
         rootElement = _doc.rootVisualElement.Q<VisualElement>("RootElement");
-        
+
+        _activatedItemSprite = _doc.rootVisualElement.Q<VisualElement>("activatedItemSprite");
+        _activatedItemLevel = _doc.rootVisualElement.Q<Label>("activatedItemLevel");
+        _activatedItemName = _doc.rootVisualElement.Q<Label>("activatedItemName");
+        _activatedItemText = _doc.rootVisualElement.Q<Label>("activatedItemText");
+        _activatedItemAdditionalDescriptionField = _doc.rootVisualElement.Q<VisualElement>("activatedItemAdditionalDescriptionField");
         menuArea.RegisterCallback<MouseUpEvent>(HandleNotRightClick, TrickleDown.TrickleDown);
     }
 
@@ -181,5 +200,27 @@ public class Backpack : MonoBehaviour
 
         oneItem.RegisterCallback<MouseUpEvent, InventoryItem>(HandleLeftClick, item, TrickleDown.TrickleDown);
         return oneItem;
+    }
+
+    private void constructActiveItemView(InventoryItem item)
+    {
+        _activatedItemName.text = item.staticInfo.englishDescription.displayName;
+        _activatedItemText.text = item.staticInfo.englishDescription.displayDescription;
+        _activatedItemSprite.style.backgroundImage = new StyleBackground(item.staticInfo.itemImage);
+
+        if (item.staticInfo.max_level > 0)
+        {
+            _activatedItemLevel.text = "LV " + item.level.ToString() + " / " + item.staticInfo.max_level;
+        }
+        else
+        {
+            _activatedItemLevel.text = "LV " + item.level.ToString();
+        }
+
+        for (int i = 0; i < _activatedItemAdditionalDescriptionField.childCount; i ++)
+        {
+            _activatedItemAdditionalDescriptionField.RemoveAt(0);
+        }
+        
     }
 }

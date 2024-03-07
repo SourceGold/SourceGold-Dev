@@ -1,4 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/BackpackUI/Backpack.uss?fileID=7433441132597879392&amp;guid=82a92f395ff7f974d9275d666a23c41f&amp;type=3#Backpack" />
-    <ui:Button text="&#10;" display-tooltip-when-elided="true" name="inventoryItem" class="inventoryItem" />
+    <ui:Button text="&#10;" display-tooltip-when-elided="true" name="inventoryEmptyItem" class="inventoryEmptyItem" />
 </ui:UXML>

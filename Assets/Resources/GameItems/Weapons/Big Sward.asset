@@ -15,6 +15,7 @@ MonoBehaviour:
   itemName: BigSward
   itemImage: {fileID: 21300000, guid: 7b869767076075441ae0b2421249ca2e, type: 3}
   type: 1
+  max_level: 100
   maximum_count: 0
-  englishDescription: {fileID: 0}
+  englishDescription: {fileID: 11400000, guid: 00df890a2988c8241b61af36f23d9d87, type: 2}
   chineseDescription: {fileID: 0}

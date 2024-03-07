@@ -17,6 +17,9 @@ public class InventoryItem
     public bool isNew;
 
     public GameItem staticInfo;
+    public Dictionary<string, int> additionalIntStats = new Dictionary<string, int>();
+    public Dictionary<string, float> additionalFloatStats = new Dictionary<string, float>();
+
     public InventoryItem(string id, int maxCount = 10000, int currentCount = 1, int level = 0, bool isNew = true)
     {
         staticInfo = GameItemsStaticManager.Instance.GetGameItem(id);
