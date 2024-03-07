@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c399c314e4c2484298770b68d93a309, type: 3}
-  m_Name: AvaliableItems
+  m_Script: {fileID: 11500000, guid: 2a109b306ca98fd40b7c3144c78fbce8, type: 3}
+  m_Name: BigSwordEng
   m_EditorClassIdentifier: 
-  gameItems:
-  - {fileID: 11400000, guid: f1e8e307590293f4987f2d07183e3298, type: 2}
-  - {fileID: 11400000, guid: e765873df10a2c240bbcffb4c8fd3f06, type: 2}
+  displayName: Big Sword
+  displayDescription: This is a big sword

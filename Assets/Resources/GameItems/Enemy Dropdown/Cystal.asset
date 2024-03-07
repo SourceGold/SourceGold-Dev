@@ -15,6 +15,7 @@ MonoBehaviour:
   itemName: Cystal
   itemImage: {fileID: 21300000, guid: ca3e1dad48ea380449b560e2c5992038, type: 3}
   type: 3
+  max_level: 10
   maximum_count: 0
   englishDescription: {fileID: 11400000, guid: 0d85c43bd5a5c894cbdec6343487f9b4, type: 2}
   chineseDescription: {fileID: 11400000, guid: 8b423073dc08b1343b036aa0d5328c52, type: 2}

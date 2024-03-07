@@ -1,5 +1,4 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="AdditionalDescription" src="project://database/Assets/UI/BackpackUI/AdditionalDescription.uxml?fileID=9197481963319205126&amp;guid=9c962a9a45c80fa49b15db6cb23b5eb4&amp;type=3#AdditionalDescription" />
     <ui:Template name="inventoryEmpty" src="project://database/Assets/UI/BackpackUI/inventoryEmpty.uxml?fileID=9197481963319205126&amp;guid=9dbccc0f8a39e354ebc0ca8210734e50&amp;type=3#inventoryEmpty" />
     <Style src="project://database/Assets/UI/BackpackUI/Backpack.uss?fileID=7433441132597879392&amp;guid=82a92f395ff7f974d9275d666a23c41f&amp;type=3#Backpack" />
     <ui:VisualElement name="RootElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; flex-direction: column; margin-top: 0; margin-bottom: 0; width: auto; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;">
@@ -35,21 +34,16 @@
             <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgb(99, 86, 62); overflow: visible; width: 43%; flex-shrink: 0;">
                 <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); background-image: none; margin-left: 96px; padding-left: 0; margin-right: 96px; margin-top: 36px; margin-bottom: 0;">
                     <ui:VisualElement style="flex-grow: 0; background-color: rgba(156, 88, 76, 0.89); height: 15%; justify-content: flex-start; padding-bottom: 0; margin-bottom: 12px;">
-                        <ui:Label tabindex="-1" text="Healing Potion" display-tooltip-when-elided="true" style="flex-grow: 1; justify-content: center; align-self: center; flex-shrink: 1; -unity-text-align: middle-left; -unity-font-style: bold;" />
+                        <ui:Label tabindex="-1" text="Healing Potion" display-tooltip-when-elided="true" name="activatedItemName" style="flex-grow: 1; justify-content: center; align-self: center; flex-shrink: 1; -unity-text-align: middle-left; -unity-font-style: bold;" />
                     </ui:VisualElement>
-                    <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Icons/Backpack/round-potion&apos;); width: 196px; height: 196px; align-self: center;" />
+                    <ui:VisualElement name="activatedItemSprite" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Icons/Backpack/round-potion&apos;); width: 196px; height: 196px; align-self: center;" />
                 </ui:VisualElement>
                 <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); align-items: stretch; margin-left: 0; align-self: center;">
-                    <ui:Label tabindex="-1" text="LV 3 / 100" display-tooltip-when-elided="true" name="Label" style="color: rgb(255, 212, 6); height: auto; margin-left: 0; margin-right: 0; margin-top: 8px; margin-bottom: 0; padding-left: 2px; padding-right: 2px; padding-top: 0; padding-bottom: 0; font-size: 18px; translate: 0 0; background-color: rgba(149, 250, 6, 0.33); -unity-font-style: bold; flex-shrink: 1; width: auto; align-items: flex-start; align-self: flex-start; justify-content: center;" />
+                    <ui:Label tabindex="-1" text="LV 3 / 100" display-tooltip-when-elided="true" name="activatedItemLevel" style="color: rgb(255, 212, 6); height: auto; margin-left: 0; margin-right: 0; margin-top: 8px; margin-bottom: 0; padding-left: 2px; padding-right: 2px; padding-top: 0; padding-bottom: 0; font-size: 18px; translate: 0 0; background-color: rgba(149, 250, 6, 0.33); -unity-font-style: bold; flex-shrink: 1; width: auto; align-items: flex-start; align-self: flex-start; justify-content: center;" />
                 </ui:VisualElement>
-                <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); margin-left: 96px; margin-right: 96px; flex-direction: column; flex-wrap: wrap;">
-                    <ui:Instance template="AdditionalDescription" name="AdditionalDescription" />
-                    <ui:Label tabindex="-1" text="Defense: 100" display-tooltip-when-elided="true" name="Label" style="color: rgb(255, 0, 214); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
-                    <ui:Label tabindex="-1" text="Star: 5" display-tooltip-when-elided="true" name="Label" style="color: rgb(255, 0, 214); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; height: 25px;" />
-                    <ui:Label tabindex="-1" text="Damage: 100" display-tooltip-when-elided="true" name="Label" style="color: rgb(255, 0, 214); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
-                </ui:VisualElement>
-                <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(208, 248, 80, 0.48); margin-left: 96px; margin-right: 96px; margin-top: 6px; margin-bottom: 36px;">
-                    <ui:Label tabindex="-1" text="This is an ancient poision." display-tooltip-when-elided="true" style="font-size: 14px;" />
+                <ui:VisualElement name="activatedItemAdditionalDescriptionField" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); margin-left: 96px; margin-right: 96px; flex-direction: column; flex-wrap: wrap;" />
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(208, 248, 80, 0.48); margin-left: 96px; margin-right: 96px; margin-top: 9px; margin-bottom: 36px;">
+                    <ui:Label tabindex="-1" text="This is an ancient poision." display-tooltip-when-elided="true" name="activatedItemText" style="font-size: 14px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
