@@ -84,6 +84,7 @@ public class ControlManager : MonoBehaviour
         _player.LockOn.canceled += ToggleLockOn;
         _player.Aim.performed += ToggleAim;
         _player.Roll.performed += TriggerRoll;
+        _player.SwitchBattlePose.performed += SwitchBattlePoseMovement;
     }
     private void GetMoveInput(InputAction.CallbackContext context)
     {
@@ -113,6 +114,11 @@ public class ControlManager : MonoBehaviour
         if (context.performed)
             _movementHandler.TriggerRoll();
     }
+    private void SwitchBattlePoseMovement(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _movementHandler.SwitchBattlePose();
+    }
     #endregion
 
     #region Melee Bindings
@@ -122,6 +128,10 @@ public class ControlManager : MonoBehaviour
         _player.SwitchWeapon.performed += SwitchWeapon;
         _player.StandingMeleeLight.performed += StandingMeleeLight;
         _player.StandingMeleeHeavy.performed += StandingMeleeHeavy;
+        _player.StandingMeleeHeavy.canceled += AttackRelease;
+        _player.SwitchBattlePose.performed += SwitchBattlePoseMelee;
+
+
         //_player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
         //_player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
     }
@@ -145,6 +155,17 @@ public class ControlManager : MonoBehaviour
         if (context.performed)
             _meleeHandler.StandingMeleeHeavy();
     }
+    private void SwitchBattlePoseMelee(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _meleeHandler.SwitchBattlePose();
+    }
+    private void AttackRelease(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+            _meleeHandler.AttackRelease();
+    }
+
     //private void StandingMeleeAttack2Press(InputAction.CallbackContext context)
     //{
     //    _meleeHandler.StandingMeleeAttack2Press(context.performed);

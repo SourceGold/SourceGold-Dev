@@ -7,12 +7,11 @@ public class WeaponHandler : MonoBehaviour
     public enum Action { Equip, Unequip };
 
 
-    public string[] Name;
-    public float[] Damage;
     public Transform []Weapon;
     public Transform []WeaponHandle;
     public Transform []WeaponRestPose;
-    public MeleeHandler MeleeHandlerRef;
+    public Transform []Shield;
+    public Transform []ShieldHandle;
 
     public struct WeaponInfo
     {
@@ -20,25 +19,42 @@ public class WeaponHandler : MonoBehaviour
         public float damge;
     }
 
+    //private PlayerManager _playerManager;
     private Animator _anim;
+
     private int _weaponType = 0;
     private WeaponInfo[] _weaponInfo;
+    private int _shieldType = 0;
 
-    void Start()
+    private void Awake()
     {
+        //_playerManager = FindObjectOfType<PlayerManager>();
         _anim = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        
         _anim.SetInteger("WeaponType", 1);
         _weaponInfo = new WeaponInfo[Weapon.Length];
         for (int i = 0; i < Weapon.Length; i++)
         {
-            _weaponInfo[i].name = Name[i];
-            _weaponInfo[i].damge = Damage[i];
+            _weaponInfo[i].name = Weapon[i].gameObject.name;
 
             Weapon[i].SetParent(WeaponRestPose[i]);
             Weapon[i].localRotation = Quaternion.identity;
             Weapon[i].localPosition = Vector3.zero;
+            Weapon[i].gameObject.SetActive(false);
         }
-        Weapon[1].gameObject.SetActive(false);
+        Weapon[0].gameObject.SetActive(true);
+
+        for (int i = 0; i < Shield.Length; i++)
+        {
+            Shield[i].SetParent(ShieldHandle[i]);
+            Shield[i].localRotation = Quaternion.identity;
+            Shield[i].localPosition = Vector3.zero;
+            Shield[i].gameObject.SetActive(false);
+        }
     }
 
     public void ResetWeapon(Action action, bool switchWeapon)
@@ -65,6 +81,11 @@ public class WeaponHandler : MonoBehaviour
             Weapon[_weaponType].gameObject.SetActive(true);
         }
             
+    }
+
+    public void ToggleShield()
+    {
+        Shield[_shieldType].gameObject.SetActive(!Shield[_shieldType].gameObject.activeSelf);
     }
 
     public Collider GetCollider()

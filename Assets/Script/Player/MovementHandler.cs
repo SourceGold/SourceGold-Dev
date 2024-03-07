@@ -121,6 +121,7 @@ public class MovementHandler : LocomotionManager
     #endregion
 
     private ShootingHandler _shootingHandler;
+    private bool _isBattlePoseSwitched = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -156,6 +157,8 @@ public class MovementHandler : LocomotionManager
 
     public void ToggleRunning(InputAction.CallbackContext context)
     {
+        if (_weaponStatus == WeaponStatus.Equipped)
+            return;
         if (GlobalSettings.globalSettings.userDefinedSettings.Control.PressToSpeedUp)
         {
             _isRunning = context.performed ? !_isRunning : _isRunning;
@@ -170,18 +173,18 @@ public class MovementHandler : LocomotionManager
     }
     public void TriggerJump(bool performed)
     {
-        _isJumping = performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("IsAttacking");
+        _isJumping = performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsAttacking");
     }
 
     public void ToggleLockOn()
     {
-        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack"))
+        if (!_animator.GetBool("IsRolling"))
             _toggleLock = true;
     }
 
     public void ToggleAim()
     {
-        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
+        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
         {
             _cameraManager.ToggleAim();
             _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
@@ -194,16 +197,19 @@ public class MovementHandler : LocomotionManager
 
     public void TriggerRoll()
     {
-        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand)
+        if (!_animator.GetBool("IsRolling") &&  _playerPosture == PlayerPosture.Stand)
         {
             _animator.SetBool("IsRolling", true);
         }
-        //else if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand && _weaponStatus == WeaponStatus.Equipped)
-        //{
-        //    _animator.SetBool("IsDodgeBack", true);
-        //}
 
+    }
 
+    public void SwitchBattlePose()
+    {
+        if (_animator.GetBool("CanAttack") && !_animator.GetBool("IsAttacking"))
+        {
+            _isBattlePoseSwitched = !_isBattlePoseSwitched;
+        }
     }
 
     #endregion
@@ -214,6 +220,27 @@ public class MovementHandler : LocomotionManager
             _weaponStatus = WeaponStatus.Equipped;
         else
             _weaponStatus = WeaponStatus.Unequipped;
+    }
+
+    protected override void SetupAnimatorWeapon()
+    {
+        if (_weaponStatus == WeaponStatus.Equipped && _isBattlePoseSwitched && _animator.GetBool("IsBlocking"))
+        {
+            _animator.SetFloat("WeaponStatus", 3.0f, 0.1f, Time.deltaTime);
+        }
+        else if (_weaponStatus == WeaponStatus.Equipped && _isBattlePoseSwitched)
+        {
+            var weaponStat = (float)(_animator.GetInteger("WeaponType"));
+            _animator.SetFloat("WeaponStatus", weaponStat, 0.1f, Time.deltaTime);
+        }
+        else if (_weaponStatus == WeaponStatus.Equipped)
+        {
+            Animator.SetFloat("WeaponStatus", 1.0f, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            Animator.SetFloat("WeaponStatus", 0.0f, 0.1f, Time.deltaTime);
+        }
     }
 
     protected override void Rotate()
@@ -239,7 +266,7 @@ public class MovementHandler : LocomotionManager
             return;
         else if (_animator.GetBool("IsRolling"))
             return;
-        else if (!_animator.GetCurrentAnimatorStateInfo(2).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(2).IsName("AttackIdle"))
+        else if (!_animator.GetCurrentAnimatorStateInfo(3).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(3).IsName("AttackIdle") && !_animator.GetBool("IsBlocking"))
             return;
         else
         {
