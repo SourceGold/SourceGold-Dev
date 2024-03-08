@@ -1,15 +1,7 @@
-using Assets.Script.Backend;
-using Mono.Cecil;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
+using Assets.Script;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using UnityEngine.Windows;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine.SceneManagement;
 
 public class InGamePauseController : MonoBehaviour
 {
@@ -39,16 +31,24 @@ public class InGamePauseController : MonoBehaviour
         var _playButton = _doc.rootVisualElement.Q<Button>("PlayButton");
         var _settingButton = _doc.rootVisualElement.Q<Button>("SettingButton");
         var _exitButton = _doc.rootVisualElement.Q<Button>("ExitButton");
+        var _saveButton = _doc.rootVisualElement.Q<Button>("SaveButton");
+        var _loadButton = _doc.rootVisualElement.Q<Button>("LoadButton");
+        var _restartButton = _doc.rootVisualElement.Q<Button>("RestartButton");
 
         _controlManager = FindObjectOfType<ControlManager>();
-        _playButton.clicked += () => { 
-            rootBackground.style.display = DisplayStyle.None; 
+        _playButton.clicked += () =>
+        {
+            rootBackground.style.display = DisplayStyle.None;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
             _controlManager.ToggleInputActionMap();
         };
         _exitButton.clicked += () => Application.Quit();
         _settingButton.clicked += SettingsButtonOnClicked;
+        _saveButton.clicked += () => DataPersistenceManager.SaveGame(DataPersistenceManager._testSave);
+        _loadButton.clicked += () => DataPersistenceManager.LoadGame(DataPersistenceManager._testSave);
+        _restartButton.clicked += () => DataPersistenceManager.RestartGame();
+
 
         rootBackground = _doc.rootVisualElement.Q<VisualElement>(name: "BlackBoxHolder");
         _displayArea = _doc.rootVisualElement.Q<VisualElement>(name: "BlackBox");
@@ -74,7 +74,8 @@ public class InGamePauseController : MonoBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.None;
             UnityEngine.Cursor.visible = true;
             rootBackground.style.display = DisplayStyle.Flex;
-        } else
+        }
+        else
         {
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
@@ -94,7 +95,7 @@ public class InGamePauseController : MonoBehaviour
         _displayArea.Remove(_mainPageButtons);
         _displayArea.Add(_settings.getRootElement());
 
-        
+
     }
     private void ResetToPauseMenu()
     {

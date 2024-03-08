@@ -89,6 +89,13 @@ public class CameraManager : MonoBehaviour
         _cinemachineTargetPitch = 12f;
     }
 
+    private void OnDestroy()
+    {
+        input.Player.Look.started -= Look;
+        input.Player.Look.performed -= Look;
+        input.Player.Look.canceled -= Look;
+    }
+
     private void Update()
     {
         //Debug.LogFormat("(Yaw: {0}, Pitch: {1})", _cinemachineTargetYaw, _cinemachineTargetPitch);

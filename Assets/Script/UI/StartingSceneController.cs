@@ -1,13 +1,7 @@
-using Assets.Script.Backend;
-using Mono.Cecil;
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
+using Assets.Script;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class MenuController : MonoBehaviour
 {
@@ -28,7 +22,7 @@ public class MenuController : MonoBehaviour
     private Label _title;
 
     private VisualElement _mainPageButtons;
-    
+
 
     private void Awake()
     {
@@ -36,9 +30,13 @@ public class MenuController : MonoBehaviour
         var _playButton = _doc.rootVisualElement.Q<Button>("PlayButton");
         var _settingButton = _doc.rootVisualElement.Q<Button>("SettingButton");
         var _exitButton = _doc.rootVisualElement.Q<Button>("ExitButton");
+        var _saveButton = _doc.rootVisualElement.Q<Button>("SaveButton");
+        var _loadButton = _doc.rootVisualElement.Q<Button>("LoadButton");
         _playButton.clicked += () => SceneManager.LoadScene("Scenes/Scene1");
         _exitButton.clicked += () => Application.Quit();
         _settingButton.clicked += SettingsButtonOnClicked;
+        _saveButton.clicked += () => DataPersistenceManager.SaveGame(DataPersistenceManager._testSave);
+        _loadButton.clicked += () => DataPersistenceManager.LoadGame(DataPersistenceManager._testSave);
 
         _blackBox = _doc.rootVisualElement.Q<VisualElement>(name: "BlackBoxHolder");
         _displayArea = _doc.rootVisualElement.Q<VisualElement>(name: "BlackBox");
@@ -61,10 +59,10 @@ public class MenuController : MonoBehaviour
         _title.text = "Settings";
 
         _settings.initializeSettings();
-        _displayArea.Remove(_mainPageButtons);    
+        _displayArea.Remove(_mainPageButtons);
         _displayArea.Add(_settings.getRootElement());
 
-        
+
     }
     private void BackButtonOnClicked()
     {

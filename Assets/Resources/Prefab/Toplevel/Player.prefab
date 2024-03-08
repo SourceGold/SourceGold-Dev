@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 7431848453188550658}
   - component: {fileID: 3441785409769160700}
   m_Layer: 6
+  m_Layer: 6
   m_Name: Weapon FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +145,7 @@ Transform:
   - {fileID: 80460903684581625}
   - {fileID: 3100556036183881556}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2826851534750170984
 MonoBehaviour:
@@ -171,6 +172,7 @@ GameObject:
   - component: {fileID: 33213316607009999}
   - component: {fileID: 8720362113030083392}
   - component: {fileID: 310218680363718757}
+  m_Layer: 6
   m_Layer: 6
   m_Name: Greatsword
   m_TagString: Untagged
@@ -503,35 +505,42 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.27
+      value: 22.27
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
         type: 3}
       propertyPath: m_LocalPosition.y
+      value: 3.565
       value: 3.565
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 28.75
+      value: 28.75
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
         type: 3}
       propertyPath: m_LocalRotation.w
+      value: 0.70630574
       value: 0.70630574
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: -0.70790696
+      value: -0.70790696
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
         type: 3}
       propertyPath: m_LocalRotation.z
+      value: -0
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
@@ -542,6 +551,7 @@ PrefabInstance:
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
+      value: -90.13
       value: -90.13
       objectReference: {fileID: 0}
     - target: {fileID: 4414269351680752103, guid: 7f077e9f9c38c46f9a58a3e6519f7980,
@@ -718,10 +728,50 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1194335804893280316, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1499031241269176786, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2937722625285615478, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4133545172781428759, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4164183244547346914, guid: 32e550d5061ed4b8db555f6e0172b6c2,
         type: 3}
       propertyPath: m_Name
       value: Godsword
+      objectReference: {fileID: 0}
+    - target: {fileID: 4164183244547346914, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367452368212754703, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107524299552296290, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6765303890438628668, guid: 32e550d5061ed4b8db555f6e0172b6c2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4164183244547346914, guid: 32e550d5061ed4b8db555f6e0172b6c2,
         type: 3}

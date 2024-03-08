@@ -75,12 +75,19 @@ public class WeaponHandler : MonoBehaviour
 
         if (switchWeapon)
         {
-            Weapon[_weaponType].gameObject.SetActive(false);
-            _weaponType = (_weaponType + 1) % Weapon.Length;
-            _anim.SetInteger("WeaponType", _weaponType+1);
-            Weapon[_weaponType].gameObject.SetActive(true);
+            SwitchWeapon((_weaponType + 1) % Weapon.Length);
         }
             
+    }
+
+    public void SwitchWeapon(int weaponType)
+    {
+        if (_weaponType == weaponType)
+            return;
+        Weapon[_weaponType].gameObject.SetActive(false);
+        _weaponType = weaponType;
+        _anim.SetInteger("WeaponType", _weaponType+1);
+        Weapon[_weaponType].gameObject.SetActive(true);
     }
 
     public void ToggleShield()

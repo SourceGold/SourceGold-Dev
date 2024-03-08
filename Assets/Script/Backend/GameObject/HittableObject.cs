@@ -135,7 +135,7 @@ namespace Assets.Script.Backend
 
         public virtual void UpdateHitPoint(int changeInHp)
         {
-            GameEventLogger.LogEvent($"{nameof(UpdateHitPoint)}: {changeInHp} {HitPointName} used");
+            GameEventLogger.LogEvent($"{nameof(UpdateHitPoint)}: {changeInHp} {HitPointName} changed");
             _hp.UpdateStats(changeInHp);
             if (!IsAlive)
             {
@@ -151,7 +151,7 @@ namespace Assets.Script.Backend
             }
             else
             {
-                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInMp} {MagicPointName} used");
+                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInMp} {MagicPointName} changed");
                 _mp.UpdateStats(changeInMp);
             }
         }
@@ -164,7 +164,7 @@ namespace Assets.Script.Backend
             }
             else
             {
-                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInStamina} {StaminaName} used");
+                GameEventLogger.LogEvent($"{nameof(UpdateMagicPoint)}: {changeInStamina} {StaminaName} changed");
                 _stamina.UpdateStats(changeInStamina);
             }
         }
