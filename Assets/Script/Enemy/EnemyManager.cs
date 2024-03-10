@@ -39,10 +39,17 @@ public class EnemyManager : CharacterManager
         set { _maximumDetectionAngle = value; }
     }
 
+    private EnemyStateMachine _enemyStateMachine;
+    public EnemyStateMachine EnemyStateMachine
+    {
+        get { return _enemyStateMachine; }
+    }
+
     private void Awake()
     {
         _isPerformingAction = false;
         _enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
+        _enemyStateMachine = GetComponent<EnemyStateMachine>();
     }
 
     // Start is called before the first frame update
@@ -59,41 +66,6 @@ public class EnemyManager : CharacterManager
 
     private void FixedUpdate()
     {
-        // HandleCurrentAction();
-
-
-
-        ProcessStateMachine();
-    }
-
-    private void HandleCurrentAction()
-    {
-        if (_enemyLocomotionManager.CurrentTarget == null)
-        {
-            _enemyLocomotionManager.HandleDetection();
-        } else
-        {
-            _enemyLocomotionManager.HandleMoveToTarget();
-        }
-    }
-
-
-
-
-
-
-
-
-    [Header("Current State")]
-    [SerializeField] AiState _currentState;
-
-    private void ProcessStateMachine()
-    {
-        AiState nextState = _currentState?.Tick(this);
-
-        if (nextState != null)
-        {
-            _currentState = nextState;
-        }
+        _enemyStateMachine.ProcessStateMachine();
     }
 }

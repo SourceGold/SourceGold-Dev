@@ -70,6 +70,8 @@ GameObject:
   - component: {fileID: 3019986435713426626}
   - component: {fileID: 913331385737105368}
   - component: {fileID: 1394397056474333235}
+  - component: {fileID: 977788100649560564}
+  - component: {fileID: 8377809209123529680}
   m_Layer: 7
   m_Name: Human Enemy
   m_TagString: Untagged
@@ -165,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3690cf61fed747b98493ed7332e5e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _detectionRadius: 20
+  _detectionRadius: 5
   _minimumDetectionAngle: -50
   _maximumDetectionAngle: 50
 --- !u!114 &3019986435713426626
@@ -194,7 +196,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _distanceFromTarget: 0
-  _stoppingDistance: 5
+  _stoppingDistance: 2
+  _lostTargetDistance: 10
 --- !u!114 &913331385737105368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +223,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 23333
+--- !u!114 &977788100649560564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184967814767266888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9d051439236934e9a2f31e1fa27151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idle: {fileID: 11400000, guid: f6191a2b57198324f9675838e33c361f, type: 2}
+  _chase: {fileID: 11400000, guid: 41cd9c1c9a39675449cc81e0a6ad8c98, type: 2}
+  _currentState: {fileID: 0}
+--- !u!114 &8377809209123529680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184967814767266888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9d051439236934e9a2f31e1fa27151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idle: {fileID: 11400000, guid: f6191a2b57198324f9675838e33c361f, type: 2}
+  _chase: {fileID: 11400000, guid: 41cd9c1c9a39675449cc81e0a6ad8c98, type: 2}
+  _currentState: {fileID: 0}
 --- !u!1001 &1317985118252469644
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -242,21 +275,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955538862659706168, guid: fb70c76232890614b9d2361ad51765c3,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955538862659706168, guid: fb70c76232890614b9d2361ad51765c3,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955538862659706168, guid: fb70c76232890614b9d2361ad51765c3,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6955538862659706168, guid: fb70c76232890614b9d2361ad51765c3,
         type: 3}
