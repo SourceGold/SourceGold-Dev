@@ -34,7 +34,7 @@
         // test only
         public void OnApplicationQuit()
         {
-            DataPersistenceManager.SaveGame(DataPersistenceManager._testSave);
+            //DataPersistenceManager.SaveGame(DataPersistenceManager._testSave);
         }
 
         private GameSceneBase LoadStage(string stageName)
