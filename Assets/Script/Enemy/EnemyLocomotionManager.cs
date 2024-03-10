@@ -17,7 +17,8 @@ public class EnemyLocomotionManager : LocomotionManager
     [SerializeField] private CharacterStats _currentTarget;
     public CharacterStats CurrentTarget 
     { 
-        get { return _currentTarget; } 
+        get { return _currentTarget; }
+        set { _currentTarget = value; }
     }
 
     [SerializeField] private LayerMask _detectionLayer;
@@ -28,7 +29,7 @@ public class EnemyLocomotionManager : LocomotionManager
     }
 
     private Transform _transform;
-    protected override Transform Transform 
+    public override Transform Transform 
     {
         get { return _transform; }
         set { _transform = value; }
@@ -91,7 +92,7 @@ public class EnemyLocomotionManager : LocomotionManager
     }
 
     private Transform _currentLockOnTarget;
-    protected override Transform CurrentLockOnTarget 
+    public override Transform CurrentLockOnTarget 
     {
         get { return _currentLockOnTarget; }
         set { _currentLockOnTarget = value; }
@@ -113,8 +114,10 @@ public class EnemyLocomotionManager : LocomotionManager
 
     private float _enemyHorizontalVelocity;
 
-    [SerializeField] private float _distanceFromTarget; 
+    [SerializeField] private float _distanceFromTarget;
     [SerializeField] private float _stoppingDistance = 5f;
+    [SerializeField] private float _lostTargetDistance = 20f;
+
 
     private void Awake()
     {
@@ -130,7 +133,7 @@ public class EnemyLocomotionManager : LocomotionManager
         _navMeshAgent.enabled = false;
     }
 
-    public void HandleDetection()
+    public void Detection()
     {
         Collider[] colliders = Physics.OverlapSphere(_transform.position, _enemyManager.DetectionRadius, _detectionLayer);
 
@@ -163,9 +166,10 @@ public class EnemyLocomotionManager : LocomotionManager
         } 
 
         _currentTarget = closestTarget;
+        ApplyGravity();
     }
 
-    public void HandleMoveToTarget()
+    public void MoveToTarget()
     {
         Vector3 targetDirection = _currentTarget.transform.position - _transform.position;
         _distanceFromTarget = Vector3.Distance(_currentTarget.transform.position, _transform.position);
@@ -191,7 +195,7 @@ public class EnemyLocomotionManager : LocomotionManager
 
         _enemyAnimatorManager.Animator.SetFloat("HorizontalVelocity", _enemyHorizontalVelocity);
 
-        HandleRotateTowardsTarget();
+        RotateTowardsTarget();
 
         _navMeshAgent.transform.localPosition = Vector3.zero;
         _navMeshAgent.transform.localRotation = Quaternion.identity;
@@ -199,7 +203,7 @@ public class EnemyLocomotionManager : LocomotionManager
         ApplyGravity();
     }
 
-    private void HandleRotateTowardsTarget()
+    private void RotateTowardsTarget()
     {
         if (_enemyManager.IsPerformingAction)
         {
@@ -216,5 +220,23 @@ public class EnemyLocomotionManager : LocomotionManager
             _navMeshAgent.SetDestination(_currentTarget.transform.position);
             Rotate(_navMeshAgent.transform.rotation);
         }
+    }
+
+    public bool IsLostTarget()
+    {
+        _distanceFromTarget = Vector3.Distance(_currentTarget.transform.position, _transform.position);
+
+        return _distanceFromTarget > _lostTargetDistance;
+    }
+
+    public void StopMoving()
+    {
+        _navMeshAgent.enabled = false;
+
+        _enemyHorizontalVelocity = Mathf.Lerp(_enemyHorizontalVelocity, 0f, 0.5f);
+
+        _enemyAnimatorManager.Animator.SetFloat("HorizontalVelocity", _enemyHorizontalVelocity);
+
+        ApplyGravity();
     }
 }

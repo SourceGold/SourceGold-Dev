@@ -579,6 +579,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 7408248914001688535, guid: 3a6274215a410c747b51af25efb31b7e,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 60.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8642083706193025898, guid: 3a6274215a410c747b51af25efb31b7e,
         type: 3}
       propertyPath: m_RootOrder

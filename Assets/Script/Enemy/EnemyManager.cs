@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class EnemyManager : CharacterManager
 {
-    EnemyLocomotionManager _enemyLocomotionManager;
+    private EnemyLocomotionManager _enemyLocomotionManager;
+    public EnemyLocomotionManager EnemyLocomotionManager
+    {
+        get { return _enemyLocomotionManager; }
+    }
+
     private bool _isPerformingAction;
     public bool IsPerformingAction
     {
@@ -34,10 +39,17 @@ public class EnemyManager : CharacterManager
         set { _maximumDetectionAngle = value; }
     }
 
+    private EnemyStateMachine _enemyStateMachine;
+    public EnemyStateMachine EnemyStateMachine
+    {
+        get { return _enemyStateMachine; }
+    }
+
     private void Awake()
     {
         _isPerformingAction = false;
         _enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
+        _enemyStateMachine = GetComponent<EnemyStateMachine>();
     }
 
     // Start is called before the first frame update
@@ -54,18 +66,6 @@ public class EnemyManager : CharacterManager
 
     private void FixedUpdate()
     {
-        HandleCurrentAction();
+        _enemyStateMachine.ProcessStateMachine();
     }
-
-    private void HandleCurrentAction()
-    {
-        if (_enemyLocomotionManager.CurrentTarget == null)
-        {
-            _enemyLocomotionManager.HandleDetection();
-        } else
-        {
-            _enemyLocomotionManager.HandleMoveToTarget();
-        }
-    }
-
 }
