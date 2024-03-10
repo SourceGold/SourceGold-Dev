@@ -26,8 +26,11 @@ public class WeaponHandler : MonoBehaviour
 
     void Start()
     {
+        // TODO:
+        // SL weapon status
+        // Falling position
         _anim = GetComponent<Animator>();
-        _anim.SetInteger("WeaponType", 1);
+        _anim.SetInteger("WeaponType", 0);
         _weaponInfo = new WeaponInfo[Weapon.Length];
         for (int i = 0; i < Weapon.Length; i++)
         {
@@ -59,12 +62,19 @@ public class WeaponHandler : MonoBehaviour
 
         if (switchWeapon)
         {
-            Weapon[_weaponType].gameObject.SetActive(false);
-            _weaponType = (_weaponType + 1) % Weapon.Length;
-            _anim.SetInteger("WeaponType", _weaponType+1);
-            Weapon[_weaponType].gameObject.SetActive(true);
+            SwitchWeapon((_weaponType + 1) % Weapon.Length);
         }
             
+    }
+
+    public void SwitchWeapon(int weaponType)
+    {
+        if (_weaponType == weaponType)
+            return;
+        Weapon[_weaponType].gameObject.SetActive(false);
+        _weaponType = weaponType;
+        _anim.SetInteger("WeaponType", _weaponType);
+        Weapon[_weaponType].gameObject.SetActive(true);
     }
 
     public Collider GetCollider()

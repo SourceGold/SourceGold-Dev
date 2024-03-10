@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Script/Backend/GameStages/EventType.cs.meta
+guid: cfe4c428c1fb8494e8eb4f75eb7515ec
+========
+guid: 521349437c2b8eb41a18f5558c1db3b4
+>>>>>>>> dev:Assets/Script/AnimatorManager.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

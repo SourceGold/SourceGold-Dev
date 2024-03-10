@@ -1,21 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-
-namespace Assets.Script.Backend
+﻿namespace Assets.Script.Backend
 {
-    public class Backend : MonoBehaviour
+    public class Backend : Singleton<Backend>
     {
         public static GameSceneBase GameLoop;
 
-        public void Awake()
+        public PlayerSaveInfo PlayerStats = null;
+
+        public new void Awake()
         {
+            GameEventLogger.LogEvent("Game Backend Awaken", EventLogType.SystemEvent);
+            // TODO: this is called when scene reload, in future need other ways to restart this object
+            // rather than just create a new one everytime to work with save/load
             GameLoop = new GameSceneTest();
             GameLoop.InitializeStage();
-            DontDestroyOnLoad(this);
+            this.doNotDestoryOnLoad = true;
+            base.Awake();
+        }
+
+        // test only
+        public void Start()
+        {
+            //DataPersistenceManager.LoadGame(DataPersistenceManager._testSave);
         }
 
         public void SetNextStage(string stageName)
@@ -24,6 +29,12 @@ namespace Assets.Script.Backend
             var newStage = LoadStage(stageName);
             newStage.InitializeStage(GameLoop);
             GameLoop = newStage;
+        }
+
+        // test only
+        public void OnApplicationQuit()
+        {
+            //DataPersistenceManager.SaveGame(DataPersistenceManager._testSave);
         }
 
         private GameSceneBase LoadStage(string stageName)

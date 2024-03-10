@@ -67,7 +67,7 @@ namespace Assets.Script.Backend
         {
             if (AllGameObjectCollection.ContainsKey(gameObject.Name))
             {
-                throw new Exception($"Object with the name {gameObject.Name} already registered, please make sure each object has unique names.");
+                throw new Exception($"Object with the name {gameObject.Name} already registered, please make sure each object has unique name.");
             }
 
             gameObject.RegisteredByGame = true;
