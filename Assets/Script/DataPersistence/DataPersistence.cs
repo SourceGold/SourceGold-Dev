@@ -4,7 +4,7 @@ namespace Assets.Script
 {
     public abstract class DataPersistence : IDataPersistence
     {
-        public DataPersistence(bool autoRegister = false)
+        public DataPersistence(bool autoRegister = true)
         {
             if (autoRegister)
             {
@@ -44,6 +44,14 @@ namespace Assets.Script
         public virtual string GetSaveFileName()
         {
             return GetType().Name;
+        }
+
+        /// <summary>
+        /// Placeholder for now, might need to be changed later when actual implementation is needed
+        /// </summary>
+        public virtual void Dispose()
+        {
+            ((IDataPersistence)this).Dispose();
         }
     }
 }

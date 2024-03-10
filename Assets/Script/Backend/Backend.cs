@@ -9,6 +9,8 @@
         public new void Awake()
         {
             GameEventLogger.LogEvent("Game Backend Awaken", EventLogType.SystemEvent);
+            // TODO: this is called when scene reload, in future need other ways to restart this object
+            // rather than just create a new one everytime to work with save/load
             GameLoop = new GameSceneTest();
             GameLoop.InitializeStage();
             this.doNotDestoryOnLoad = true;
