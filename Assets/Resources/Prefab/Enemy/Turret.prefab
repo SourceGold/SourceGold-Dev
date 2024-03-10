@@ -41,8 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3027819601709504245}
   - component: {fileID: 1835974151882089849}
-  - component: {fileID: 6582183637111002737}
   - component: {fileID: 3194070380052080136}
+  - component: {fileID: 5890252285247379975}
   m_Layer: 7
   m_Name: Turret
   m_TagString: Untagged
@@ -81,29 +81,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 0
---- !u!114 &6582183637111002737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 621005923828124090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c123c142072ff714599c3a1eea4a368f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsTurret: 1
-  RateOfFire: 2
-  Head: {fileID: 7755229873186707616}
-  SpawnBulletPosition:
-  - {fileID: 239269159220255066}
-  - {fileID: 2911036550719374670}
-  DetectionAngle: 360
-  DetectionRadius: 25
-  AimRotationSpeed: 5
-  ReleaseLockTime: 0.5
-  BulletSpeed: 200
 --- !u!143 &3194070380052080136
 CharacterController:
   m_ObjectHideFlags: 0
@@ -130,6 +107,27 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.14, z: 0}
+--- !u!114 &5890252285247379975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621005923828124090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c772cf07bae5842a61c4e3388873f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 7755229873186707616}
+  RateOfFire: 2
+  DetectionAngle: 360
+  DetectionRadius: 25
+  ReleaseLockTime: 0.5
+  SpawnBulletPosition:
+  - {fileID: 239269159220255066}
+  - {fileID: 2911036550719374670}
+  BulletSpeed: 300
 --- !u!1 &1906135797451115088
 GameObject:
   m_ObjectHideFlags: 0

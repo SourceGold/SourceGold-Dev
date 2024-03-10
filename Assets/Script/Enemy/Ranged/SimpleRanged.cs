@@ -76,6 +76,7 @@ public class SimpleRanged : MonoBehaviour
     {
         // transform target position to coordinate relative to self position;
         Vector3 targetRelative = AlwaysUp.InverseTransformPoint(target.position);
+        targetRelative.Scale(transform.localScale);
         // align x,z to x axis only
         Vector2 targetPosition = new Vector2(Mathf.Sqrt(targetRelative.x * targetRelative.x + targetRelative.z * targetRelative.z), targetRelative.y);
         Vector2 thisPosition = Vector2.zero;
@@ -114,13 +115,17 @@ public class SimpleRanged : MonoBehaviour
 
         if (LockedTarget && !IsTurret)
         {
+            Debug.Log(LockedTarget);
             Vector3 euler = Quaternion.LookRotation(LockedTarget.position - transform.position).eulerAngles;
             if (shortestDistance > BulletPositionHeight)
             {
                 float angle = Calculate(LockedTarget);
                 euler.x = angle;
                 float time = Mathf.Abs(Vector3.Angle(transform.eulerAngles, euler) / AimRotationSpeed);
-                transform.eulerAngles = Vector3.SmoothDamp(transform.eulerAngles, euler, ref CurrentRotateionVelocity, time);
+                var x = Mathf.SmoothDampAngle(transform.eulerAngles.x, euler.x, ref CurrentRotateionVelocity.x, time);
+                var y = Mathf.SmoothDampAngle(transform.eulerAngles.y, euler.y, ref CurrentRotateionVelocity.y, time);
+                var z = Mathf.SmoothDampAngle(transform.eulerAngles.z, euler.z, ref CurrentRotateionVelocity.z, time);
+                transform.rotation = Quaternion.Euler(x, y, z);
                 euler = transform.eulerAngles;
                 euler.x = 0;
                 AlwaysUp.eulerAngles = euler;
