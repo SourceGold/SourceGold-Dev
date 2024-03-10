@@ -43,7 +43,10 @@ public class Enemy : MonoBehaviour
 
     private void DeathHandler()
     {
-        this.gameObject.SetActive(false);
+        if (_anim)
+            _anim.SetBool("IsDead", true);
+        else
+            this.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,6 +59,8 @@ public class Enemy : MonoBehaviour
             {
                 var attackerName = other.GetComponentInParent<PlayerManager>().name;
                 //_anim.SetTrigger("Hit");
+                if (_anim)
+                    _anim.SetBool("Hit", true);
                 //Debug.Log("Hit By Sword");
 
                 Backend.GameLoop.ProcessDamage(new DamangeSource(){ SrcObjectName = attackerName }, new DamageTarget() { TgtObjectName = _name });
