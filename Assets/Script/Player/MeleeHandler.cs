@@ -31,7 +31,6 @@ public class MeleeHandler : MonoBehaviour
     //private BoxCollider _weaponCollider;
     //private int _maxFrameBuffer = 10;
 
-    public WeaponHandler WeaponHandlerRef;
     private Animator _anim;
     private MovementHandler _movementHandler;
     private WeaponHandler _weaponHandler;
@@ -113,7 +112,6 @@ public class MeleeHandler : MonoBehaviour
             switch (_anim.GetInteger("WeaponType"))
             {
                 case 1:
-                    //_weaponHandler.ToggleShield();
                     break;
                 case 2:
                     break;

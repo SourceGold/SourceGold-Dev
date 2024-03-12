@@ -266,7 +266,7 @@ public class MovementHandler : LocomotionManager
             return;
         else if (_animator.GetBool("IsRolling"))
             return;
-        else if (!_animator.GetCurrentAnimatorStateInfo(3).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(3).IsName("AttackIdle") && !_animator.GetBool("IsBlocking"))
+        else if (!_animator.GetCurrentAnimatorStateInfo(3).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(3).IsName("AttackIdle") && !_animator.GetBool("IsBlocking") && !_animator.GetCurrentAnimatorStateInfo(3).IsName("AttackSwitchPoseIdle"))
             return;
         else
         {
