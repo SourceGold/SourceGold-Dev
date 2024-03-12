@@ -127,15 +127,15 @@ public class MovementHandler : LocomotionManager
     void Awake()
     {
         //Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        _characterController = GetComponentInChildren<CharacterController>();
+        _animator = GetComponentInChildren<Animator>();
         _isRunning = false;
         _isAiming = false;
         _cameraManager = FindObjectOfType<CameraManager>();
         _cam = _cameraManager.gameObject.GetComponent<Camera>();
         _camT = _cam.transform;
         _transform = GetComponent<Transform>();
-        _shootingHandler = GetComponentInParent<ShootingHandler>();
+        _shootingHandler = GetComponentInChildren<ShootingHandler>();
     }
 
     // Start is called before the first frame update

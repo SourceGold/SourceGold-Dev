@@ -29,8 +29,8 @@ public class ControlManager : MonoBehaviour
         _isSetting = false;
 
         _playerManager = FindObjectOfType<PlayerManager>();
-        _movementHandler = _playerManager.GetComponentInChildren<MovementHandler>();
-        _meleeHandler = _playerManager.GetComponentInChildren<MeleeHandler>();
+        _movementHandler = _playerManager.GetComponent<MovementHandler>();
+        _meleeHandler = _playerManager.GetComponent<MeleeHandler>();
         _shootingHandler = _playerManager.GetComponentInChildren<ShootingHandler>();
         _gameItemSensationHandler = _playerManager.GetComponentInChildren<GameItemSensationHandler>();
         _inGamePauseController = FindObjectOfType<InGamePauseController>();

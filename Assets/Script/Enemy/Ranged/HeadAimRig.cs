@@ -6,14 +6,14 @@ using UnityEngine.Animations.Rigging;
 public class HeadAim : MonoBehaviour
 {
     private PlayerManager _playerManager;
-    private Transform _playerBot;
+    private Transform _followTarget;
     private MultiAimConstraint _multiAimConstraint;
     private RigBuilder _rigBuilder;
 
     private void Awake()
     {
         _playerManager = FindObjectOfType<PlayerManager>();
-        _playerBot = _playerManager.transform.Find("Player Bot");
+        _followTarget = _playerManager.transform.Find("Follow Target");
         _multiAimConstraint = GetComponent<MultiAimConstraint>();
         _rigBuilder = GetComponentInParent<RigBuilder>();
     }
@@ -22,7 +22,7 @@ public class HeadAim : MonoBehaviour
     void Start()
     {
         var data = _multiAimConstraint.data.sourceObjects;
-        data.SetTransform(0, _playerBot.Find("Follow Target"));
+        data.SetTransform(0, _followTarget);
         _multiAimConstraint.data.sourceObjects = data;
         _rigBuilder.Build();
     }

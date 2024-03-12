@@ -49,7 +49,7 @@ public class ShootingHandler : MonoBehaviour
             Vector3 aimDir = (hitPosition - spawnBulletPosition.position).normalized;
             var bullet = Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<BulletProjectile>();
             bullet.CollisionLayer = enemyLayer;
-            bullet.SourceName = transform.parent.name;
+            bullet.SourceName = transform.name;
         }
     }
 

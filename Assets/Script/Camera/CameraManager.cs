@@ -59,7 +59,7 @@ public class CameraManager : MonoBehaviour
 
         Crosshair = gameObject.transform.Find("Crosshair").Find("crosshair_0");
 
-        CinemachineCameraTarget = FindObjectOfType<PlayerManager>().transform.Find("Player Bot").Find("Follow Target");
+        CinemachineCameraTarget = FindObjectOfType<PlayerManager>().transform.Find("Follow Target");
 
         // Camera property initialization
         FollowCamera.Follow = CinemachineCameraTarget;

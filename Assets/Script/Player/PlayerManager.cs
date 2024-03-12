@@ -14,8 +14,8 @@ public class PlayerManager : CharacterManager, IDataPersistence
     private void Awake()
     {
         MainCamera = FindObjectOfType<CameraManager>().GetComponent<Transform>();
-        _weaponHandler = GetComponentInChildren<WeaponHandler>();
-        _movementHandler = GetComponentInChildren<MovementHandler>();
+        _weaponHandler = GetComponent<WeaponHandler>();
+        _movementHandler = GetComponent<MovementHandler>();
         _anim = GetComponentInChildren<Animator>();
     }
 

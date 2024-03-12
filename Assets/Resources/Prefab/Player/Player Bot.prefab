@@ -2083,7 +2083,6 @@ GameObject:
   - component: {fileID: 559396764725585400}
   - component: {fileID: 8602645093617411545}
   - component: {fileID: 1419590376948937697}
-  - component: {fileID: 8609369702345820944}
   m_Layer: 9
   m_Name: Player Bot
   m_TagString: Player
@@ -2106,7 +2105,6 @@ Transform:
   - {fileID: 5752446016966065377}
   - {fileID: 4524670426942614808}
   - {fileID: 8313760032920990036}
-  - {fileID: 4425225758844774199}
   - {fileID: 2084369831555026659}
   - {fileID: 4378398741407890965}
   m_Father: {fileID: 0}
@@ -2120,7 +2118,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6998707516784165002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 6a2c9a2db3acc454d8fa0de00965213d, type: 3}
   m_Controller: {fileID: 9100000, guid: 4c7fe8e1a3919c549a79a706afefd1ce, type: 2}
   m_CullingMode: 1
@@ -2149,7 +2147,7 @@ CharacterController:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Height: 1.8
   m_Radius: 0.4
@@ -2165,12 +2163,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6998707516784165002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48db017a32035435886e4691622dc01c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponHandlerRef: {fileID: 559396764725585400}
 --- !u!114 &559396764725585400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2178,7 +2175,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6998707516784165002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a180202c36094f2aa4cf28120b50839, type: 3}
   m_Name: 
@@ -2203,7 +2200,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6998707516784165002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a13571ebdc4604b05be01bc0fbf84e97, type: 3}
   m_Name: 
@@ -2224,7 +2221,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6998707516784165002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f9b89db533e33743b6b809342afa4a1, type: 3}
   m_Name: 
@@ -2235,18 +2232,6 @@ MonoBehaviour:
     m_Bits: 137
   spawnBulletPosition: {fileID: 2937432678485719112}
   IsMouseLeftDown: 0
---- !u!114 &8609369702345820944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6998707516784165002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d8813eddb39b6443b4123e88d41dc73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7012922845065194391
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,37 +2294,6 @@ Transform:
   m_Children:
   - {fileID: 5964180570428185044}
   m_Father: {fileID: 7895445235351883233}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7119155126568584037
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4425225758844774199}
-  m_Layer: 9
-  m_Name: Follow Target
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4425225758844774199
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7119155126568584037}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.665, z: 0.011}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4414269351680752103}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7188543110372511956
