@@ -12,7 +12,6 @@ public class ShootingHandler : MonoBehaviour
     public LayerMask aimColliderLayerMask;
     public Transform spawnBulletPosition;
     private UnityEngine.Object pfBulletProjectile;
-    private InputMap input;
     [HideInInspector] public bool IsMouseLeftDown;
 
     private bool isShooting = false;
@@ -21,6 +20,11 @@ public class ShootingHandler : MonoBehaviour
     private bool AllowShoot => shootWait >= ShootDelay;
     private Animator _anim;
     private LayerMask enemyLayer;
+
+    private CameraManager _cameraManager;
+    private MovementHandler _movementHandler;
+    private WeaponHandler _weaponHandler;
+
     private void Awake()
     {
         Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
@@ -32,8 +36,11 @@ public class ShootingHandler : MonoBehaviour
     void Start()
     {
         enemyLayer = LayerMask.GetMask("Enemy");
+
         _anim = GetComponent<Animator>();
-        input = FindObjectOfType<ControlManager>().InputMap;
+        _cameraManager = FindObjectOfType<CameraManager>();
+        _movementHandler = GetComponent<MovementHandler>();
+        _weaponHandler = GetComponent<WeaponHandler>();
 
         shootWait += ShootDelay;
     }
@@ -50,6 +57,17 @@ public class ShootingHandler : MonoBehaviour
             var bullet = Instantiate(pfBulletProjectile, spawnBulletPosition.position, Quaternion.LookRotation(aimDir, Vector3.up)).GetComponent<BulletProjectile>();
             bullet.CollisionLayer = enemyLayer;
             bullet.SourceName = transform.name;
+        }
+    }
+
+    public void ToggleAim()
+    {
+        if (!_anim.GetBool("IsRolling") && !_anim.GetBool("RangeStarting") && !_anim.GetBool("IsWeaponReady") && !_anim.GetBool("IsEquipting") && !IsMouseLeftDown)
+        {
+            _cameraManager.ToggleAim();
+            _weaponHandler.ToggleGun();
+            _anim.SetBool("IsRangeStart", !_anim.GetBool("IsRangeStart"));
+            _movementHandler.ToggleAim(_anim.GetBool("IsRangeStart"));
         }
     }
 

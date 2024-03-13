@@ -361,8 +361,8 @@
                 {
                     "name": "",
                     "id": "1984e75a-39e1-49a4-a743-5570b7d3c5f8",
-                    "path": "<Keyboard>/capsLock",
-                    "interactions": "",
+                    "path": "<Keyboard>/c",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Roll",

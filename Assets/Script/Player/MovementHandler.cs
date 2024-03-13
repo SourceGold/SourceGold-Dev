@@ -30,11 +30,11 @@ public class MovementHandler : LocomotionManager
 
     #region Variables: Animation
 
-    private Animator _animator;
+    private Animator _anim;
     protected override Animator Animator
     {
-        get { return _animator; }
-        set { _animator = value; }
+        get { return _anim; }
+        set { _anim = value; }
     }
 
     #endregion
@@ -128,7 +128,7 @@ public class MovementHandler : LocomotionManager
     {
         //Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
         _characterController = GetComponentInChildren<CharacterController>();
-        _animator = GetComponentInChildren<Animator>();
+        _anim = GetComponentInChildren<Animator>();
         _isRunning = false;
         _isAiming = false;
         _cameraManager = FindObjectOfType<CameraManager>();
@@ -173,40 +173,33 @@ public class MovementHandler : LocomotionManager
     }
     public void TriggerJump(bool performed)
     {
-        _isJumping = performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsAttacking");
+        _isJumping = performed && !_anim.GetBool("IsRolling") && !_anim.GetBool("IsAttacking");
     }
 
     public void ToggleLockOn()
     {
-        if (!_animator.GetBool("IsRolling"))
+        if (!_anim.GetBool("IsRolling"))
             _toggleLock = true;
     }
 
-    public void ToggleAim()
+    public void ToggleAim(bool isAiming)
     {
-        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
-        {
-            _cameraManager.ToggleAim();
-            _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
-            if (_animator.GetBool("IsRangeStart"))
-                IsAiming = true;
-            else
-                IsAiming = false;
-        }
+        IsAiming = isAiming;
     }
 
     public void TriggerRoll()
     {
-        if (!_animator.GetBool("IsRolling") &&  _playerPosture == PlayerPosture.Stand)
+        if (!_anim.GetBool("IsRolling") &&  _playerPosture == PlayerPosture.Stand)
         {
-            _animator.SetBool("IsRolling", true);
+            _anim.SetBool("IsRolling", true);
+            _anim.SetTrigger("Roll");
         }
 
     }
 
     public void SwitchBattlePose()
     {
-        if (_animator.GetBool("CanAttack") && !_animator.GetBool("IsAttacking"))
+        if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsAttacking"))
         {
             _isBattlePoseSwitched = !_isBattlePoseSwitched;
         }
@@ -224,14 +217,14 @@ public class MovementHandler : LocomotionManager
 
     protected override void SetupAnimatorWeapon()
     {
-        if (_weaponStatus == WeaponStatus.Equipped && _isBattlePoseSwitched && _animator.GetBool("IsBlocking"))
+        if (_weaponStatus == WeaponStatus.Equipped && _isBattlePoseSwitched && _anim.GetBool("IsBlocking"))
         {
-            _animator.SetFloat("WeaponStatus", 3.0f, 0.1f, Time.deltaTime);
+            _anim.SetFloat("WeaponStatus", 3.0f, 0.1f, Time.deltaTime);
         }
         else if (_weaponStatus == WeaponStatus.Equipped && _isBattlePoseSwitched)
         {
-            var weaponStat = (float)(_animator.GetInteger("WeaponType"));
-            _animator.SetFloat("WeaponStatus", weaponStat, 0.1f, Time.deltaTime);
+            var weaponStat = (float)(_anim.GetInteger("WeaponType"));
+            _anim.SetFloat("WeaponStatus", weaponStat, 0.1f, Time.deltaTime);
         }
         else if (_weaponStatus == WeaponStatus.Equipped)
         {
@@ -264,9 +257,9 @@ public class MovementHandler : LocomotionManager
         }
         else if (_input.Equals(Vector2.zero))
             return;
-        else if (_animator.GetBool("IsRolling"))
+        else if (_anim.GetBool("IsRolling"))
             return;
-        else if (!_animator.GetCurrentAnimatorStateInfo(3).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(3).IsName("AttackIdle") && !_animator.GetBool("IsBlocking") && !_animator.GetCurrentAnimatorStateInfo(3).IsName("AttackSwitchPoseIdle"))
+        else if (!_anim.GetCurrentAnimatorStateInfo(3).IsName("Idle") && !_anim.GetCurrentAnimatorStateInfo(3).IsName("AttackIdle") && !_anim.GetBool("IsBlocking") && !_anim.GetCurrentAnimatorStateInfo(3).IsName("AttackSwitchPoseIdle"))
             return;
         else
         {
@@ -283,10 +276,10 @@ public class MovementHandler : LocomotionManager
     {
         if (_playerPosture != PlayerPosture.Jumping && _playerPosture != PlayerPosture.Falling)
         {
-            Vector3 playerDelterMovement = _animator.deltaPosition;
+            Vector3 playerDelterMovement = _anim.deltaPosition;
             playerDelterMovement.y = _verticalVelocity * Time.deltaTime;
             _characterController.Move(playerDelterMovement);
-            CacheVelocity(_animator.velocity);
+            CacheVelocity(_anim.velocity);
         }
         else
         {

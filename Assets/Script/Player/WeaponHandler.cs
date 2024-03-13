@@ -12,6 +12,8 @@ public class WeaponHandler : MonoBehaviour
     public Transform []WeaponRestPose;
     public Transform []Shield;
     public Transform []ShieldHandle;
+    public Transform []Gun;
+    public Transform[] GunHandle;
 
     public struct WeaponInfo
     {
@@ -25,11 +27,12 @@ public class WeaponHandler : MonoBehaviour
     private int _weaponType = 0;
     private WeaponInfo[] _weaponInfo;
     private int _shieldType = 0;
+    private int _gunType = 0;
 
     private void Awake()
     {
         //_playerManager = FindObjectOfType<PlayerManager>();
-        _anim = GetComponent<Animator>();
+        _anim = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -54,6 +57,14 @@ public class WeaponHandler : MonoBehaviour
             Shield[i].localRotation = Quaternion.identity;
             Shield[i].localPosition = Vector3.zero;
             Shield[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < Gun.Length; i++)
+        {
+            Gun[i].SetParent(GunHandle[i]);
+            Gun[i].localRotation = Quaternion.identity;
+            Gun[i].localPosition = Vector3.zero;
+            Gun[i].gameObject.SetActive(false);
         }
     }
 
@@ -93,6 +104,11 @@ public class WeaponHandler : MonoBehaviour
     public void ToggleShield()
     {
         Shield[_shieldType].gameObject.SetActive(!Shield[_shieldType].gameObject.activeSelf);
+    }
+
+    public void ToggleGun()
+    {
+        Gun[_gunType].gameObject.SetActive(!Gun[_gunType].gameObject.activeSelf);
     }
 
     public Collider GetCollider()
