@@ -1,12 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : Component
 {
     public bool doNotDestoryOnLoad;
 
     private static T _instance;
-    public static T Instance {
-        get {
+    public static T Instance
+    {
+        get
+        {
             if (_instance == null)
             {
                 GameObject go = new GameObject();
@@ -16,7 +18,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
             return _instance;
         }
     }
-    private void Awake()
+    protected void Awake()
     {
         if (_instance != null)
         {
