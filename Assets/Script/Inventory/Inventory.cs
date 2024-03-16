@@ -10,15 +10,15 @@ using static Cinemachine.DocumentationSortingAttribute;
 public class Inventory
 {
     private int _itemMaxCount;
-    public List<InventoryItem> _items { get; set; }
+    public List<GameItemDynamic> _items { get; set; }
 
     public Inventory(int itemMaxCount)
     {
-        _items = new List<InventoryItem>();
+        _items = new List<GameItemDynamic>();
         _itemMaxCount = itemMaxCount;
     }
 
-    public InventoryItem GetInventoryItem(InventoryItem inventoryItem)
+    public GameItemDynamic GetInventoryItem(GameItemDynamic inventoryItem)
     {
         foreach (var existingItem in _items)
         {
@@ -29,7 +29,7 @@ public class Inventory
         throw new Exception($"GameItem of {inventoryItem.id}, does not found in the static library");
     }
 
-    public int AddItem(InventoryItem inventoryItem)
+    public int AddItem(GameItemDynamic inventoryItem)
     {
         foreach (var existingItem in _items)
         {
@@ -56,7 +56,7 @@ public class Inventory
         
     }
     
-    public int RemoveItem(InventoryItem inventoryItem)
+    public int RemoveItem(GameItemDynamic inventoryItem)
     {
         for (int i = 0; i < _items.Count; i++)
         {
@@ -80,7 +80,7 @@ public class Inventory
     /// </summary>
     /// <param name="inventoryItem">The ID and Level that you want to remove</param>
     /// <exception cref="Exception">There should be one and only one in the inventory. If not found will throw</exception>
-    public void RemoveAllItem(InventoryItem inventoryItem)
+    public void RemoveAllItem(GameItemDynamic inventoryItem)
     {
         for (int i = 0; i < _items.Count; i++)
         {

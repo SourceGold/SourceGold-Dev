@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class InventoryItem
+public class GameItemDynamic
 {
     private ThreadSafeIntStats _count { get; set; }
     public string uid { get; set; }
@@ -20,7 +20,7 @@ public class InventoryItem
     public Dictionary<string, int> additionalIntStats = new Dictionary<string, int>();
     public Dictionary<string, float> additionalFloatStats = new Dictionary<string, float>();
 
-    public InventoryItem(string id, int maxCount = 10000, int currentCount = 1, int level = 0, bool isNew = true)
+    public GameItemDynamic(string id, int maxCount = 10000, int currentCount = 1, int level = 0, bool isNew = true)
     {
         staticInfo = GameItemsStaticManager.Instance.GetGameItem(id);
         if (staticInfo.maximum_count == 0)

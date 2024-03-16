@@ -32,8 +32,8 @@ public class InventoryCommand
     {
         for (int i = number; i < number + 2; i++)
         {
-            InventoryItem aItem = new InventoryItem($"Cystal", level: i, currentCount: i);
-            InventoryItem bItem = new InventoryItem($"BigSward", level: i, currentCount: i);
+            GameItemDynamic aItem = new GameItemDynamic($"Cystal", level: i, currentCount: i);
+            GameItemDynamic bItem = new GameItemDynamic($"BigSward", level: i, currentCount: i);
             Backend.GameLoop.GetInventory().AddItem(aItem);
             Backend.GameLoop.GetInventory().AddItem(bItem);
         }

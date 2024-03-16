@@ -76,7 +76,7 @@ public class Backpack : MonoBehaviour
         buttonContainer.style.left = localPos.x + 5;
     }
 
-    private void HandleLeftClick(MouseUpEvent evt, InventoryItem item)
+    private void HandleLeftClick(MouseUpEvent evt, GameItemDynamic item)
     {
         if (evt.button != (int)MouseButton.LeftMouse)
             return;
@@ -180,7 +180,7 @@ public class Backpack : MonoBehaviour
 
     }
 
-    private VisualElement constructOneInventoryItem(InventoryItem item)
+    private VisualElement constructOneInventoryItem(GameItemDynamic item)
     {
         VisualElement   oneItem = _itemTemplate.CloneTree();
 
@@ -198,11 +198,11 @@ public class Backpack : MonoBehaviour
         else
             newItemDot.style.visibility = Visibility.Hidden;
 
-        oneItem.RegisterCallback<MouseUpEvent, InventoryItem>(HandleLeftClick, item, TrickleDown.TrickleDown);
+        oneItem.RegisterCallback<MouseUpEvent, GameItemDynamic>(HandleLeftClick, item, TrickleDown.TrickleDown);
         return oneItem;
     }
 
-    private void constructActiveItemView(InventoryItem item)
+    private void constructActiveItemView(GameItemDynamic item)
     {
         _activatedItemName.text = item.staticInfo.englishDescription.displayName;
         _activatedItemText.text = item.staticInfo.englishDescription.displayDescription;
