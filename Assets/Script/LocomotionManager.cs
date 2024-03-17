@@ -19,8 +19,8 @@ public abstract class LocomotionManager : MonoBehaviour
     [SerializeField] private float _fallingMultiplier = 1.5f;
     [SerializeField] private float _jumpCoolDown = 0.15f;
     [SerializeField] private float _jumpPower = 5.0f;
-    [SerializeField] private float _leftRightRunningCoef = 3.5f;
-    [SerializeField] private float _leftRightWalkingCoef = 2.0f;
+    [SerializeField] private float _leftRightRunningCoef = 4.0f;
+    [SerializeField] private float _leftRightWalkingCoef = 1.0f;
     [SerializeField] private float _walkSpeed = 1.75f;
     [SerializeField] private float _runSpeed = 3.5f;
 
@@ -304,7 +304,7 @@ public abstract class LocomotionManager : MonoBehaviour
         Animator.SetFloat("AimV", _aimingVerticalVelocity);
     }
 
-    protected void SetupAnimator()
+    protected void SetupAnimatorPosture()
     {
         if (PlayerPosture == PlayerPosture.Stand || PlayerPosture == PlayerPosture.Landing)
         {
@@ -328,7 +328,10 @@ public abstract class LocomotionManager : MonoBehaviour
             if (PlayerPosture == PlayerPosture.Jumping)
                 Animator.SetFloat("LeftRight", _leftRight);
         }
+    }
 
+    protected virtual void SetupAnimatorWeapon()
+    {
         if (WeaponStatus == WeaponStatus.Equipped)
         {
             Animator.SetFloat("WeaponStatus", 1.0f, 0.1f, Time.deltaTime);
@@ -337,5 +340,11 @@ public abstract class LocomotionManager : MonoBehaviour
         {
             Animator.SetFloat("WeaponStatus", 0.0f, 0.1f, Time.deltaTime);
         }
+    }
+
+    protected void SetupAnimator()
+    {
+        SetupAnimatorPosture();
+        SetupAnimatorWeapon();
     }
 }

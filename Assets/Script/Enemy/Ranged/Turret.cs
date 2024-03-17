@@ -11,8 +11,11 @@ public class Turret : RangedBase
     private Object pfBulletProjectile;
     private bool IsShooting { get { return LockedTarget != null; } }
 
-    private void Awake()
+    public override string LockedBodyPart { get; set; }
+
+    protected override void Awake()
     {
+        LockedBodyPart = "Follow Target";
         pfBulletProjectile = Resources.Load("Prefab/Player/pfSimpleEnemyBulletProjectile");
     }
 
