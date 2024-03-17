@@ -15,3 +15,4 @@ MonoBehaviour:
   gameItems:
   - {fileID: 11400000, guid: f1e8e307590293f4987f2d07183e3298, type: 2}
   - {fileID: 11400000, guid: e765873df10a2c240bbcffb4c8fd3f06, type: 2}
+  - {fileID: 11400000, guid: c343f5eb5207c454899462b8012e9d3b, type: 2}

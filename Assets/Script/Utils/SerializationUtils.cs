@@ -43,5 +43,6 @@ namespace Assets.Script.Utilities
             var yaml = File.ReadAllText(srcFilePath);
             return deserializer.Deserialize<T>(yaml);
         }
+
     }
 }
