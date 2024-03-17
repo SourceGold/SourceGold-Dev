@@ -30,9 +30,9 @@ namespace Assets.Script.Backend
             SaveToNextStage = saveToNextStage;
         }
 
-        public abstract void SetGameObjectStates(BackendGameObjectStats GameObjectStats);
+        public abstract void SetGameObjectStats(BackendGameObjectStats GameObjectStats);
 
-        public abstract BackendGameObjectStats GetGameObjectStates();
+        public abstract BackendGameObjectStats GetGameObjectBaseStats();
     }
 
     public abstract class BackendGameObjectStats

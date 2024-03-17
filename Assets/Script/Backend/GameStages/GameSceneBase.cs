@@ -12,6 +12,7 @@ namespace Assets.Script.Backend
         {
             AllGameObjectCollection = new ConcurrentDictionary<string, BackendGameObject>();
             PlayerInventory = new Inventory(100);
+            WeaponProvidor = Backend.WeaponProvidor;
         }
 
         public void InitializeStage(GameSceneBase previousStage)

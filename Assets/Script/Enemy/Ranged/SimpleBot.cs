@@ -1,10 +1,7 @@
+using Assets.Script;
 using Assets.Script.Backend;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class SimpleBot : RangedBase
 {
@@ -90,7 +87,7 @@ public class SimpleBot : RangedBase
                 euler.x = 0;
                 AlwaysUp.eulerAngles = euler;
                 for (int i = 0; i < 50; i++)
-                    Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = transform.name },
+                    Backend.GameLoop.ProcessDamage(new DamageSource() { SrcObjectName = transform.name, AttackWeapon = WeaponNames.Ranged1 },
                         new DamageTarget() { TgtObjectName = "Player" });
             }
         }
