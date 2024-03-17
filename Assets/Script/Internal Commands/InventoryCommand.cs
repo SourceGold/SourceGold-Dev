@@ -30,12 +30,14 @@ public class InventoryCommand
     [MenuItem("Internal Controll/Add To Inventory")]
     static void AddToInventory()
     {
-        for (int i = number; i < number + 2; i++)
+        for (int i = number; i < number + 1; i++)
         {
             GameItemDynamic aItem = new GameItemDynamic($"Cystal", level: i, currentCount: i);
             GameItemDynamic bItem = new GameItemDynamic($"BigSward", level: i, currentCount: i);
+            GameItemDynamic cItem = new GameItemDynamic($"Potion", level: i, currentCount: i);
             Backend.GameLoop.GetInventory().AddItem(aItem);
             Backend.GameLoop.GetInventory().AddItem(bItem);
+            Backend.GameLoop.GetInventory().AddItem(cItem);
         }
         number += 3;
     }

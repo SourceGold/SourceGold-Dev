@@ -18,8 +18,12 @@ public class GameItemDynamic
 
     public GameItem staticInfo;
     public Dictionary<string, int> additionalIntStats = new Dictionary<string, int>();
+    public Dictionary<string, int> additionalIntStatsHidden = new Dictionary<string, int>();
     public Dictionary<string, float> additionalFloatStats = new Dictionary<string, float>();
-
+    public Dictionary<string, float> additionalFloatStatsHidden = new Dictionary<string, float>();
+    public List<String> addtionalStatus = new List<String>();
+    public List<String> addtionalStatusHidden = new List<String>();
+    
     public GameItemDynamic(string id, int maxCount = 10000, int currentCount = 1, int level = 0, bool isNew = true)
     {
         staticInfo = GameItemsStaticManager.Instance.GetGameItem(id);
@@ -32,6 +36,7 @@ public class GameItemDynamic
         this.uid = System.Guid.NewGuid().ToString();
         this.level = level;
         this.isNew = isNew;
+        ConsumableController.Instance.activateItem(this);
     }
     public virtual int AddItems(int count)
     {

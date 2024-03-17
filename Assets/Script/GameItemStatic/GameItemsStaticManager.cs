@@ -10,11 +10,8 @@ public class GameItemsStaticManager : Singleton<GameItemsStaticManager>
     void Start()
     {
         AllGameItems allGameItems = Resources.Load<AllGameItems>("GameItems/AvaliableItems");
-        Debug.Log(allGameItems);
         foreach (GameItem item in allGameItems.gameItems)
         {
-            print(item.itemName);
-
             gameItemsStatic[item.itemName] = item;
         }
     }
