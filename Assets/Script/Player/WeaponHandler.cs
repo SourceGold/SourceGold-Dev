@@ -103,18 +103,23 @@ public class WeaponHandler : MonoBehaviour
 
     public void ToggleShield()
     {
-        Shield[_shieldType].gameObject.SetActive(!Shield[_shieldType].gameObject.activeSelf);
+        ToggleWeapon(Shield[_shieldType].gameObject);
     }
 
     public void ToggleGun()
     {
-        Gun[_gunType].gameObject.SetActive(!Gun[_gunType].gameObject.activeSelf);
+        ToggleWeapon(Gun[_gunType].gameObject);
     }
 
-    public Collider GetCollider()
+    public void ToggleWeapon(GameObject weapon)
     {
-        return Weapon[_weaponType].GetComponent<Collider>();
+        weapon.SetActive(!weapon.activeSelf);
     }
+
+    //public Collider GetCollider()
+    //{
+    //    return Weapon[_weaponType].GetComponent<Collider>();
+    //}
 
     public WeaponInfo GetWeaponInfo()
     {

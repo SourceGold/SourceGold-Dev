@@ -119,6 +119,7 @@ AnimatorState:
   - {fileID: -2361490179799856977}
   m_StateMachineBehaviours:
   - {fileID: 4364764522841729356}
+  - {fileID: 7070780905844781828}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
   m_WriteDefaultValues: 1
@@ -518,7 +519,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -1711897733979439100}
-    m_Position: {x: 90, y: 230, z: 0}
+    m_Position: {x: 80, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6818123085175185082}
     m_Position: {x: 400, y: 230, z: 0}
@@ -564,7 +565,7 @@ AnimatorStateMachine:
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 900, y: -220, z: 0}
-  m_EntryPosition: {x: 110, y: 160, z: 0}
+  m_EntryPosition: {x: 100, y: 60, z: 0}
   m_ExitPosition: {x: 900, y: -160, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -1711897733979439100}
@@ -790,8 +791,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParamStateData:
-  - paramName: IsWeaponReady
-    setDefaultState: 0
   - paramName: IsEquipting
     setDefaultState: 1
 --- !u!1102 &-5180406800819462922
@@ -1118,6 +1117,31 @@ MonoBehaviour:
   Action: 1
   EventTime: 0.8
   switchWeapon: 1
+--- !u!1101 &-3682766309449970573
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsWeaponEquipped
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: -1711897733979439100}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.75
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
 --- !u!206 &-3532993965956283189
 BlendTree:
   m_ObjectHideFlags: 1
@@ -1322,7 +1346,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 0.1
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Speed
     m_Mirror: 0
@@ -2013,6 +2037,7 @@ AnimatorState:
   - {fileID: -3458732812214134986}
   - {fileID: 7324493616945960229}
   - {fileID: 5334441484049697666}
+  - {fileID: -3682766309449970573}
   m_StateMachineBehaviours:
   - {fileID: 3819476081902427396}
   m_Position: {x: 50, y: 50, z: 0}
@@ -2155,21 +2180,6 @@ MonoBehaviour:
     setDefaultState: 0
   - paramName: RangeStarting
     setDefaultState: 0
---- !u!114 &-1104200989199454495
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832d37f7cee044d12a233eec609ee02b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Action: 1
-  EventTime: 0.35
-  switchWeapon: 0
 --- !u!114 &-1044029106798055246
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2935,8 +2945,6 @@ MonoBehaviour:
   ParamStateData:
   - paramName: IsEquipting
     setDefaultState: 1
-  - paramName: IsWeaponReady
-    setDefaultState: 0
 --- !u!1101 &1812207155982053955
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -3043,21 +3051,6 @@ MonoBehaviour:
     setDefaultState: 0
   - paramName: IsAttacking
     setDefaultState: 1
---- !u!114 &2268114616095162352
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832d37f7cee044d12a233eec609ee02b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Action: 0
-  EventTime: 0.65
-  switchWeapon: 0
 --- !u!1102 &2286021100813616676
 AnimatorState:
   serializedVersion: 6
@@ -3305,7 +3298,6 @@ AnimatorState:
   m_Transitions:
   - {fileID: -297718012521074590}
   m_StateMachineBehaviours:
-  - {fileID: 2268114616095162352}
   - {fileID: -3720294018796971095}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -3539,8 +3531,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParamStateData:
-  - paramName: IsWeaponReady
-    setDefaultState: 1
   - paramName: IsEquipting
     setDefaultState: 0
   - paramName: IsSwitching
@@ -3605,7 +3595,6 @@ AnimatorState:
   m_Transitions:
   - {fileID: -4896858158640780992}
   m_StateMachineBehaviours:
-  - {fileID: -1104200989199454495}
   - {fileID: 1699104531850374473}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 1
@@ -4040,6 +4029,21 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &7070780905844781828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40572dfd464874fecb058fe52d44bd96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParamStateData:
+  - paramName: IsWeaponReady
+    setDefaultState: 1
 --- !u!1102 &7150019641799283594
 AnimatorState:
   serializedVersion: 6
