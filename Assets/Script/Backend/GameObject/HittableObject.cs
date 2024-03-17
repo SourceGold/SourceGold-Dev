@@ -28,7 +28,7 @@ namespace Assets.Script.Backend
             HittableObjectType = hittableObjectType;
         }
 
-        public override void SetGameObjectStates(BackendGameObjectStats gameObjectStats)
+        public override void SetGameObjectStats(BackendGameObjectStats gameObjectStats)
         {
             if (gameObjectStats is HittableObjectStats hittableObjectStats)
             {
@@ -36,7 +36,7 @@ namespace Assets.Script.Backend
             }
         }
 
-        public override BackendGameObjectStats GetGameObjectStates()
+        public override BackendGameObjectStats GetGameObjectBaseStats()
         {
             return HittableObjectStats!;
         }

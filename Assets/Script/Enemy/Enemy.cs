@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Assets.Script.Backend;
+using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
@@ -63,8 +61,8 @@ public class Enemy : MonoBehaviour
                     _anim.SetBool("Hit", true);
                 //Debug.Log("Hit By Sword");
 
-                Backend.GameLoop.ProcessDamage(new DamangeSource(){ SrcObjectName = attackerName }, new DamageTarget() { TgtObjectName = _name });
-            } 
+                Backend.GameLoop.ProcessDamage(new DamageSource() { SrcObjectName = attackerName, AttackWeapon = weaponInfo.name }, new DamageTarget() { TgtObjectName = _name });
+            }
         }
     }
 
