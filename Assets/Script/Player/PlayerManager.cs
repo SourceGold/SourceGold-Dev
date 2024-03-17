@@ -16,7 +16,7 @@ public class PlayerManager : CharacterManager, IDataPersistence
         MainCamera = FindObjectOfType<CameraManager>().GetComponent<Transform>();
         _weaponHandler = GetComponent<WeaponHandler>();
         _movementHandler = GetComponent<MovementHandler>();
-        _anim = GetComponentInChildren<Animator>();
+        _anim = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -88,14 +88,14 @@ public class PlayerManager : CharacterManager, IDataPersistence
         {
             return;
         }
-        var playerTranform = transform.Find("Player Bot").transform.localPosition;
+        var playerTranform = transform.localPosition;
         var playerInfo = new PlayerSaveInfo()
         {
             X = playerTranform.x,
             Y = playerTranform.y,
             Z = playerTranform.z,
             WeaponDrawn = _anim.GetBool("IsWeaponReady"),
-            WeaponType = _anim.GetInteger("WeaponType")
+            WeaponType = _anim.GetInteger("WeaponType") - 1
         };
 
         //Debug.Log($"saved info: x {playerInfo.X}, y {playerInfo.Y}, z {playerInfo.Z}");

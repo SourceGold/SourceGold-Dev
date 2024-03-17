@@ -128,7 +128,7 @@ public class MovementHandler : LocomotionManager
     {
         //Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
         _characterController = GetComponentInChildren<CharacterController>();
-        _anim = GetComponentInChildren<Animator>();
+        _anim = GetComponent<Animator>();
         _isRunning = false;
         _isAiming = false;
         _cameraManager = FindObjectOfType<CameraManager>();

@@ -42,7 +42,7 @@ public class MeleeHandler : MonoBehaviour
 
     void Start()
     {
-        _anim = GetComponentInChildren<Animator>();
+        _anim = GetComponent<Animator>();
         _movementHandler = GetComponent<MovementHandler>();
         _weaponHandler = GetComponent<WeaponHandler>();
     }

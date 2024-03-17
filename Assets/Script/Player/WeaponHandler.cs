@@ -32,7 +32,7 @@ public class WeaponHandler : MonoBehaviour
     private void Awake()
     {
         //_playerManager = FindObjectOfType<PlayerManager>();
-        _anim = GetComponentInChildren<Animator>();
+        _anim = GetComponent<Animator>();
     }
 
     private void Start()
