@@ -103,17 +103,19 @@ public class WeaponHandler : MonoBehaviour
 
     public void ToggleShield()
     {
-        ToggleWeapon(Shield[_shieldType].gameObject);
+        ToggleWeapon(Shield[_shieldType]);
     }
 
     public void ToggleGun()
     {
-        ToggleWeapon(Gun[_gunType].gameObject);
+        if (Gun.Length > 0)
+            ToggleWeapon(Gun[_gunType]);
     }
 
-    public void ToggleWeapon(GameObject weapon)
+    public void ToggleWeapon(Transform weapon)
     {
-        weapon.SetActive(!weapon.activeSelf);
+        if (weapon)
+            weapon.gameObject.SetActive(!weapon.gameObject.activeSelf);
     }
 
     public WeaponInfo GetWeaponInfo()

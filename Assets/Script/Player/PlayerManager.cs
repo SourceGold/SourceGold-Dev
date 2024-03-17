@@ -88,12 +88,12 @@ public class PlayerManager : CharacterManager, IDataPersistence
         {
             return;
         }
-        var playerTranform = transform.localPosition;
+        var playerPosition = transform.localPosition;
         var playerInfo = new PlayerSaveInfo()
         {
-            X = playerTranform.x,
-            Y = playerTranform.y,
-            Z = playerTranform.z,
+            X = playerPosition.x,
+            Y = playerPosition.y,
+            Z = playerPosition.z,
             WeaponDrawn = _anim.GetBool("IsWeaponReady"),
             WeaponType = _anim.GetInteger("WeaponType") - 1
         };
