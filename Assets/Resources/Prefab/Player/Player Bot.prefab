@@ -2087,7 +2087,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.8
-  m_Radius: 0.2
+  m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.1
   m_SkinWidth: 0.05
@@ -2172,8 +2172,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 137
   spawnBulletPosition: {fileID: 2937432678485719112}
-  pfBulletProjectile: {fileID: 6863857337172796870, guid: b554a30b8ca61f54d91398a50dfb483e,
-    type: 3}
   IsMouseLeftDown: 0
 --- !u!114 &8609369702345820944
 MonoBehaviour:
