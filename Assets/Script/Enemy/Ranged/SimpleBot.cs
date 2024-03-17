@@ -18,8 +18,11 @@ public class SimpleBot : RangedBase
     private float BulletPositionHeight;
     private Transform AlwaysUp;
 
-    private void Awake()
+    public override string LockedBodyPart { get; set; }
+
+    protected override void Awake()
     {
+        LockedBodyPart = "Follow Target - Body";
         pfBulletProjectile = Resources.Load("Prefab/Player/pfSimpleEnemyBulletProjectile");
         AlwaysUp = transform.Find("Always Up");
     }

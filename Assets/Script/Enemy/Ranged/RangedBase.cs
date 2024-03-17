@@ -11,6 +11,7 @@ public class RangedBase : MonoBehaviour
     public float ReleaseLockTime = 0.5f;
     protected LayerMask PlayerMask;
     protected Transform LockedTarget;
+    public virtual string LockedBodyPart{get; set;}
     protected float DistanceFromTarget;
     protected float NoTargetTime;
     protected float ShootDelay { get { return 1 / RateOfFire; } }
@@ -18,9 +19,15 @@ public class RangedBase : MonoBehaviour
     protected bool AllowShoot { get { return ShootWait >= ShootDelay; } }
     protected Collider[] DetectedColliders = new Collider[10];
     // Start is called before the first frame update
+
+    protected virtual void Awake()
+    {
+        LockedBodyPart = "Follow Target";
+    }
+
     protected virtual void Start()
     {
-        ShootWait += ShootDelay;
+        ShootWait += ShootDelay;    
     }
 
     // Update is called once per frame
@@ -56,7 +63,7 @@ public class RangedBase : MonoBehaviour
             if (/*InSight(c.transform) &&*/ shortestDistance > DistanceFromTarget && targetAngle < DetectionAngle && targetAngle > -DetectionAngle)
             {
                 shortestDistance = DistanceFromTarget;
-                LockedTarget = c.transform.Find("Follow Target");
+                LockedTarget = c.transform.Find(LockedBodyPart);
                 noTarget = false;
             }
         }
