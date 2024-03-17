@@ -116,11 +116,6 @@ public class WeaponHandler : MonoBehaviour
         weapon.SetActive(!weapon.activeSelf);
     }
 
-    //public Collider GetCollider()
-    //{
-    //    return Weapon[_weaponType].GetComponent<Collider>();
-    //}
-
     public WeaponInfo GetWeaponInfo()
     {
         return _weaponInfo[_weaponType];
