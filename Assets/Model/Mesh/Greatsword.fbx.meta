@@ -18,12 +18,17 @@ ModelImporter:
   - first:
       43: 4300000
     second: Greatsword
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Greatsword
+    second: {fileID: 2100000, guid: 0f34b64c219343940999afb54f7fee90, type: 2}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
