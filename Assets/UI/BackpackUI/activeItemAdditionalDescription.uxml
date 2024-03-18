@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Label tabindex="-1" text="Damage: 100" display-tooltip-when-elided="true" name="Description" style="color: rgb(255, 0, 214); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+</ui:UXML>

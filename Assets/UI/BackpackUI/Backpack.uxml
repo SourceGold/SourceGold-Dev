@@ -1,90 +1,51 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 5%; margin-right: 5%; flex-direction: column; margin-top: 5%; margin-bottom: 5%;">
-        <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
-            <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgb(118, 118, 83); height: auto; width: 50%;">
-                <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 12%; flex-direction: row; justify-content: center; padding-bottom: 1%;">
-                    <ui:Button text="Eatable" display-tooltip-when-elided="true" />
+    <ui:Template name="inventoryEmpty" src="project://database/Assets/UI/BackpackUI/inventoryEmpty.uxml?fileID=9197481963319205126&amp;guid=9dbccc0f8a39e354ebc0ca8210734e50&amp;type=3#inventoryEmpty" />
+    <Style src="project://database/Assets/UI/BackpackUI/Backpack.uss?fileID=7433441132597879392&amp;guid=82a92f395ff7f974d9275d666a23c41f&amp;type=3#Backpack" />
+    <ui:VisualElement name="RootElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; flex-direction: column; margin-top: 0; margin-bottom: 0; width: auto; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;">
+        <ui:VisualElement name="MenuArea" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+            <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgb(99, 86, 62); height: auto; width: 55%; margin-top: 0; padding-top: 36px; flex-shrink: 0;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 8%; flex-direction: row; justify-content: center; padding-bottom: 8px; padding-top: 0;">
+                    <ui:Button text="Consumable" display-tooltip-when-elided="true" name="consumableButton" />
                     <ui:Button text="Key Items" display-tooltip-when-elided="true" />
                     <ui:Button text="Throwable" display-tooltip-when-elided="true" />
                     <ui:Button text="Weapons" display-tooltip-when-elided="true" />
                     <ui:Button text="Tailsman" display-tooltip-when-elided="true" />
                 </ui:VisualElement>
-                <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-self: stretch; border-left-width: 3px; border-right-width: 3px; border-top-width: 3px; border-bottom-width: 3px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
-                    <ui:Label tabindex="-1" text="Quick Access" display-tooltip-when-elided="true" style="white-space: nowrap; align-self: center;" />
-                    <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 111px; flex-direction: row; margin-left: 0; margin-right: 0; justify-content: center;">
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); align-self: stretch; border-left-width: 0; border-right-width: 0; border-top-width: 3px; border-bottom-width: 3px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-right: 4%; margin-left: 4%; flex-shrink: 0;">
+                    <ui:Label tabindex="-1" text="Quick Access" display-tooltip-when-elided="true" style="white-space: nowrap; align-self: center; -unity-font-style: bold;" />
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: space-between; padding-left: 27%; padding-right: 27%; margin-bottom: 4px; margin-top: 4px;">
+                        <ui:Label tabindex="-1" text=" Q " display-tooltip-when-elided="true" name="Label" style="color: rgb(0, 0, 0); height: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; font-size: 12px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; background-color: rgb(255, 218, 184);" />
+                        <ui:Label tabindex="-1" text=" W " display-tooltip-when-elided="true" name="Label" style="color: rgb(0, 0, 0); height: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; font-size: 12px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; background-color: rgb(255, 218, 184);" />
+                        <ui:Label tabindex="-1" text=" E " display-tooltip-when-elided="true" name="Label" style="color: rgb(0, 0, 0); height: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; font-size: 12px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; background-color: rgb(255, 218, 184);" />
+                        <ui:Label tabindex="-1" text=" R " display-tooltip-when-elided="true" name="Label" style="color: rgb(0, 0, 0); height: auto; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; font-size: 12px; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; background-color: rgb(255, 218, 184);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="quickAccessPanel" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 108px; flex-direction: row; margin-left: 0; margin-right: 0; justify-content: center;">
+                        <ui:Instance template="inventoryEmpty" name="inventoryEmpty" />
+                        <ui:Instance template="inventoryEmpty" name="inventoryEmpty" />
+                        <ui:Instance template="inventoryEmpty" name="inventoryEmpty" />
+                        <ui:Instance template="inventoryEmpty" name="inventoryEmpty" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); flex-shrink: 0; height: 347px;">
-                    <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 111px; flex-direction: row; margin-left: 0; margin-right: 0; justify-content: center;">
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 111px; flex-direction: row; margin-left: 0; margin-right: 0; justify-content: center;">
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 111px; flex-direction: row; margin-left: 0; margin-right: 0; justify-content: center;">
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                        <ui:VisualElement style="flex-grow: 0; background-color: rgba(212, 170, 17, 0); margin-left: 0; width: 96px; height: 96px; flex-shrink: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 8px; padding-right: 8px; padding-top: 8px; padding-bottom: 8px;">
-                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(243, 225, 0); margin-left: 0; padding-left: 0;" />
-                        </ui:VisualElement>
-                    </ui:VisualElement>
-                </ui:VisualElement>
-                <ui:ScrollView name="testing" />
+                <ui:ScrollView name="backpack" style="margin-bottom: 36px; padding-top: 8px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 3px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-left: 4%; margin-right: 4%; padding-bottom: 8px; flex-grow: 1;" />
             </ui:VisualElement>
-            <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+            <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgb(99, 86, 62); width: 10px; flex-shrink: 0;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(210, 140, 47); margin-left: 2px; margin-right: 2px; margin-top: 50px; margin-bottom: 50px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgb(99, 86, 62); overflow: visible; width: 43%; flex-shrink: 0;">
+                <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); background-image: none; margin-left: 96px; padding-left: 0; margin-right: 96px; margin-top: 36px; margin-bottom: 0;">
+                    <ui:VisualElement style="flex-grow: 0; background-color: rgba(156, 88, 76, 0.89); height: 15%; justify-content: flex-start; padding-bottom: 0; margin-bottom: 12px;">
+                        <ui:Label tabindex="-1" text="Healing Potion" display-tooltip-when-elided="true" name="activatedItemName" style="flex-grow: 1; justify-content: center; align-self: center; flex-shrink: 1; -unity-text-align: middle-left; -unity-font-style: bold;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="activatedItemSprite" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); background-image: resource(&apos;Icons/Backpack/round-potion&apos;); width: 196px; height: 196px; align-self: center;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); align-items: stretch; margin-left: 0; align-self: center;">
+                    <ui:Label tabindex="-1" text="LV 3 / 100" display-tooltip-when-elided="true" name="activatedItemLevel" style="color: rgb(255, 212, 6); height: auto; margin-left: 0; margin-right: 0; margin-top: 8px; margin-bottom: 0; padding-left: 2px; padding-right: 2px; padding-top: 0; padding-bottom: 0; font-size: 18px; translate: 0 0; background-color: rgba(149, 250, 6, 0.33); -unity-font-style: bold; flex-shrink: 1; width: auto; align-items: flex-start; align-self: flex-start; justify-content: center;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="activatedItemAdditionalDescriptionField" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); margin-left: 96px; margin-right: 96px; flex-direction: column; flex-wrap: wrap;" />
+                <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(208, 248, 80, 0.48); margin-left: 96px; margin-right: 96px; margin-top: 9px; margin-bottom: 36px;">
+                    <ui:Label tabindex="-1" text="This is an ancient poision." display-tooltip-when-elided="true" name="activatedItemText" style="font-size: 14px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Button text="Q" display-tooltip-when-elided="true" name="RightClickButton" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; background-color: rgb(213, 213, 213);" />
+</ui:UXML>
