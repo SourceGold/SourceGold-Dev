@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="inventoryEmpty" src="project://database/Assets/UI/BackpackUI/inventoryEmpty.uxml?fileID=9197481963319205126&amp;guid=9dbccc0f8a39e354ebc0ca8210734e50&amp;type=3#inventoryEmpty" />
     <Style src="project://database/Assets/UI/BackpackUI/Backpack.uss?fileID=7433441132597879392&amp;guid=82a92f395ff7f974d9275d666a23c41f&amp;type=3#Backpack" />
-    <ui:VisualElement name="RootElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; flex-direction: column; margin-top: 0; margin-bottom: 0; width: auto; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%;">
+    <ui:VisualElement name="RootElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; flex-direction: column; margin-top: 0; margin-bottom: 0; width: auto; padding-left: 5%; padding-right: 5%; padding-top: 5%; padding-bottom: 5%; display: none;">
         <ui:VisualElement name="MenuArea" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
             <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgb(99, 86, 62); height: auto; width: 55%; margin-top: 0; padding-top: 36px; flex-shrink: 0;">
                 <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: 8%; flex-direction: row; justify-content: center; padding-bottom: 8px; padding-top: 0;">

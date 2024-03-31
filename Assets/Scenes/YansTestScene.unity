@@ -633,10 +633,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1350811695533615345, guid: 3a6274215a410c747b51af25efb31b7e,
+        type: 3}
+      propertyPath: CameraCollisionFilter.m_Bits
+      value: 159
+      objectReference: {fileID: 0}
     - target: {fileID: 2029313120558806071, guid: 3a6274215a410c747b51af25efb31b7e,
         type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699109450924267989, guid: 3a6274215a410c747b51af25efb31b7e,
+        type: 3}
+      propertyPath: CameraCollisionFilter.m_Bits
+      value: 159
+      objectReference: {fileID: 0}
+    - target: {fileID: 4734049130495345091, guid: 3a6274215a410c747b51af25efb31b7e,
+        type: 3}
+      propertyPath: CameraCollisionFilter.m_Bits
+      value: 159
       objectReference: {fileID: 0}
     - target: {fileID: 8642083706193025898, guid: 3a6274215a410c747b51af25efb31b7e,
         type: 3}
@@ -904,6 +919,7 @@ GameObject:
   - component: {fileID: 1617742873}
   - component: {fileID: 1617742872}
   - component: {fileID: 1617742870}
+  - component: {fileID: 1617742874}
   m_Layer: 5
   m_Name: UI Layer
   m_TagString: Untagged
@@ -967,6 +983,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1617742874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617742869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d41461d601741244398945ef8b1fb831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1753525731
 PrefabInstance:
   m_ObjectHideFlags: 0

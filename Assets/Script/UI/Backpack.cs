@@ -49,13 +49,14 @@ public class Backpack : MonoBehaviour
     #endregion
 
     private Inventory playerInventory;
-    private List<int> quickAccessList;
+    private GameItemDynamic[] quickAccessList;
     private void Awake()
     {
         UIDocument _doc = GetComponent<UIDocument>();
         _backpackScoll = _doc.rootVisualElement.Q<ScrollView>("backpack");
         menuArea = _doc.rootVisualElement.Q<VisualElement>("MenuArea");
         rootElement = _doc.rootVisualElement.Q<VisualElement>("RootElement");
+        rootElement.style.display = DisplayStyle.None;
         quickAccessPanel = _doc.rootVisualElement.Q<VisualElement>("quickAccessPanel");
 
         _activatedItemSprite = _doc.rootVisualElement.Q<VisualElement>("activatedItemSprite");
@@ -132,9 +133,15 @@ public class Backpack : MonoBehaviour
     {
 
         quickAccessPanel.Clear();
-        foreach (int itemID in quickAccessList)
+        foreach (GameItemDynamic item in quickAccessList)
         {
-            if (itemID == -1)
+            if (item == null)
+            {
+                // add as empty
+                VisualElement empty = _emptyItemTemplate.CloneTree().Q<VisualElement>("inventoryEmptyItem");
+                quickAccessPanel.Add(empty);
+            }
+            else if (item.CurrentCount == 0)
             {
                 // add as empty
                 VisualElement empty = _emptyItemTemplate.CloneTree().Q<VisualElement>("inventoryEmptyItem");
@@ -142,9 +149,8 @@ public class Backpack : MonoBehaviour
             }
             else
             {
-                var item = playerInventory._items[itemID];
                 var oneElement = constructOneInventoryItem(item);
-                oneElement.RegisterCallback<MouseUpEvent, int>(HandleQuickAccessRightClick, itemID, TrickleDown.TrickleDown);
+                oneElement.RegisterCallback<MouseUpEvent, GameItemDynamic>(HandleQuickAccessRightClick, item, TrickleDown.TrickleDown);
 
                 VisualElement newItemDot = oneElement.Q<Label>("newItemDot");
                 newItemDot.style.visibility = Visibility.Hidden;
@@ -153,23 +159,23 @@ public class Backpack : MonoBehaviour
         }
     }
 
-    private void addToQuickAccess(int location, int inventoryIndex)
+    private void addToQuickAccess(int location, GameItemDynamic inventoryIndex)
     {
-        for (int i = 0; i < quickAccessList.Count; i++)
+        for (int i = 0; i < quickAccessList.Length; i++)
         {
             if (quickAccessList[i] == inventoryIndex)
-                quickAccessList[i] = -1;
+                quickAccessList[i] = null;
 
         }
         quickAccessList[location] = inventoryIndex;
     }
 
-    private void removeFromQuickAccess(int inventoryIndex)
+    private void removeFromQuickAccess(GameItemDynamic inventoryIndex)
     {
-        for (int i = 0; i < quickAccessList.Count; i++)
+        for (int i = 0; i < quickAccessList.Length; i++)
         {
             if (quickAccessList[i] == inventoryIndex)
-                quickAccessList[i] = -1;
+                quickAccessList[i] = null;
 
         }
     }
@@ -243,22 +249,22 @@ public class Backpack : MonoBehaviour
 
         Button button = _rightClickButtonTemplate.CloneTree().Q<Button>("RightClickButton");
         button.text = "Set to Q";
-        button.clicked += () => { addToQuickAccess(0, inventoryIndex); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
+        button.clicked += () => { addToQuickAccess(0, playerInventory._items[inventoryIndex]); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
         buttonContainer.Add(button);
 
         button = _rightClickButtonTemplate.CloneTree().Q<Button>("RightClickButton");
         button.text = "Set to W";
-        button.clicked += () => { addToQuickAccess(1, inventoryIndex); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
+        button.clicked += () => { addToQuickAccess(1, playerInventory._items[inventoryIndex]); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
         buttonContainer.Add(button);
 
         button = _rightClickButtonTemplate.CloneTree().Q<Button>("RightClickButton");
         button.text = "Set to E";
-        button.clicked += () => { addToQuickAccess(2, inventoryIndex); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
+        button.clicked += () => { addToQuickAccess(2, playerInventory._items[inventoryIndex]); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
         buttonContainer.Add(button);
 
         button = _rightClickButtonTemplate.CloneTree().Q<Button>("RightClickButton");
         button.text = "Set to R";
-        button.clicked += () => { addToQuickAccess(3, inventoryIndex); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
+        button.clicked += () => { addToQuickAccess(3, playerInventory._items[inventoryIndex]); menuArea.Remove(buttonContainer); buttonContainer = null; putItemsIntoQuickAccess(); };
         buttonContainer.Add(button);
 
         button = _rightClickButtonTemplate.CloneTree().Q<Button>("RightClickButton");
@@ -280,7 +286,7 @@ public class Backpack : MonoBehaviour
         buttonContainer.style.left = localPos.x + 5;
     }
 
-    private void HandleQuickAccessRightClick(MouseUpEvent evt, int inventoryIndex)
+    private void HandleQuickAccessRightClick(MouseUpEvent evt, GameItemDynamic inventoryIndex)
     {
         if (evt.button != (int)MouseButton.RightMouse)
             return;
@@ -301,7 +307,7 @@ public class Backpack : MonoBehaviour
         button = _rightClickButtonTemplate.CloneTree().Q<Button>("RightClickButton");
         button.text = "Consume";
         button.clicked += () => {
-            ConsumableController.Instance.consumeItem(playerInventory._items[inventoryIndex]);
+            ConsumableController.Instance.consumeItem(inventoryIndex);
             menuArea.Remove(buttonContainer);
             buttonContainer = null;
         };
@@ -348,4 +354,22 @@ public class Backpack : MonoBehaviour
             newItemDot.style.visibility = Visibility.Hidden;
         }
     }
+    public void ActiveOnClick()
+    {
+        if (rootElement.style.display == DisplayStyle.None)
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+            UnityEngine.Cursor.visible = true;
+            putItemIntoUI();
+            putItemsIntoQuickAccess();
+            rootElement.style.display = DisplayStyle.Flex;
+        }
+        else
+        {
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.visible = false;
+            rootElement.style.display = DisplayStyle.None;
+        }
+    }
+
 }

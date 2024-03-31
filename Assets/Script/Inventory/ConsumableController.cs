@@ -15,6 +15,7 @@ using YamlDotNet.Serialization.NamingConventions;
 public class ConsumableController : Singleton<ConsumableController>
 {
     ConsumableConfig config;
+    Inventory inventory;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +27,7 @@ public class ConsumableController : Singleton<ConsumableController>
                 .Build();
         var consumableYaml = Resources.Load<TextAsset>("Configs/Consumable");
         config = deserializer.Deserialize<ConsumableConfig>(consumableYaml.text);
+        inventory = Backend.GameLoop.GetInventory();
     }
 
     public void activateItem(GameItemDynamic item)
@@ -41,7 +43,11 @@ public class ConsumableController : Singleton<ConsumableController>
 
     public void consumeItem(GameItemDynamic item)
     {
-
+        if (item.additionalFloatStats.ContainsKey("Recovery Health"))
+        {
+            Backend.GameLoop.ProcessHealing((int)item.additionalFloatStats["Recovery Health"]) ;
+        }
+        inventory.RemoveItem(item, 1);
     }
 
     private void writeDictionaryAfterUpdate() 

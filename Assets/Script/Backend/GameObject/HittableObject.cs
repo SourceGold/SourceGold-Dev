@@ -46,6 +46,11 @@ namespace Assets.Script.Backend
             HittableObjectStats!.GotDamanged(incomingDmg);
         }
 
+        public virtual void GotHealed(int incomingDmg)
+        {
+            HittableObjectStats!.GotHealed(incomingDmg);
+        }
+
         public bool IsAlive => HittableObjectStats!.IsAlive;
 
         public bool EnableOnStatsChangedCallback
@@ -131,6 +136,12 @@ namespace Assets.Script.Backend
             int dmg = (int)Math.Round(CalculateDamage(incomingDmg));
             GameEventLogger.LogEvent($"{nameof(GotDamanged)}: {dmg} damage dealt");
             UpdateHitPoint(-dmg);
+        }
+
+        public virtual void GotHealed(int incomingHeal)
+        {
+            GameEventLogger.LogEvent($"{nameof(GotDamanged)}: {incomingHeal} healing received");
+            UpdateHitPoint(incomingHeal);
         }
 
         public virtual void UpdateHitPoint(int changeInHp)

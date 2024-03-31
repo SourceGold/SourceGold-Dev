@@ -43,6 +43,12 @@ namespace Assets.Script.Backend
             }
         }
 
+        public virtual void ProcessHealing(int healingHitPoint)
+        {
+            GetMainCharacters().GotHealed(healingHitPoint);
+        }
+
+
         public BackendGameObject GetGameObject(string objectName)
         {
             return AllGameObjectCollection[objectName];

@@ -38,6 +38,11 @@ namespace Assets.Script.Backend
             base.GotDamanged(incomingDmg);
         }
 
+        public override void GotHealed(int incomingDmg)
+        {
+            base.GotHealed(incomingDmg);
+        }
+
         public void SetOnStatsChangedCallback(Action<PlayableCharacterStats> onStatsChangedCallback)
         {
             EnableOnStatsChangedCallback = _isMainCharacter;

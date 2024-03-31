@@ -19,7 +19,8 @@ public class ControlManager : MonoBehaviour
     private ShootingHandler _shootingHandler;
     private GameItemSensationHandler _gameItemSensationHandler;
     private InGamePauseController _inGamePauseController;
-
+    private Backpack _backpack;
+    private ItemQuickAccess _quickAccess;
 
     private void Awake()
     {
@@ -34,6 +35,8 @@ public class ControlManager : MonoBehaviour
         _shootingHandler = _playerManager.GetComponentInChildren<ShootingHandler>();
         _gameItemSensationHandler = _playerManager.GetComponentInChildren<GameItemSensationHandler>();
         _inGamePauseController = FindObjectOfType<InGamePauseController>();
+        _backpack = FindObjectOfType<Backpack>();
+        _quickAccess = FindObjectOfType<ItemQuickAccess>();
     }
 
     void Start()
@@ -257,6 +260,20 @@ public class ControlManager : MonoBehaviour
         _player.EscClick.performed += EscOnClick;
 
         _setting.EscClick.performed += EscOnClick;
+
+        _player.Backpack.performed += BackPackOnClick;
+
+        _setting.Backpack.performed += BackPackOnClick;
+
+        _player.QuckAccess1.performed += QuickAccess1OnClick;
+        _player.QuckAccess2.performed += QuickAccess2OnClick;
+        _player.QuckAccess3.performed += QuickAccess3OnClick;
+        _player.QuckAccess4.performed += QuickAccess4OnClick;
+    }
+
+    private void RegisterQuickAccess()
+    {
+
     }
     private void EscOnClick(InputAction.CallbackContext context)
     {
@@ -265,6 +282,46 @@ public class ControlManager : MonoBehaviour
             _inGamePauseController.EscOnClick();
             ToggleInputActionMap();
         } 
+    }
+
+    private void BackPackOnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _backpack.ActiveOnClick();
+            ToggleInputActionMap();
+        }
+    }
+
+    private void QuickAccess1OnClick(InputAction.CallbackContext context) {
+        if (context.performed)
+        {
+            _quickAccess.OnClicked(0);
+        }
+    }
+
+    private void QuickAccess2OnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _quickAccess.OnClicked(1);
+        }
+    }
+
+    private void QuickAccess3OnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _quickAccess.OnClicked(2);
+        }
+    }
+
+    private void QuickAccess4OnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _quickAccess.OnClicked(3);
+        }
     }
     #endregion
 }
