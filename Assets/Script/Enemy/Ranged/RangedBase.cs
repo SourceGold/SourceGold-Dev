@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,15 @@ public class RangedBase : MonoBehaviour
     protected float ShootWait = 0;
     protected bool AllowShoot { get { return ShootWait >= ShootDelay; } }
     protected Collider[] DetectedColliders = new Collider[10];
+
+    protected virtual void Awake()
+    {
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        ShootWait += ShootDelay;
+        ShootWait += ShootDelay;    
     }
 
     // Update is called once per frame
@@ -34,6 +40,10 @@ public class RangedBase : MonoBehaviour
         }
     }
 
+    public virtual string LockedBodyPart()
+    {
+        return "Follow Target";
+    }
     protected virtual void Shoot() { }
 
     protected virtual bool InSight(Transform target)
@@ -56,7 +66,7 @@ public class RangedBase : MonoBehaviour
             if (/*InSight(c.transform) &&*/ shortestDistance > DistanceFromTarget && targetAngle < DetectionAngle && targetAngle > -DetectionAngle)
             {
                 shortestDistance = DistanceFromTarget;
-                LockedTarget = c.transform.Find("Follow Target");
+                LockedTarget = c.transform.Find(LockedBodyPart());
                 noTarget = false;
             }
         }

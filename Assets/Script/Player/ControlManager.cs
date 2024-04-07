@@ -29,8 +29,8 @@ public class ControlManager : MonoBehaviour
         _isSetting = false;
 
         _playerManager = FindObjectOfType<PlayerManager>();
-        _movementHandler = _playerManager.GetComponentInChildren<MovementHandler>();
-        _meleeHandler = _playerManager.GetComponentInChildren<MeleeHandler>();
+        _movementHandler = _playerManager.GetComponent<MovementHandler>();
+        _meleeHandler = _playerManager.GetComponent<MeleeHandler>();
         _shootingHandler = _playerManager.GetComponentInChildren<ShootingHandler>();
         _gameItemSensationHandler = _playerManager.GetComponentInChildren<GameItemSensationHandler>();
         _inGamePauseController = FindObjectOfType<InGamePauseController>();
@@ -91,8 +91,8 @@ public class ControlManager : MonoBehaviour
         _player.LockOn.started += ToggleLockOn;
         _player.LockOn.performed += ToggleLockOn;
         _player.LockOn.canceled += ToggleLockOn;
-        _player.Aim.performed += ToggleAim;
         _player.Roll.performed += TriggerRoll;
+        _player.SwitchBattlePose.performed += SwitchBattlePoseMovement;
     }
 
     private void DisposeMovement()
@@ -109,8 +109,8 @@ public class ControlManager : MonoBehaviour
         _player.LockOn.started -= ToggleLockOn;
         _player.LockOn.performed -= ToggleLockOn;
         _player.LockOn.canceled -= ToggleLockOn;
-        _player.Aim.performed -= ToggleAim;
         _player.Roll.performed -= TriggerRoll;
+        _player.SwitchBattlePose.performed -= SwitchBattlePoseMovement;
     }
 
     private void GetMoveInput(InputAction.CallbackContext context)
@@ -131,15 +131,15 @@ public class ControlManager : MonoBehaviour
         if (context.performed)
             _movementHandler.ToggleLockOn();
     }
-    private void ToggleAim(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            _movementHandler.ToggleAim();
-    }
     private void TriggerRoll(InputAction.CallbackContext context)
     {
         if (context.performed)
             _movementHandler.TriggerRoll();
+    }
+    private void SwitchBattlePoseMovement(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _movementHandler.SwitchBattlePose();
     }
     #endregion
 
@@ -150,6 +150,10 @@ public class ControlManager : MonoBehaviour
         _player.SwitchWeapon.performed += SwitchWeapon;
         _player.StandingMeleeLight.performed += StandingMeleeLight;
         _player.StandingMeleeHeavy.performed += StandingMeleeHeavy;
+        _player.StandingMeleeHeavy.canceled += AttackRelease;
+        _player.SwitchBattlePose.performed += SwitchBattlePoseMelee;
+
+
         //_player.MeleeAttack2Press.performed += StandingMeleeAttack2Press;
         //_player.MeleeAttack2Release.performed += StandingMeleeAttack2Release;
     }
@@ -160,6 +164,8 @@ public class ControlManager : MonoBehaviour
         _player.SwitchWeapon.performed -= SwitchWeapon;
         _player.StandingMeleeLight.performed -= StandingMeleeLight;
         _player.StandingMeleeHeavy.performed -= StandingMeleeHeavy;
+        _player.StandingMeleeHeavy.canceled -= AttackRelease;
+        _player.SwitchBattlePose.performed -= SwitchBattlePoseMelee;
         //_player.MeleeAttack2Press.performed -= StandingMeleeAttack2Press;
         //_player.MeleeAttack2Release.performed -= StandingMeleeAttack2Release;
     }
@@ -184,6 +190,17 @@ public class ControlManager : MonoBehaviour
         if (context.performed)
             _meleeHandler.StandingMeleeHeavy();
     }
+    private void SwitchBattlePoseMelee(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _meleeHandler.SwitchBattlePose();
+    }
+    private void AttackRelease(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+            _meleeHandler.AttackRelease();
+    }
+
     //private void StandingMeleeAttack2Press(InputAction.CallbackContext context)
     //{
     //    _meleeHandler.StandingMeleeAttack2Press(context.performed);
@@ -200,6 +217,7 @@ public class ControlManager : MonoBehaviour
         _player.Shoot.started += HandleShoot;
         _player.Shoot.performed += HandleShoot;
         _player.Shoot.canceled += HandleShoot;
+        _player.Aim.performed += ToggleAim;
     }
 
     private void DisposeRanged()
@@ -207,11 +225,17 @@ public class ControlManager : MonoBehaviour
         _player.Shoot.started -= HandleShoot;
         _player.Shoot.performed -= HandleShoot;
         _player.Shoot.canceled -= HandleShoot;
+        _player.Aim.performed -= ToggleAim;
     }
 
     private void HandleShoot(InputAction.CallbackContext context)
     {
         _shootingHandler.HandleShoot(context.performed, context.canceled);
+    }
+    private void ToggleAim(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _shootingHandler.ToggleAim();
     }
     #endregion
 
@@ -220,7 +244,6 @@ public class ControlManager : MonoBehaviour
     {
         _player.SceneInteraction.performed += PickupKeyPress;
     }
-
     private void PickupKeyPress(InputAction.CallbackContext context)
     {
         if (context.performed)

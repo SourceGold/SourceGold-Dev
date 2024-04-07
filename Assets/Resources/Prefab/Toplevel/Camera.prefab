@@ -308,10 +308,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 0, y: 0.5, z: -0.75}
-  VerticalArmLength: 0.15
+  ShoulderOffset: {x: 0, y: -1, z: 0.1}
+  VerticalArmLength: 1
   CameraSide: 1
-  CameraDistance: 2
+  CameraDistance: 3.33
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -781,10 +781,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 0.5, y: 0.5, z: 0}
+  ShoulderOffset: {x: 0.5, y: 0, z: 0}
   VerticalArmLength: 0
   CameraSide: 1
-  CameraDistance: 1.2
+  CameraDistance: 1.5
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 0

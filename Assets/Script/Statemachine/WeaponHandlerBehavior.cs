@@ -21,7 +21,7 @@ public class WeaponHandlerBehavior : StateMachineBehaviour
         if (stateInfo.normalizedTime >= EventTime && !_eventTriggered)
         {
             _eventTriggered = true;
-            animator.GetComponentInParent<WeaponHandler>().ResetWeapon(Action, switchWeapon);
+            animator.GetComponent<WeaponHandler>().ResetWeapon(Action, switchWeapon);
         }
     }
 }
