@@ -7,7 +7,7 @@ public class GameItemsStaticManager : Singleton<GameItemsStaticManager>
 {
     public Dictionary<string, GameItem> gameItemsStatic = new Dictionary<string, GameItem>();
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         AllGameItems allGameItems = Resources.Load<AllGameItems>("GameItems/AvaliableItems");
         foreach (GameItem item in allGameItems.gameItems)

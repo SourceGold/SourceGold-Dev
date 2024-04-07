@@ -17,7 +17,7 @@ public class ConsumableController : Singleton<ConsumableController>
     ConsumableConfig config;
     Inventory inventory;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         // load the config file
         // var settingsInText = Resources.Load<TextAsset>("Configs/Consumable");
@@ -36,6 +36,24 @@ public class ConsumableController : Singleton<ConsumableController>
         if (config.healingPotionRecoverHealth.ContainsKey(name))
         {
             item.additionalFloatStats["Recovery Health"] = config.healingPotionRecoverHealth[name];
+            item.additionalIntStats["Recovery Time"] = 10;
+            item.addtionalStatus.Add("Test");
+        }
+    }
+
+    public void activateItem(GameItemDynamic item, Dictionary<string, string> additionalConfig)
+    {
+        string name = item.staticInfo.itemName;
+        if (config.healingPotionRecoverHealth.ContainsKey(name))
+        {
+            if (additionalConfig.TryGetValue("recovery_health", out var recoveryHealth))
+            {
+                item.additionalFloatStats["Recovery Health"] = float.Parse(recoveryHealth);
+           
+            }
+            else { 
+                item.additionalFloatStats["Recovery Health"] = config.healingPotionRecoverHealth[name];
+            }
             item.additionalIntStats["Recovery Time"] = 10;
             item.addtionalStatus.Add("Test");
         }

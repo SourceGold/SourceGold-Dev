@@ -80,24 +80,59 @@ public class GameItemDynamic
         }
         return true;
     }
-    public GameItemDynamic(string id, int maxCount = 10000, int currentCount = 1, int level = 0, bool isNew = true, bool dummy = false)
+    public GameItemDynamic(string id, int currentCount = 1, int level = 0, bool isNew = true, bool dummy = false)
     {
         this.id = id;
         this.uid = System.Guid.NewGuid().ToString();
         this.dummy = dummy;
         if (dummy) return;
         staticInfo = GameItemsStaticManager.Instance.GetGameItem(id);
-        if (staticInfo.maximum_count == 0)
-            _count = new ThreadSafeIntStats("Count", minStats: 0, int.MaxValue, currentCount);
+
+        if (staticInfo.maximum_count <= 0)
+            _count = new ThreadSafeIntStats("Count", minStats: 0, Int32.MaxValue, currentCount);
         else
             _count = new ThreadSafeIntStats("Count", minStats: 0, staticInfo.maximum_count, currentCount);
 
-        this.id = id;
-        this.uid = System.Guid.NewGuid().ToString();
         this.level = level;
         this.isNew = isNew;
         ConsumableController.Instance.activateItem(this);
     }
+
+    public GameItemDynamic(string id, Dictionary<string, string> additionalConfig)
+    {
+        this.id = id;
+        this.uid = System.Guid.NewGuid().ToString();
+
+        if (additionalConfig.ContainsKey("dummy") && additionalConfig["dummy"] == "true")
+        {
+            this.dummy = true;
+            return;
+        } else
+        {
+            this.dummy = false;
+        }
+
+        if (!additionalConfig.ContainsKey("current_count"))
+            throw new Exception("count for none dummy object is 0");
+
+        staticInfo = GameItemsStaticManager.Instance.GetGameItem(id);
+        if (staticInfo.maximum_count <= 0)
+            _count = new ThreadSafeIntStats("Count", minStats: 0, Int32.MaxValue, Int32.Parse(additionalConfig["current_count"]));
+        else
+            _count = new ThreadSafeIntStats("Count", minStats: 0, staticInfo.maximum_count, Int32.Parse(additionalConfig["current_count"]));
+
+
+        if (additionalConfig.ContainsKey("is_new") && additionalConfig["is_new"] == "false")
+            this.isNew = false;
+        else
+            this.isNew = true;
+
+        if (additionalConfig.ContainsKey("level"))
+            this.level = Int32.Parse(additionalConfig["level"]);
+
+        ConsumableController.Instance.activateItem(this, additionalConfig);
+    }
+
     public virtual int AddItems(int count)
     {
         var addedCount = Math.Min(MaxCount - CurrentCount, count);
