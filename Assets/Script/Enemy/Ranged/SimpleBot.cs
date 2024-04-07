@@ -17,12 +17,9 @@ public class SimpleBot : RangedBase
     private bool IsShooting { get { return LockedTarget != null; } }
     private float BulletPositionHeight;
     private Transform AlwaysUp;
-
-    public override string LockedBodyPart { get; set; }
-
+    public string BodyLockPart = "Follow Target - Body";
     protected override void Awake()
     {
-        LockedBodyPart = "Follow Target - Body";
         pfBulletProjectile = Resources.Load("Prefab/Player/pfSimpleEnemyBulletProjectile");
         AlwaysUp = transform.Find("Always Up");
     }
@@ -52,6 +49,11 @@ public class SimpleBot : RangedBase
             bullet.SourceName = transform.name;
             bullet.BulletSpeed = BulletSpeed;
         }
+    }
+
+    public override string LockedBodyPart()
+    {
+        return BodyLockPart;
     }
 
     // https://math.stackexchange.com/questions/543496/how-to-find-the-equation-of-a-line-tangent-to-a-circle-that-passes-through-a-g

@@ -11,11 +11,10 @@ public class Turret : RangedBase
     private Object pfBulletProjectile;
     private bool IsShooting { get { return LockedTarget != null; } }
 
-    public override string LockedBodyPart { get; set; }
+    public string BodyLockPart = "Follow Target - Body";
 
     protected override void Awake()
     {
-        LockedBodyPart = "Follow Target";
         pfBulletProjectile = Resources.Load("Prefab/Player/pfSimpleEnemyBulletProjectile");
     }
 
@@ -26,6 +25,10 @@ public class Turret : RangedBase
         PlayerMask = LayerMask.GetMask("Player");
     }
 
+    public override string LockedBodyPart()
+    {
+        return BodyLockPart;
+    }
     // Update is called once per frame
     protected override void Update()
     {

@@ -20,7 +20,7 @@ public class HeadAim : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _followTarget = _playerManager.transform.Find(GetComponentInParent<Turret>().LockedBodyPart);
+        _followTarget = _playerManager.transform.Find(GetComponentInParent<Turret>().LockedBodyPart());
         var data = _multiAimConstraint.data.sourceObjects;
         data.SetTransform(0, _followTarget);
         _multiAimConstraint.data.sourceObjects = data;

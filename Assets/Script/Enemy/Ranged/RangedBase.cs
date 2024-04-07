@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,20 +12,18 @@ public class RangedBase : MonoBehaviour
     public float ReleaseLockTime = 0.5f;
     protected LayerMask PlayerMask;
     protected Transform LockedTarget;
-    public virtual string LockedBodyPart{get; set;}
     protected float DistanceFromTarget;
     protected float NoTargetTime;
     protected float ShootDelay { get { return 1 / RateOfFire; } }
     protected float ShootWait = 0;
     protected bool AllowShoot { get { return ShootWait >= ShootDelay; } }
     protected Collider[] DetectedColliders = new Collider[10];
-    // Start is called before the first frame update
 
     protected virtual void Awake()
     {
-        LockedBodyPart = "Follow Target";
     }
 
+    // Start is called before the first frame update
     protected virtual void Start()
     {
         ShootWait += ShootDelay;    
@@ -41,6 +40,10 @@ public class RangedBase : MonoBehaviour
         }
     }
 
+    public virtual string LockedBodyPart()
+    {
+        return "Follow Target";
+    }
     protected virtual void Shoot() { }
 
     protected virtual bool InSight(Transform target)
@@ -63,7 +66,7 @@ public class RangedBase : MonoBehaviour
             if (/*InSight(c.transform) &&*/ shortestDistance > DistanceFromTarget && targetAngle < DetectionAngle && targetAngle > -DetectionAngle)
             {
                 shortestDistance = DistanceFromTarget;
-                LockedTarget = c.transform.Find(LockedBodyPart);
+                LockedTarget = c.transform.Find(LockedBodyPart());
                 noTarget = false;
             }
         }
