@@ -17,7 +17,7 @@ public class ConsumableController : Singleton<ConsumableController>
     ConsumableConfig config;
     Inventory inventory;
     // Start is called before the first frame update
-    void OnEnable()
+    new void Awake()
     {
         // load the config file
         // var settingsInText = Resources.Load<TextAsset>("Configs/Consumable");
@@ -27,7 +27,13 @@ public class ConsumableController : Singleton<ConsumableController>
                 .Build();
         var consumableYaml = Resources.Load<TextAsset>("Configs/Consumable");
         config = deserializer.Deserialize<ConsumableConfig>(consumableYaml.text);
-        inventory = Backend.GameLoop.GetInventory();
+        base.Awake();
+    }
+
+    void Start()
+    {
+    inventory = Backend.GameLoop.GetInventory();
+
     }
 
     public void activateItem(GameItemDynamic item)
