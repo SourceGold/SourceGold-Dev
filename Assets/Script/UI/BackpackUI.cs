@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 
-public class Backpack : MonoBehaviour
+public class BackpackUI : MonoBehaviour
 {
     private VisualElement menuArea;
     private VisualElement rootElement;

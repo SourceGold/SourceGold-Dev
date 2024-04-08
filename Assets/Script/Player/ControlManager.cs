@@ -19,7 +19,7 @@ public class ControlManager : MonoBehaviour
     private ShootingHandler _shootingHandler;
     private GameItemSensationHandler _gameItemSensationHandler;
     private InGamePauseController _inGamePauseController;
-    private Backpack _backpack;
+    private BackpackUI _backpack;
     private ItemQuickAccess _quickAccess;
 
     private void Awake()
@@ -35,7 +35,7 @@ public class ControlManager : MonoBehaviour
         _shootingHandler = _playerManager.GetComponentInChildren<ShootingHandler>();
         _gameItemSensationHandler = _playerManager.GetComponentInChildren<GameItemSensationHandler>();
         _inGamePauseController = FindObjectOfType<InGamePauseController>();
-        _backpack = FindObjectOfType<Backpack>();
+        _backpack = FindObjectOfType<BackpackUI>();
         _quickAccess = FindObjectOfType<ItemQuickAccess>();
     }
 
