@@ -9,6 +9,8 @@ namespace Assets.Script.Backend
     {
         private Action<PlayableCharacterStats> _playerOnStatsChangedCallback = null;
 
+        protected WeaponProvidor WeaponProvidor;
+
         public void InitializeStageGameObject(List<BackendGameObject> savedGameObjects)
         {
             foreach (var gameObject in savedGameObjects)
@@ -25,13 +27,13 @@ namespace Assets.Script.Backend
             //AddGameObject(new PlayableCharacter(playerName, LoadCharacterStats(playerName), LoadDefaultEnvironmentalStats(), isMainCharacter: true));
         }
 
-        public virtual void ProcessDamage(DamangeSource damangeSource, DamageTarget damageTarget)
+        public virtual void ProcessDamage(DamageSource damageSource, DamageTarget damageTarget)
         {
-            GameEventLogger.LogEvent($"{damangeSource.SrcObjectName} hit {damageTarget.TgtObjectName} with {damangeSource.AttackWeapon} weapon and {damangeSource.AttackName} attack");
+            GameEventLogger.LogEvent($"{damageSource.SrcObjectName} hit {damageTarget.TgtObjectName} with {damageSource.AttackWeapon} weapon and {damageSource.AttackName} attack");
             var targetObj = AllGameObjectCollection[damageTarget.TgtObjectName];
             if (targetObj is HittableObject hittableObject)
             {
-                hittableObject.GotDamanged(CalculateDamage(damangeSource, damageTarget));
+                hittableObject.GotDamanged(CalculateDamage(damageSource, damageTarget));
                 //if (!hittableObject.IsAlive)
                 //{
                 //    AllGameObjectCollection.Remove(targetObj.Name, out _);
@@ -195,7 +197,7 @@ namespace Assets.Script.Backend
             {
                 if (AllGameObjectCollection[objectName].SaveToNextStage)
                 {
-                    gameObject.SetGameObjectStates(AllGameObjectCollection[objectName].GetGameObjectStates());
+                    gameObject.SetGameObjectStats(AllGameObjectCollection[objectName].GetGameObjectBaseStats());
                 }
                 else
                 {
@@ -207,7 +209,7 @@ namespace Assets.Script.Backend
 
         protected virtual EnemyStats LoadEnemyStats(string parentName)
         {
-            return new EnemyStats(parentName, maxHitPoint: 100, maxMagicPoint: 100, baseAttack: 30, baseDefence: 10);
+            return new EnemyStats(parentName, maxHitPoint: 100, maxMagicPoint: 100, baseAttack: 15, baseDefence: 10);
         }
 
         protected virtual PlayableCharacterStats LoadCharacterStats(string parentName)
@@ -258,12 +260,21 @@ namespace Assets.Script.Backend
                 });
         }
 
-        protected virtual int CalculateDamage(DamangeSource damangeSource, DamageTarget damageTarget)
+        protected virtual int CalculateDamage(DamageSource damageSource, DamageTarget damageTarget)
         {
-            var srcObject = AllGameObjectCollection[damangeSource.SrcObjectName];
+            var srcObject = AllGameObjectCollection[damageSource.SrcObjectName];
             if (srcObject is HittableObject hittableObject)
             {
-                return hittableObject.HittableObjectStats.Attack;
+                var finalAttackStats = hittableObject.HittableObjectStats.Attack;
+                var damageMultiplier = 1.0f;
+                if (!string.IsNullOrEmpty(damageSource.AttackWeapon))
+                {
+                    var weaponStats = WeaponProvidor.GetWeaponStats(damageSource.AttackWeapon);
+                    finalAttackStats += weaponStats.WeaponAttack;
+                    damageMultiplier = weaponStats.GetDamageMultiplier();
+                }
+                var finalDamage = finalAttackStats * damageMultiplier;
+                return (int)Math.Round(finalDamage);
             }
             else
             {

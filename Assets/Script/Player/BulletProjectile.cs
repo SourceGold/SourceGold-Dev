@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+using Assets.Script;
 using Assets.Script.Backend;
-using System;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class BulletProjectile : MonoBehaviour
 {
@@ -31,10 +27,10 @@ public class BulletProjectile : MonoBehaviour
         Instantiate(vfxHitRed, hit.point, Quaternion.identity);
         if (CollisionLayer == 1 << hit.transform.gameObject.layer)
         {
-            Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = SourceName },
+            Backend.GameLoop.ProcessDamage(new DamageSource() { SrcObjectName = SourceName, AttackWeapon = WeaponNames.Ranged1 },
                 new DamageTarget() { TgtObjectName = hit.transform.name == "Player Bot" ? "Player" : hit.transform.name });
         }
-        Destroy(gameObject); 
+        Destroy(gameObject);
     }
 
     private void FixedUpdate()
@@ -46,7 +42,7 @@ public class BulletProjectile : MonoBehaviour
             {
                 if (hit.transform.GetComponent<Animator>().GetBool("IsInvincible"))
                 {
-                    if (Physics.Raycast(hit.point, transform.forward, out RaycastHit nextHit, 
+                    if (Physics.Raycast(hit.point, transform.forward, out RaycastHit nextHit,
                         maxDistance - Vector3.Distance(hit.point, transform.position), ~LayerMask.GetMask("Player")))
                     {
                         Hit(nextHit);

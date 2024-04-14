@@ -6,9 +6,12 @@
 
         public PlayerSaveInfo PlayerStats = null;
 
+        public static WeaponProvidor WeaponProvidor;
+
         public new void Awake()
         {
             GameEventLogger.LogEvent("Game Backend Awaken", EventLogType.SystemEvent);
+            WeaponProvidor = new WeaponProvidor();
             // TODO: this is called when scene reload, in future need other ways to restart this object
             // rather than just create a new one everytime to work with save/load
             GameLoop = new GameSceneTest();
