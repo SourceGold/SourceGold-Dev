@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private WeaponHandler WeaponHandlerRef;
+    private WeaponHandler _weaponHandlerRef;
+    private CharacterController _characterController;
     [SerializeField] private float Health;
     private Animator _anim;
     private bool _dead = false;
@@ -20,7 +21,8 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _anim = GetComponent<Animator>();
-        WeaponHandlerRef = GetComponentInParent<AllEnemyManager>().Player.GetComponentInChildren<WeaponHandler>();
+        _weaponHandlerRef = GetComponentInParent<AllEnemyManager>().Player.GetComponent<WeaponHandler>();
+        _characterController = GetComponent<CharacterController>();
         _enemyHealthBar = GetComponentInChildren<EnemyHealthBar>();
         RegisterSelf();
     }
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour
 
     private void DeathHandler()
     {
+        //_characterController.enabled = false;
         if (_anim)
             _anim.SetBool("IsDead", true);
         else
@@ -52,7 +55,7 @@ public class Enemy : MonoBehaviour
         Animator anim_other = other.GetComponentInParent<Animator>();
         if (anim_other.GetBool("IsDamageOn"))
         {
-            WeaponHandler.WeaponInfo weaponInfo = WeaponHandlerRef.GetWeaponInfo();
+            WeaponHandler.WeaponInfo weaponInfo = _weaponHandlerRef.GetWeaponInfo();
             if (weaponInfo.name == other.gameObject.name)
             {
                 var attackerName = other.GetComponentInParent<PlayerManager>().name;

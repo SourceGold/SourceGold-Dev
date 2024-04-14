@@ -30,11 +30,11 @@ public class MovementHandler : LocomotionManager
 
     #region Variables: Animation
 
-    private Animator _animator;
+    private Animator _anim;
     protected override Animator Animator
     {
-        get { return _animator; }
-        set { _animator = value; }
+        get { return _anim; }
+        set { _anim = value; }
     }
 
     #endregion
@@ -121,20 +121,21 @@ public class MovementHandler : LocomotionManager
     #endregion
 
     private ShootingHandler _shootingHandler;
+    private bool _isBattlePoseSwitched = false;
 
     // Start is called before the first frame update
     void Awake()
     {
         //Camera = FindObjectOfType<CameraManager>().gameObject.GetComponent<Camera>();
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        _characterController = GetComponentInChildren<CharacterController>();
+        _anim = GetComponent<Animator>();
         _isRunning = false;
         _isAiming = false;
         _cameraManager = FindObjectOfType<CameraManager>();
         _cam = _cameraManager.gameObject.GetComponent<Camera>();
         _camT = _cam.transform;
         _transform = GetComponent<Transform>();
-        _shootingHandler = GetComponentInParent<ShootingHandler>();
+        _shootingHandler = GetComponentInChildren<ShootingHandler>();
     }
 
     // Start is called before the first frame update
@@ -156,6 +157,8 @@ public class MovementHandler : LocomotionManager
 
     public void ToggleRunning(InputAction.CallbackContext context)
     {
+        if (_weaponStatus == WeaponStatus.Equipped)
+            return;
         if (GlobalSettings.globalSettings.userDefinedSettings.Control.PressToSpeedUp)
         {
             _isRunning = context.performed ? !_isRunning : _isRunning;
@@ -170,40 +173,36 @@ public class MovementHandler : LocomotionManager
     }
     public void TriggerJump(bool performed)
     {
-        _isJumping = performed && !_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("IsAttacking");
+        _isJumping = performed && !_anim.GetBool("IsRolling") && !_anim.GetBool("IsAttacking");
     }
 
     public void ToggleLockOn()
     {
-        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack"))
+        if (!_anim.GetBool("IsRolling"))
             _toggleLock = true;
     }
 
-    public void ToggleAim()
+    public void ToggleAim(bool isAiming)
     {
-        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && !_animator.GetBool("RangeStarting") && !_animator.GetBool("IsWeaponReady") && !_animator.GetBool("IsEquipting") && !_shootingHandler.IsMouseLeftDown)
-        {
-            _cameraManager.ToggleAim();
-            _animator.SetBool("IsRangeStart", !_animator.GetBool("IsRangeStart"));
-            if (_animator.GetBool("IsRangeStart"))
-                IsAiming = true;
-            else
-                IsAiming = false;
-        }
+        IsAiming = isAiming;
     }
 
     public void TriggerRoll()
     {
-        if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand)
+        if (!_anim.GetBool("IsRolling") &&  _playerPosture == PlayerPosture.Stand)
         {
-            _animator.SetBool("IsRolling", true);
+            _anim.SetBool("IsRolling", true);
+            _anim.SetTrigger("Roll");
         }
-        //else if (!_animator.GetBool("IsRolling") && !_animator.GetBool("IsDodgeBack") && _playerPosture == PlayerPosture.Stand && _weaponStatus == WeaponStatus.Equipped)
-        //{
-        //    _animator.SetBool("IsDodgeBack", true);
-        //}
 
+    }
 
+    public void SwitchBattlePose()
+    {
+        if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsAttacking"))
+        {
+            _isBattlePoseSwitched = !_isBattlePoseSwitched;
+        }
     }
 
     #endregion
@@ -214,6 +213,27 @@ public class MovementHandler : LocomotionManager
             _weaponStatus = WeaponStatus.Equipped;
         else
             _weaponStatus = WeaponStatus.Unequipped;
+    }
+
+    protected override void SetupAnimatorWeapon()
+    {
+        if (_weaponStatus == WeaponStatus.Equipped && _isBattlePoseSwitched && _anim.GetBool("IsBlocking"))
+        {
+            _anim.SetFloat("WeaponStatus", 3.0f, 0.1f, Time.deltaTime);
+        }
+        else if (_weaponStatus == WeaponStatus.Equipped && _isBattlePoseSwitched)
+        {
+            var weaponStat = (float)(_anim.GetInteger("WeaponType"));
+            _anim.SetFloat("WeaponStatus", weaponStat, 0.1f, Time.deltaTime);
+        }
+        else if (_weaponStatus == WeaponStatus.Equipped)
+        {
+            Animator.SetFloat("WeaponStatus", 1.0f, 0.1f, Time.deltaTime);
+        }
+        else
+        {
+            Animator.SetFloat("WeaponStatus", 0.0f, 0.1f, Time.deltaTime);
+        }
     }
 
     protected override void Rotate()
@@ -237,9 +257,9 @@ public class MovementHandler : LocomotionManager
         }
         else if (_input.Equals(Vector2.zero))
             return;
-        else if (_animator.GetBool("IsRolling"))
+        else if (_anim.GetBool("IsRolling"))
             return;
-        else if (!_animator.GetCurrentAnimatorStateInfo(2).IsName("Idle") && !_animator.GetCurrentAnimatorStateInfo(2).IsName("AttackIdle"))
+        else if (!_anim.GetCurrentAnimatorStateInfo(3).IsName("Idle") && !_anim.GetCurrentAnimatorStateInfo(3).IsName("AttackIdle") && !_anim.GetBool("IsBlocking") && !_anim.GetCurrentAnimatorStateInfo(3).IsName("AttackSwitchPoseIdle"))
             return;
         else
         {
@@ -256,10 +276,10 @@ public class MovementHandler : LocomotionManager
     {
         if (_playerPosture != PlayerPosture.Jumping && _playerPosture != PlayerPosture.Falling)
         {
-            Vector3 playerDelterMovement = _animator.deltaPosition;
+            Vector3 playerDelterMovement = _anim.deltaPosition;
             playerDelterMovement.y = _verticalVelocity * Time.deltaTime;
             _characterController.Move(playerDelterMovement);
-            CacheVelocity(_animator.velocity);
+            CacheVelocity(_anim.velocity);
         }
         else
         {

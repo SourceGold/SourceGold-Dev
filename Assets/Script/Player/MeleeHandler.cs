@@ -31,9 +31,9 @@ public class MeleeHandler : MonoBehaviour
     //private BoxCollider _weaponCollider;
     //private int _maxFrameBuffer = 10;
 
-    public WeaponHandler WeaponHandlerRef;
     private Animator _anim;
     private MovementHandler _movementHandler;
+    private WeaponHandler _weaponHandler;
 
     private void Awake()
     {
@@ -44,6 +44,7 @@ public class MeleeHandler : MonoBehaviour
     {
         _anim = GetComponent<Animator>();
         _movementHandler = GetComponent<MovementHandler>();
+        _weaponHandler = GetComponent<WeaponHandler>();
     }
 
     void Update()
@@ -55,6 +56,11 @@ public class MeleeHandler : MonoBehaviour
     {
         if (!_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting"))
         {
+            if (_anim.GetBool("IsBattlePoseSwitched"))
+            {
+                SwitchBattlePose();
+                _movementHandler.SwitchBattlePose();
+            }         
             _anim.SetBool("IsWeaponEquipped", !_anim.GetBool("IsWeaponEquipped"));
             _movementHandler.SetWeaponStatus(_anim.GetBool("IsWeaponEquipped"));
         }
@@ -64,6 +70,11 @@ public class MeleeHandler : MonoBehaviour
     {
         if (!_anim.GetBool("IsAttacking") && !_anim.GetBool("IsEquipting") && _anim.GetBool("IsWeaponEquipped"))
         {
+            if (_anim.GetBool("IsBattlePoseSwitched"))
+            {
+                SwitchBattlePose();
+                _movementHandler.SwitchBattlePose();
+            }
             _anim.SetBool("IsWeaponEquipped", false);
             _anim.SetBool("Switch", true);
             _anim.SetBool("IsSwitching", true);
@@ -88,9 +99,31 @@ public class MeleeHandler : MonoBehaviour
     {
         if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsRolling"))
         {
-            _anim.SetInteger("AttackType", 3);
+            _anim.SetInteger("AttackType", 2);
             _anim.SetTrigger("Attack");    
         }
+    }
+
+    public void SwitchBattlePose()
+    {
+        if (_anim.GetBool("CanAttack") && !_anim.GetBool("IsAttacking"))
+        {
+            _anim.SetBool("IsBattlePoseSwitched", !_anim.GetBool("IsBattlePoseSwitched"));
+            switch (_anim.GetInteger("WeaponType"))
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                default:
+                    break;
+            }
+        } 
+    }
+
+    public void AttackRelease()
+    {
+        _anim.SetBool("AttackRelease", true);
     }
 
     //public void StandingMeleeAttack2Press(bool performed)

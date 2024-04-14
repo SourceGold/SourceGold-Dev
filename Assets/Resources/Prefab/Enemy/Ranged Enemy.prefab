@@ -97,7 +97,7 @@ Transform:
   - {fileID: 7377321603236796402}
   - {fileID: 6902773904276025703}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &2642488398310819111
 MonoBehaviour:
@@ -158,6 +158,7 @@ MonoBehaviour:
   SpawnBulletPosition: {fileID: 2843284902618257440}
   AimRotationSpeed: 45
   BulletSpeed: 200
+  BodyLockPart: Follow Target - Body
 --- !u!1001 &4561194200283278431
 PrefabInstance:
   m_ObjectHideFlags: 0

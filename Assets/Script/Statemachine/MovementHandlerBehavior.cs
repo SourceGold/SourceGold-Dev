@@ -14,11 +14,11 @@ public class MovementHandlerBehavior : StateMachineBehaviour
 
         if (Equip)
         {
-            animator.GetComponentInParent<MovementHandler>().WeaponStatus = WeaponStatus.Equipped;
+            animator.GetComponent<MovementHandler>().WeaponStatus = WeaponStatus.Equipped;
         }
         else
         {
-            animator.GetComponentInParent<MovementHandler>().WeaponStatus = WeaponStatus.Unequipped;
+            animator.GetComponent<MovementHandler>().WeaponStatus = WeaponStatus.Unequipped;
         }
         
     }

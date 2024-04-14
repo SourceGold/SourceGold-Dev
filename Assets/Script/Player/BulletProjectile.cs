@@ -33,16 +33,6 @@ public class BulletProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.name == "Player Bot")
-        {
-            if (!other.transform.GetComponent<Animator>().GetBool("IsInvincible"))
-                Backend.GameLoop.ProcessDamage(new DamageSource() { SrcObjectName = "Player", AttackWeapon = WeaponNames.Ranged1 },
-                    new DamageTarget() { TgtObjectName = "Player" });
-        }
-    }
-
     private void FixedUpdate()
     {
         float maxDistance = BulletSpeed * Time.fixedDeltaTime;
