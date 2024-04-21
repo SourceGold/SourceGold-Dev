@@ -13,12 +13,12 @@
             InvincibleObjectType = invincibleObjectType;
         }
 
-        public override void SetGameObjectStates(BackendGameObjectStats GameObjectStats)
+        public override void SetGameObjectStats(BackendGameObjectStats GameObjectStats)
         {
             return;
         }
 
-        public override BackendGameObjectStats GetGameObjectStates()
+        public override BackendGameObjectStats GetGameObjectBaseStats()
         {
             return null;
         }

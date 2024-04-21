@@ -59,7 +59,7 @@ public class PlayerManager : CharacterManager, IDataPersistence
 
     public void SelfDmg()
     {
-        Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = this.name }, new DamageTarget() { TgtObjectName = this.name });
+        Backend.GameLoop.ProcessDamage(new DamageSource() { SrcObjectName = this.name }, new DamageTarget() { TgtObjectName = this.name });
         Invoke("SelfDmg", 10.0f);
     }
 

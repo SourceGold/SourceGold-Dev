@@ -1,18 +1,14 @@
+using Assets.Script;
 using Assets.Script.Backend;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class SimpleRanged : MonoBehaviour
 {
     public bool IsTurret;
     public float RateOfFire = 10f;
     public Transform Head;
-    public Transform []SpawnBulletPosition;
+    public Transform[] SpawnBulletPosition;
     public float DetectionAngle = 30f;
     public float DetectionRadius = 15f;
     [Tooltip("Degree per second")]
@@ -21,7 +17,7 @@ public class SimpleRanged : MonoBehaviour
     public float BulletSpeed = 200f;
 
     private Object pfBulletProjectile;
-    private bool IsShooting { get {return LockedTarget != null; } }
+    private bool IsShooting { get { return LockedTarget != null; } }
     private float ShootDelay { get { return 1 / RateOfFire; } }
     private float ShootWait = 0;
     private bool AllowShoot { get { return ShootWait >= ShootDelay; } }
@@ -61,7 +57,7 @@ public class SimpleRanged : MonoBehaviour
                 bullet.CollisionLayer = PlayerMask;
                 bullet.SourceName = transform.name;
                 bullet.BulletSpeed = BulletSpeed;
-            }   
+            }
         }
     }
 
@@ -137,7 +133,7 @@ public class SimpleRanged : MonoBehaviour
                 euler.x = 0;
                 AlwaysUp.eulerAngles = euler;
                 for (int i = 0; i < 50; i++)
-                    Backend.GameLoop.ProcessDamage(new DamangeSource() { SrcObjectName = transform.name },
+                    Backend.GameLoop.ProcessDamage(new DamageSource() { SrcObjectName = transform.name, AttackWeapon = WeaponNames.Ranged1 },
                         new DamageTarget() { TgtObjectName = "Player" });
             }
         }
