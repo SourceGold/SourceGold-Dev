@@ -159,18 +159,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Backpack",
-                    "type": "Button",
-                    "id": "9d33de0e-876c-4705-8d25-7a2d61d11dbd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "QuckAccess1",
                     "type": "Button",
-                    "id": "7831f8ab-1687-4624-b3eb-be7556c9915b",
+                    "id": "5a71000a-e436-4c0c-9ab4-1df9d65d5d4b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -179,7 +170,7 @@
                 {
                     "name": "QuckAccess2",
                     "type": "Button",
-                    "id": "d055777f-1c13-48d2-8fe5-2fda0b68d51b",
+                    "id": "644716a2-edca-4485-a481-c14a5e02e71c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -188,7 +179,7 @@
                 {
                     "name": "QuckAccess3",
                     "type": "Button",
-                    "id": "8d8cceb7-1b8a-4ad9-95a9-02717a459d6e",
+                    "id": "6f6b927a-00f3-486f-bae5-62503ca51b1e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -197,7 +188,16 @@
                 {
                     "name": "QuckAccess4",
                     "type": "Button",
-                    "id": "868305b5-6128-4146-b866-e8a6f6d79d56",
+                    "id": "bf25fd81-7fea-4488-84f7-d219d31ce66a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Backpack",
+                    "type": "Button",
+                    "id": "ea6fda7e-85b7-43e0-9c44-945eb8981574",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -460,18 +460,7 @@
                 },
                 {
                     "name": "",
-                    "id": "74a3f59c-6dc9-42a4-a265-c4a05ab8ab84",
-                    "path": "<Keyboard>/b",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Backpack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0332d96c-b27b-4a6e-858c-b71208bea518",
+                    "id": "6ed4312c-2b5d-482b-a125-4d4e5b5c8e25",
                     "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
@@ -482,7 +471,7 @@
                 },
                 {
                     "name": "",
-                    "id": "39f51427-e685-4fd1-9c37-1da883aaa430",
+                    "id": "8924b4aa-366a-4fde-8935-c5ee5f04b8f6",
                     "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
@@ -493,7 +482,7 @@
                 },
                 {
                     "name": "",
-                    "id": "9e59e8bc-2267-4feb-a3d7-0c7a7338bce9",
+                    "id": "a8a23ad6-a9bc-46d6-825b-9acd096e6d86",
                     "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
@@ -504,12 +493,71 @@
                 },
                 {
                     "name": "",
-                    "id": "55db1505-a813-46a9-9c56-c324171889f1",
+                    "id": "ac0b0fd0-aa3a-4578-995f-1b8782bd7aaa",
                     "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "QuckAccess4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "809c9e19-eebc-4079-8f59-1f3db41a4009",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Backpack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Inventory",
+            "id": "52fb052d-b3ab-43b1-99d2-7400243bf013",
+            "actions": [
+                {
+                    "name": "Backpack",
+                    "type": "Button",
+                    "id": "5596cf37-a8a6-4586-bd4f-2afea90bca0c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Esc Click",
+                    "type": "Button",
+                    "id": "543dfc76-2577-49b6-9bbc-d6fd90740e8a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "be1f6b5e-983f-4f2d-862e-37f2e1d9c541",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Backpack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1c67624b-934e-4ee2-bab5-64eabfa6ab5c",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Esc Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
