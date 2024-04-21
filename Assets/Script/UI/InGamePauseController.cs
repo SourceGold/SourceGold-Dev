@@ -41,7 +41,7 @@ public class InGamePauseController : MonoBehaviour
             rootBackground.style.display = DisplayStyle.None;
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             UnityEngine.Cursor.visible = false;
-            _controlManager.ToggleInputActionMap();
+            _controlManager.ToggleInputActionMap(InputActionMaps.Player);
         };
         _exitButton.clicked += () => Application.Quit();
         _settingButton.clicked += SettingsButtonOnClicked;

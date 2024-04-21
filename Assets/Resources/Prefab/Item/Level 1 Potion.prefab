@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5323168084410581474}
   - component: {fileID: 8365691294979109593}
   m_Layer: 0
-  m_Name: Collectable
+  m_Name: Level 1 Potion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
   priority: 0
   fullVisibleRange: 3.95
   initialVisibleRange: 4
-  count: 
+  itemsConfig: Potion:level=1,recovery_health=20,current_count=100
 --- !u!54 &8365691294979109593
 Rigidbody:
   m_ObjectHideFlags: 0

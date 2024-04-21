@@ -6,12 +6,9 @@ namespace Assets.Script.Backend
     {
         protected ConcurrentDictionary<string, BackendGameObject> AllGameObjectCollection { get; set; }
 
-        protected Inventory PlayerInventory { get; set; }
-
         public GameSceneBase()
         {
             AllGameObjectCollection = new ConcurrentDictionary<string, BackendGameObject>();
-            PlayerInventory = new Inventory(100);
             WeaponProvidor = Backend.WeaponProvidor;
         }
 
@@ -25,6 +22,7 @@ namespace Assets.Script.Backend
 
         public void InitializeStage()
         {
+            InitializeStageInventory();
             InitializeCharacters();
         }
     }

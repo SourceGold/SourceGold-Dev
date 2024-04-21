@@ -15,6 +15,7 @@ public class SceneItemActiveUI : MonoBehaviour
     private Camera MainCamera;
     private CanvasGroup canvasGroup;
     private Transform canvasTransform;
+    private TextMeshProUGUI textField;
 
     private float fullVisibleRange;
     private float initialVisibleRange;
@@ -27,6 +28,7 @@ public class SceneItemActiveUI : MonoBehaviour
     {
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         canvasTransform = canvas.GetComponent<Transform>();
+        textField = canvas.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -64,5 +66,11 @@ public class SceneItemActiveUI : MonoBehaviour
     public void setInactive()
     {
         canvas.SetActive(false);
+    }
+
+    public void setText(string description)
+    {
+        string updated_text = description + " Press [f] to pick up";
+        textField.text = updated_text;
     }
 }

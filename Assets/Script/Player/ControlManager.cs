@@ -10,8 +10,9 @@ public class ControlManager : MonoBehaviour
     public InputMap InputMap;
 
     private InputMap.PlayerActions _player;
+    private InputMap.InventoryActions _inventory;
     private InputMap.SettingActions _setting;
-    private bool _isSetting;
+    private InputActionMaps _currentActionMap = InputActionMaps.Player;
 
     private PlayerManager _playerManager;
     private MovementHandler _movementHandler;
@@ -19,14 +20,15 @@ public class ControlManager : MonoBehaviour
     private ShootingHandler _shootingHandler;
     private GameItemSensationHandler _gameItemSensationHandler;
     private InGamePauseController _inGamePauseController;
-
+    private BackpackUI _backpack;
+    private ItemQuickAccess _quickAccess;
 
     private void Awake()
     {
         InputMap = new InputMap();
         _player = InputMap.Player;
+        _inventory = InputMap.Inventory;
         _setting = InputMap.Setting;
-        _isSetting = false;
 
         _playerManager = FindObjectOfType<PlayerManager>();
         _movementHandler = _playerManager.GetComponent<MovementHandler>();
@@ -34,6 +36,8 @@ public class ControlManager : MonoBehaviour
         _shootingHandler = _playerManager.GetComponentInChildren<ShootingHandler>();
         _gameItemSensationHandler = _playerManager.GetComponentInChildren<GameItemSensationHandler>();
         _inGamePauseController = FindObjectOfType<InGamePauseController>();
+        _backpack = FindObjectOfType<BackpackUI>();
+        _quickAccess = FindObjectOfType<ItemQuickAccess>();
     }
 
     void Start()
@@ -49,6 +53,8 @@ public class ControlManager : MonoBehaviour
         RegisterInteraction();
 
         RegisterUI();
+
+        RegisterQuickAccess();
     }
 
     void OnDestroy()
@@ -58,22 +64,12 @@ public class ControlManager : MonoBehaviour
         DisposeMelee();
 
         DisposeRanged();
-    }
 
-    public void ToggleInputActionMap()
-    {
-        if (_isSetting)
-        {
-            _isSetting = false;
-            _setting.Disable();
-            _player.Enable();
-        }
-        else
-        {
-            _isSetting = true;
-            _player.Disable();
-            _setting.Enable();
-        }
+        DisposeInteraction();
+
+        DisposeUI();
+
+        DisposeQuickAccess();
     }
 
     #region Movement Bindings
@@ -244,6 +240,10 @@ public class ControlManager : MonoBehaviour
     {
         _player.SceneInteraction.performed += PickupKeyPress;
     }
+    private void DisposeInteraction()
+    {
+        _player.SceneInteraction.performed -= PickupKeyPress;
+    }
     private void PickupKeyPress(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -256,15 +256,119 @@ public class ControlManager : MonoBehaviour
     {
         _player.EscClick.performed += EscOnClick;
 
+        _inventory.EscClick.performed += EscOnClick;
+
         _setting.EscClick.performed += EscOnClick;
+
+        _player.Backpack.performed += BackPackOnClick;
+
+        _inventory.Backpack.performed += BackPackOnClick;
+
+        _setting.Backpack.performed += BackPackOnClick;
     }
+
+    private void DisposeUI()
+    {
+        _player.EscClick.performed -= EscOnClick;
+
+        _inventory.EscClick.performed -= EscOnClick;
+
+        _setting.EscClick.performed -= EscOnClick;
+
+        _player.Backpack.performed -= BackPackOnClick;
+
+        _inventory.Backpack.performed -= BackPackOnClick;
+
+        _setting.Backpack.performed -= BackPackOnClick;
+    }
+
     private void EscOnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed && _currentActionMap != InputActionMaps.Inventory)
+        {
+            _inGamePauseController.EscOnClick();
+            ToggleInputActionMap(InputActionMaps.Setting);
+        }
+    }
+
+    private void BackPackOnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed && _currentActionMap != InputActionMaps.Setting)
+        {
+            _backpack.ActiveOnClick();
+            ToggleInputActionMap(InputActionMaps.Inventory);
+        }
+    }
+
+    #endregion
+
+    #region Quick Access
+    private void RegisterQuickAccess()
+    {
+        _player.QuckAccess1.performed += QuickAccess1OnClick;
+        _player.QuckAccess2.performed += QuickAccess2OnClick;
+        _player.QuckAccess3.performed += QuickAccess3OnClick;
+        _player.QuckAccess4.performed += QuickAccess4OnClick;
+    }
+
+    private void DisposeQuickAccess()
+    {
+        _player.QuckAccess1.performed -= QuickAccess1OnClick;
+        _player.QuckAccess2.performed -= QuickAccess2OnClick;
+        _player.QuckAccess3.performed -= QuickAccess3OnClick;
+        _player.QuckAccess4.performed -= QuickAccess4OnClick;
+    }
+
+
+    private void QuickAccess1OnClick(InputAction.CallbackContext context) {
+        if (context.performed)
+        {
+            _quickAccess.OnClicked(0);
+        }
+    }
+
+    private void QuickAccess2OnClick(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            _inGamePauseController.EscOnClick();
-            ToggleInputActionMap();
-        } 
+            _quickAccess.OnClicked(1);
+        }
+    }
+
+    private void QuickAccess3OnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _quickAccess.OnClicked(2);
+        }
+    }
+
+    private void QuickAccess4OnClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _quickAccess.OnClicked(3);
+        }
     }
     #endregion
+
+    public void ToggleInputActionMap(InputActionMaps newActionMap)
+    {
+        if (_currentActionMap == InputActionMaps.Player)
+        {
+            _currentActionMap = newActionMap;
+            _player.Disable();
+            if (_currentActionMap == InputActionMaps.Inventory)
+                _inventory.Enable();
+            else
+                _setting.Enable();
+        }
+        else
+        {
+            _currentActionMap = InputActionMaps.Player;
+            _inventory.Disable();
+            _setting.Disable();
+            _player.Enable();
+        }
+    }
 }

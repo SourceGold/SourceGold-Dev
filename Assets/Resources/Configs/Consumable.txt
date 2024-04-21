@@ -1,0 +1,2 @@
+healing_potion_recover_health:
+  Potion: 25

@@ -13,6 +13,8 @@
         public static GameEventType GetNotEnoughStatsEvent(string stats) => new GameEventType($"NotEnough{stats}Event");
 
         public static GameEventType SettingsPageChangeEvent => new GameEventType(nameof(SettingsPageChangeEvent));
+
+        public static GameEventType InventoryChangeEvent => new GameEventType(nameof(InventoryChangeEvent));
     }
 
     public class GameEventType
