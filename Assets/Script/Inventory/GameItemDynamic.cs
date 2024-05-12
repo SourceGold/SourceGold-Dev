@@ -46,7 +46,7 @@ public class GameItemDynamic
         // Return true if the fields match.
         // Note that the base class is not invoked because it is
         // System.Object, which defines Equals as reference equality.
-        if (id != p.id)
+        if (id.ToLower() != p.id.ToLower())
             return false;
         if (p.dummy)
             return true;

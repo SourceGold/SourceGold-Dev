@@ -22,6 +22,9 @@ public class SceneItemActiveUI : MonoBehaviour
     private void Awake()
     {
         MainCamera = FindObjectOfType<CameraManager>().GetComponent<Camera>();
+        canvasGroup = canvas.GetComponent<CanvasGroup>();
+        canvasTransform = canvas.GetComponent<Transform>();
+        textField = canvas.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void Start()
@@ -29,6 +32,7 @@ public class SceneItemActiveUI : MonoBehaviour
         canvasGroup = canvas.GetComponent<CanvasGroup>();
         canvasTransform = canvas.GetComponent<Transform>();
         textField = canvas.GetComponentInChildren<TextMeshProUGUI>();
+        
     }
 
     // Update is called once per frame
@@ -70,7 +74,6 @@ public class SceneItemActiveUI : MonoBehaviour
 
     public void setText(string description)
     {
-        string updated_text = description + " Press [f] to pick up";
-        textField.text = updated_text;
+        textField.text = description;
     }
 }

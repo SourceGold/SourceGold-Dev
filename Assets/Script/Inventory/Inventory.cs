@@ -56,7 +56,17 @@ public class Inventory
             return 0;
         }
     }
-    
+
+    public bool checkItem(GameItemDynamic inventoryItem, int count)
+    {
+
+        var current_item = _items.Find(e => e.Equals(inventoryItem));
+        if (current_item != null && current_item.CurrentCount >= count)
+            return true;
+        else
+            return false;
+    }
+
     public int RemoveItem(GameItemDynamic inventoryItem, int count)
     {
 

@@ -116,6 +116,7 @@ public class GameItemSensationHandler : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
+
         InteractableObject gameItem = other.GetComponent<InteractableObject>();
         if (gameItem != null)
         {
@@ -146,7 +147,6 @@ public class GameItemSensationHandler : MonoBehaviour
 
             // TODO: double check how it is been deleted
             inRangeItems.Remove(closest);
-            Destroy(closest);
             closest = null;
         }
     }

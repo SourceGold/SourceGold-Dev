@@ -54,7 +54,7 @@ public class collectableItem : InteractableObject
             displayed_count += 1;
             
         }
-        uiElement.setText(display_name);
+        uiElement.setText(display_name + " Press [f] to pick up");
     }
     public override void closestActivation()
     {
@@ -75,6 +75,7 @@ public class collectableItem : InteractableObject
         {
             playerInventory.AddItem(item);
         }
+        Destroy(gameObject);
     }
     
     public override void inRange() { }
