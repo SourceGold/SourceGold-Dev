@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/AlwaysOnUI/AlwaysOnUI.uss?fileID=7433441132597879392&amp;guid=b379ebe65d6a27c48a77f595a58c6890&amp;type=3#AlwaysOnUI" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); padding-left: 0; margin-left: 5%; margin-top: 2.5%; margin-right: 5%; flex-direction: column-reverse; margin-bottom: 2%;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(255, 0, 0, 0); height: auto; width: auto; padding-left: 0; justify-content: flex-start; flex-direction: column;">
+            <ui:VisualElement name="VisualElement" class="bar-holder" style="height: 100%; background-color: rgba(60, 43, 47, 0.6);">
+                <ui:VisualElement name="HealthBar" class="smaller-bar" style="background-color: rgb(108, 72, 79); margin-right: 50%;">
+                    <ui:Label tabindex="-1" text="150/200" display-tooltip-when-elided="true" name="HealthLabel" style="-unity-text-align: middle-left; flex-grow: 1; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 12%; padding-left: 10px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
