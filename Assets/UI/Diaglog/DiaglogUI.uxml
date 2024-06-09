@@ -1,13 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="one-line-of-text" src="project://database/Assets/UI/Diaglog/one-line-of-text.uxml?fileID=9197481963319205126&amp;guid=ddae0145531e54fbdac20b1fa8e30b11&amp;type=3#one-line-of-text" />
     <Style src="project://database/Assets/UI/Diaglog/Dialogue.uss?fileID=7433441132597879392&amp;guid=89e213e72c609ce40a17d468d0722c66&amp;type=3#Dialogue" />
-    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-top: 35%; margin-left: 25%; margin-right: 25%; margin-bottom: 5%;">
-        <ui:ScrollView class="text-region">
-            <ui:Label tabindex="-1" text="[NPC1]: I have some good protion for you. Do you want to have them, afoifeiowfiao, afji,faofoi," display-tooltip-when-elided="true" name="text" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px; padding-left: 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: nowrap; white-space: normal; padding-right: 16px;" />
-            <ui:Label tabindex="-1" text="[NPC1]: I have some good protion for you. Do you want to have them, afoifeiowfiao, afji,faofoi," display-tooltip-when-elided="true" name="text" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px; padding-left: 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: nowrap; white-space: normal; padding-right: 16px;" />
-            <ui:Label tabindex="-1" text="[NPC1]: I have some good protion for you. Do you want to have them, afoifeiowfiao, afji,faofoi," display-tooltip-when-elided="true" name="text" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px; padding-left: 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: nowrap; white-space: normal; padding-right: 16px;" />
-            <ui:Label tabindex="-1" text="[NPC1]: I have some good protion for you. Do you want to have them, afoifeiowfiao, afji,faofoi," display-tooltip-when-elided="true" name="text" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px; padding-left: 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: nowrap; white-space: normal; padding-right: 16px;" />
-            <ui:Label tabindex="-1" text="[NPC1]: I have some good protion for you. Do you want to have them, afoifeiowfiao, afji,faofoi," display-tooltip-when-elided="true" name="text" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px; padding-left: 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: nowrap; white-space: normal; padding-right: 16px;" />
-            <ui:Label tabindex="-1" text="[NPC1]: I have some good protion for you. Do you want to have them, afoifeiowfiao, afji,faofoi," display-tooltip-when-elided="true" name="text" style="color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 20px; padding-left: 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: nowrap; white-space: normal; padding-right: 16px;" />
-        </ui:ScrollView>
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-top: 40%; margin-left: 26%; margin-right: 26%; margin-bottom: 5%; justify-content: flex-end;">
+        <ui:VisualElement name="VisualElement" class="text-region" style="overflow: hidden; justify-content: flex-end; opacity: 1; flex-grow: 0;">
+            <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); padding-top: 0; padding-bottom: 0; top: auto; flex-shrink: 0; justify-content: flex-start;">
+                <ui:Instance template="one-line-of-text" name="one-line-of-text" />
+                <ui:Instance template="one-line-of-text" name="one-line-of-text" />
+                <ui:Instance template="one-line-of-text" name="one-line-of-text" />
+                <ui:Instance template="one-line-of-text" name="one-line-of-text" />
+                <ui:Instance template="one-line-of-text" name="one-line-of-text" />
+                <ui:Instance template="one-line-of-text" name="one-line-of-text" />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
