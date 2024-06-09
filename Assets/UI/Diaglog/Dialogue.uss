@@ -1,0 +1,10 @@
+.text-region {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: auto;
+    min-width: auto;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
