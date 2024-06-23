@@ -1,3 +1,4 @@
+using Assets.Script;
 using Assets.Script.Backend;
 using UnityEngine;
 
@@ -64,7 +65,9 @@ public class Enemy : MonoBehaviour
                     _anim.SetBool("Hit", true);
                 //Debug.Log("Hit By Sword");
 
-                Backend.GameLoop.ProcessDamage(new DamageSource() { SrcObjectName = attackerName, AttackWeapon = weaponInfo.name }, new DamageTarget() { TgtObjectName = _name });
+                Backend.GameLoop.ProcessDamage(
+                    new DamageSource() { SrcObjectName = attackerName, AttackWeapon = weaponInfo.name, AttackName = PlayerAttackNames.SwordLight1 }, 
+                    new DamageTarget() { TgtObjectName = _name });
             }
         }
     }

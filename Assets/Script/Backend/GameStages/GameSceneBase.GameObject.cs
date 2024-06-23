@@ -9,7 +9,9 @@ namespace Assets.Script.Backend
     {
         private Action<PlayableCharacterStats> _playerOnStatsChangedCallback = null;
 
-        protected WeaponProvidor WeaponProvidor;
+        protected WeaponProvidor WeaponProvidor => Backend.WeaponProvidor;
+
+        protected PlayerAttackProvidor PlayerAttackProvidor => Backend.PlayerAttackProvidor;
 
         public void InitializeStageGameObject(List<BackendGameObject> savedGameObjects)
         {
@@ -277,7 +279,12 @@ namespace Assets.Script.Backend
                 {
                     var weaponStats = WeaponProvidor.GetWeaponStats(damageSource.AttackWeapon);
                     finalAttackStats += weaponStats.WeaponAttack;
-                    damageMultiplier = weaponStats.GetDamageMultiplier();
+                    damageMultiplier *= weaponStats.GetDamageMultiplier();
+                }
+                if (!string.IsNullOrEmpty(damageSource.AttackName))
+                {
+                    var attackStats = PlayerAttackProvidor.GetPlayerAttackStats(damageSource.AttackName);
+                    damageMultiplier *= attackStats.GetDamageMultiplier();
                 }
                 var finalDamage = finalAttackStats * damageMultiplier;
                 return (int)Math.Round(finalDamage);

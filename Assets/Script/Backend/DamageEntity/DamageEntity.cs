@@ -2,13 +2,8 @@
 
 namespace Assets.Script.Backend
 {
-    [CreateAssetMenu(fileName = "New Weapon Stats", menuName = "WeaponStats/CreateWeapon")]
-    public class WeaponStats : ScriptableObject
+    public class DamageEntity : ScriptableObject
     {
-        public string WeaponName;
-
-        public int WeaponAttack;
-
         public float SimpleDamageMultiplier;
 
         public virtual float GetDamageMultiplier()
