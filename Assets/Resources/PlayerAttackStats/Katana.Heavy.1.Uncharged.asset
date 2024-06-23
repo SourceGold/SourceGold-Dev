@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5be22fd0e1ef62b40aa31684e3a98b70, type: 3}
   m_Name: Katana.Heavy.1.Uncharged
   m_EditorClassIdentifier: 
-  SimpleDamageMultiplier: 0
+  SimpleDamageMultiplier: 1
