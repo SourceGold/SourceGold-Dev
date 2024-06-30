@@ -69,13 +69,14 @@ public class collectableItem : InteractableObject
             uiElement.setInactive(); 
         }
     }
-    public override void playerInteract()
+    public override bool playerInteract()
     {
         foreach (GameItemDynamic item in gameItems)
         {
             playerInventory.AddItem(item);
         }
         Destroy(gameObject);
+        return true;
     }
     
     public override void inRange() { }

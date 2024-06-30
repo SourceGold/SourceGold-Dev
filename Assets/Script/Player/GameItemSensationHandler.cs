@@ -143,11 +143,14 @@ public class GameItemSensationHandler : MonoBehaviour
         if (closest != null)
         {
             InteractableObject gameItem = closest.GetComponent<InteractableObject>();
-            gameItem.playerInteract();
+            var gameItemRemoved = gameItem.playerInteract();
 
-            // TODO: double check how it is been deleted
-            inRangeItems.Remove(closest);
-            closest = null;
+            if (gameItemRemoved)
+            {
+                inRangeItems.Remove(closest);
+                closest = null;
+            }
+            
         }
     }
 

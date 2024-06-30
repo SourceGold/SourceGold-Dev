@@ -40,7 +40,7 @@ public class activeElevator : InteractableObject
             uiElement.setInactive();
         }
     }
-    public override void playerInteract()
+    public override bool playerInteract()
     {
         animator1.SetBool("TurnOnElevator", true);
         animator2.SetBool("TurnOnElevator", true);
@@ -50,6 +50,7 @@ public class activeElevator : InteractableObject
         animator6.SetBool("TurnOnElevator", true);
         animator7.SetBool("TurnOnElevator", true);
         animator8.SetBool("TurnOnElevator", true);
+        return false;
     }
 
     public override void inRange() { }
