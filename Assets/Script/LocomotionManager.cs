@@ -75,7 +75,7 @@ public abstract class LocomotionManager : MonoBehaviour
 
     protected virtual void Rotate() { }
 
-    protected void Rotate(Quaternion targetAngle)
+    public void Rotate(Quaternion targetAngle)
     {
         Transform.rotation = Quaternion.Slerp(Transform.rotation, targetAngle, _rotateSpeed / Time.deltaTime);
     }
@@ -86,6 +86,7 @@ public abstract class LocomotionManager : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
     }
+
     private void LockOnTarget()
     {
 

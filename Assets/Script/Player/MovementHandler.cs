@@ -121,6 +121,12 @@ public class MovementHandler : LocomotionManager
     #endregion
 
     private ShootingHandler _shootingHandler;
+    protected ShootingHandler ShootingHandler
+    {
+        get { return _shootingHandler; }
+        set { _shootingHandler = value; }
+    }
+
     private bool _isBattlePoseSwitched = false;
 
     // Start is called before the first frame update
@@ -149,28 +155,27 @@ public class MovementHandler : LocomotionManager
     {
         PlayerUpdate();
     }
+
     #region Functions: Inputs
     public void GetMoveInput(Vector2 moveInput)
     {
         _input = moveInput;
     }
 
-    public void ToggleRunning(InputAction.CallbackContext context)
+    public void ToggleRunning(bool performed)
     {
         if (_weaponStatus == WeaponStatus.Equipped)
             return;
         if (GlobalSettings.globalSettings.userDefinedSettings.Control.PressToSpeedUp)
         {
-            _isRunning = context.performed ? !_isRunning : _isRunning;
+            _isRunning = performed ? !_isRunning : _isRunning;
         }
-        else 
+        else
         {
-            if (context.performed)
-                _isRunning = true;
-            if (context.canceled)
-                _isRunning = false;
+            _isRunning = performed;
         }
     }
+
     public void TriggerJump(bool performed)
     {
         _isJumping = performed && !_anim.GetBool("IsRolling") && !_anim.GetBool("IsAttacking");
@@ -265,7 +270,6 @@ public class MovementHandler : LocomotionManager
         {
             _direction.x = _input.x;
             _direction.z = _input.y;
-            Vector3 inputDirection = new Vector3(_input.x, 0.0f, _input.y).normalized;
 
             var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg + _camT.eulerAngles.y;
             Rotate(targetAngle);
