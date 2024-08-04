@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Label tabindex="-1" text="[NPC1]: I have some good protion for you. Do you want to have them, afoifeiowfiao, afji,faofoi," display-tooltip-when-elided="true" name="one-line-of-text" class="one-line-diaglog" />
+</ui:UXML>

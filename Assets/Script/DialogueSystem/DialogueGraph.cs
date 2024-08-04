@@ -52,8 +52,17 @@ public class DialogueGraph
             {
                 nodes.Add(ymlNode.NodeName, new DialogueGraphEventNode(ymlNode));
             }
+            else if (ymlNode.Type == DialogueNodeYmlType.end)
+            {
+                nodes.Add(ymlNode.NodeName, new DialogueGraphEndNode(ymlNode));
+            }
         }
         entryNode = nodes[avaliable_nodes[0]];
+        if (entryNode.type != DialogueNodeType.normal)
+        {
+            entryNode = new DialogueGraphTextNode("fake_entry_text", entryNode);
+            nodes.Add("fake_entry_text", entryNode);
+        }
     }
 
     private void ResolveNextNodes()
@@ -64,26 +73,37 @@ public class DialogueGraph
             switch (node)
             {
                 case DialogueGraphTextNode textNode:
-                    if (textNode.nextNodeString != null && textNode.nextNodeString != "null")
+                    if (textNode.nextNodeString == null || textNode.nextNodeString == "null")
                     {
-                        textNode.nextNode = nodes[textNode.nextNodeString];
+                        throw new Exception($"Node name {textNode.nodeName} is type text should have a next node.");
                     }
+                    textNode.nextNode = nodes[textNode.nextNodeString];
                     break;
 
                 case DialogueGraphChoiceNode choiceNode:
                     foreach (var choice in choiceNode.choices)
                     {
-                        if (choice.nextNodeString != null && choice.nextNodeString != "null")
+                        if (choice.nextNodeString == null || choice.nextNodeString == "null")
                         {
-                            choice.nextNode = nodes[choice.nextNodeString];
+                            throw new Exception($"Node name {choiceNode.nodeName} is type choice and each choice should have a next node."); 
                         }
+                        choice.nextNode = nodes[choice.nextNodeString];
                     }
                     break;
 
                 case DialogueGraphEventNode eventNode:
-                    if (eventNode.nextNodeString != null && eventNode.nextNodeString != "null")
+                    if (eventNode.nextNodeString == null || eventNode.nextNodeString == "null")
                     {
-                        eventNode.nextNode = nodes[eventNode.nextNodeString];
+                        throw new Exception($"Node name {eventNode.nodeName} is type event and should have a next node.");
+                    }
+                    eventNode.nextNode = nodes[eventNode.nextNodeString];
+                    break;
+
+                case DialogueGraphEndNode endNode:
+                    Console.WriteLine(endNode.nextNodeString);
+                    if (endNode.nextNodeString != null && endNode.nextNodeString != "null")
+                    {
+                        endNode.nextNode = nodes[endNode.nextNodeString];
                     }
                     break;
             }
@@ -95,6 +115,7 @@ public class DialogueGraph
         CheckNodesWithNoIncomingReferences();
         CheckForLoops();
     }
+
 
     private void CheckNodesWithNoIncomingReferences()
     {
@@ -132,6 +153,13 @@ public class DialogueGraph
                     if (eventNode.nextNode is DialogueGraphBaseNode nextEventNode)
                     {
                         referenceCounts[nextEventNode.nodeName]++;
+                    }
+                    break;
+
+                case DialogueGraphEndNode endNode:
+                    if (endNode.nextNode is DialogueGraphBaseNode nextEndNode)
+                    {
+                        referenceCounts[nextEndNode.nodeName]++;
                     }
                     break;
             }
@@ -216,6 +244,16 @@ public class DialogueGraph
                     }
                 }
                 break;
+
+            case DialogueGraphEndNode endNode:
+                if (endNode.nextNode is DialogueGraphBaseNode nextEndNode)
+                {
+                    if (DetectCycle(nextEndNode.nodeName, visited, stack))
+                    {
+                        return true;
+                    }
+                }
+                break;
         }
 
         stack.Remove(currentNode);
@@ -286,6 +324,17 @@ public class DialogueGraph
                         nextNode = nextEventNode;
                     }
                     break;
+
+                case DialogueGraphEndNode endNode:
+                    if (endNode.nextNode is DialogueGraphBaseNode nextEndNode)
+                    {
+                        nodeString += " ... " + nextEndNode.nodeName;
+                    }
+                    else
+                    {
+                        nodeString += "[END]";
+                    }
+                    break;
             }
 
             if (nextNode != null && !local_visited.Contains(nextNode.nodeName))
@@ -353,6 +402,30 @@ public class DialogueGraphTextNode : DialogueGraphBaseNode
         else
             nextNodeString = null;
     }
+
+    public DialogueGraphTextNode(string name, DialogueGraphBaseNode nextNode)
+    {
+        nodeName = name; 
+        type = DialogueNodeType.normal;
+        this.nextNode = nextNode;
+    }
+}
+
+public class DialogueGraphEndNode : DialogueGraphBaseNode
+{
+    public DialogueGraphBaseNode nextNode = null;
+    public string nextNodeString;
+
+    public DialogueGraphEndNode(DialogueNodeYml yml)
+    {
+        nodeName = yml.NodeName;
+        type = DialogueNodeType.end;
+
+        if (yml.NextNodes.Count > 0)
+            nextNodeString = yml.NextNodes[0];
+        else
+            nextNodeString = null;
+    }
 }
 
 public class DialogueGraphBaseNode
@@ -404,4 +477,5 @@ public enum DialogueNodeType
     normal = 0,
     choice = 1,
     codeEvent = 2,
+    end = 3,
 }

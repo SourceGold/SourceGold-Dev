@@ -36,7 +36,7 @@ list_of_nodes:
   - Old Lady~(angry)
   type: normal
   next_nodes:
-  - intro_choice_end
+  - intro_choice_angry_exit
 
 - node_name: intro_choice_armor
   dialogue_content:
@@ -51,3 +51,13 @@ list_of_nodes:
   dialogue_content:
   - System~Now you can freely explore this world!
   type: normal
+  next_nodes:
+  - intro_choice_exit
+
+- node_name: intro_choice_exit
+  type: end 
+  next_nodes:
+  - intro_choice_end
+
+- node_name: intro_choice_angry_exit
+  type: end 

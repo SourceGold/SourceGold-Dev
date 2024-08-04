@@ -50,6 +50,10 @@ public class DialogueYmlFile
 
             if (node.Type == DialogueNodeYmlType.normal)
             {
+                if (node.NextNodes.Count == 0)
+                {
+                    throw new Exception($"Node name {node.NodeName} is type normal should have a next node. Please use end node if want terminate.");
+                }
                 if (node.NextNodes.Count > 1)
                 {
                     throw new Exception($"Node name {node.NodeName} is type normal but has more than 1 next node");
@@ -82,6 +86,17 @@ public class DialogueYmlFile
                     {
                         throw new Exception($"Node name {node.NodeName} contains invalid action '{action}' which is not in plausible actions list");
                     }
+                }
+                if (node.NextNodes.Count == 0)
+                {
+                    throw new Exception($"Node name {node.NodeName} is type codeEvent should have a next node. Please use end node if want terminate.");
+                }
+            }
+            else if(node.Type == DialogueNodeYmlType.end)
+            {
+                if (node.NextNodes.Count > 1)
+                {
+                    throw new Exception($"Node name {node.NodeName} is type end but has more than 1 next node");
                 }
             }
 
@@ -145,4 +160,5 @@ public enum DialogueNodeYmlType
     normal = 0,
     choice = 1,
     codeEvent = 2,
+    end = 3,
 }
