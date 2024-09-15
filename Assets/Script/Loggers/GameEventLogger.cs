@@ -1,7 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace Assets.Script.Backend
+namespace Assets.Script.Loggers
 {
     public class GameEventLogger : DataPersistence
     {
@@ -33,15 +34,37 @@ namespace Assets.Script.Backend
             //EventLog = new List<EventLogMessage>();
         }
 
-        public static void LogEvent(string message, EventLogType eventLogType = EventLogType.UserEvent)
+        public static void LogEvent(string message, EventLogLevel eventLogLevel, string eventLogType = "", bool enableConsoleLogging = false)
         {
-            Instance.EventLog.Enqueue(new EventLogMessage(message, eventLogType));
+            Instance.EventLog.Enqueue(new EventLogMessage(message, eventLogLevel, eventLogType));
+            if (enableConsoleLogging )
+            {
+                switch (eventLogType)
+                {
+                    case EventLogType.WarningEventLogType: 
+                        Debug.LogWarning(message); 
+                        break;
+                    case EventLogType.UserErrorEventLogType:
+                    case EventLogType.GameErrorEventLogType:
+                        Debug.LogError(message); 
+                        break;
+                    case EventLogType.InfoEventLogType:
+                    default:
+                        Debug.Log(message);
+                        break;
+                }
+            }
             //Instance.EventLog.Add(new EventLogMessage(message, eventLogType));
+        }
+
+        public static void LogDebugEvent(string message, string eventLogType = "", bool enableConsoleLogging = false)
+        {
+            LogEvent(message, EventLogLevel.DebugEvent, eventLogType, enableConsoleLogging);
         }
 
         public override void Restart()
         {
-            LogEvent("Scene Restarted", EventLogType.GameEvent);
+            LogEvent("Scene Restarted", EventLogLevel.GameEvent);
         }
 
         public override void LoadData(string fileName)
@@ -50,7 +73,7 @@ namespace Assets.Script.Backend
             var newQueue = new ConcurrentQueue<EventLogMessage>();
             foreach (var log in logs)
             {
-                if (log.Type == EventLogType.UserEvent)
+                if (log.Level == EventLogLevel.UserEvent)
                 {
                     newQueue.Enqueue(log);
                 }

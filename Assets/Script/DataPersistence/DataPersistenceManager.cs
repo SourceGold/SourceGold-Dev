@@ -1,4 +1,4 @@
-﻿using Assets.Script.Backend;
+﻿using Assets.Script.Loggers;
 using Assets.Script.Utilities;
 using System;
 using System.Collections.Generic;
@@ -52,7 +52,7 @@ namespace Assets.Script
 
         public static void NewGame()
         {
-            
+
         }
 
         public static void RestartGame()
@@ -66,7 +66,7 @@ namespace Assets.Script
 
         public static void LoadGame(string saveName)
         {
-            GameEventLogger.LogEvent("Loading Game", EventLogType.SystemEvent);
+            GameEventLogger.LogEvent("Loading Game", EventLogLevel.SystemEvent);
             foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects.Values)
             {
                 if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
@@ -82,7 +82,7 @@ namespace Assets.Script
 
         public static void SaveGame(string saveName)
         {
-            GameEventLogger.LogEvent("Saving Game", EventLogType.SystemEvent);
+            GameEventLogger.LogEvent("Saving Game", EventLogLevel.SystemEvent);
             foreach (IDataPersistence dataPersistenceObject in Instance._dataPersistenceObjects.Values)
             {
                 if (dataPersistenceObject == null || dataPersistenceObject.IsUnityNull())
