@@ -41,13 +41,14 @@ public class DoorOpen : InteractableObject
             uiElement.setInactive();
         }
     }
-    public override void playerInteract()
+    public override bool playerInteract()
     {
         if (playerInventory.checkItem(test_item, 10))
         {
             playerInventory.RemoveItem(test_item, 10);
             animator1.SetBool("OpenDoor", true);
         }
+        return false;
     }
 
     public override void inRange() { }

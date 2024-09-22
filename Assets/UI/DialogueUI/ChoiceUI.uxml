@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="one-line-of-choice" src="project://database/Assets/UI/Diaglog/one-line-of-choice.uxml?fileID=9197481963319205126&amp;guid=cfe67195a6d35814788691d4703455a8&amp;type=3#one-line-of-choice" />
+    <Style src="project://database/Assets/UI/Diaglog/Dialogue.uss?fileID=7433441132597879392&amp;guid=89e213e72c609ce40a17d468d0722c66&amp;type=3#Dialogue" />
+    <ui:VisualElement name="ChoiceRoot" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0; justify-content: center; align-self: center; align-items: auto;">
+        <ui:VisualElement name="LargeContainer" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0.5); padding-top: 2%; padding-bottom: 2%; top: 30%; flex-shrink: 0; justify-content: center; height: auto; overflow: visible; padding-left: 2%; padding-right: 2%; width: 765px; align-items: stretch; border-top-left-radius: 15px; border-bottom-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px;">
+            <ui:VisualElement name="ChoiceBox" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); min-width: auto; min-height: auto; flex-shrink: 0;">
+                <ui:Instance template="one-line-of-choice" name="one-line-of-choice" />
+                <ui:Button text="Where should I go to find the boss" display-tooltip-when-elided="true" name="testButton" class="choice-button" />
+                <ui:Button text="Tell Sellen&apos;s story" display-tooltip-when-elided="true" name="testButton2" class="choice-button" style="display: flex; visibility: visible; overflow: hidden;" />
+                <ui:Button text="Is there any place I can upgrade my armor" display-tooltip-when-elided="true" name="testButton3" class="choice-button" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 0; background-color: rgba(255, 255, 255, 0.8); flex-shrink: 0; height: 3px; margin-top: 9px; margin-bottom: 3px;" />
+            <ui:Label tabindex="-1" text="Press up left down right to select. Enter to confirm. Esc to quit" display-tooltip-when-elided="true" style="font-size: 16px; -unity-font-style: bold; -unity-text-align: upper-center; color: rgb(177, 177, 177); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 1px; padding-right: 1px; padding-top: 1px; padding-bottom: 1px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

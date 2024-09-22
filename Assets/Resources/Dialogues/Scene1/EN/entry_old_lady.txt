@@ -1,0 +1,63 @@
+list_of_nodes:
+- node_name: intro_node
+  dialogue_content: 
+  - Old Lady~Hello, Player. Welcome to this town. We have a big evil boss that is in that tower.
+  - Old Lady~He is very dangerous and please be careful
+  - Player~Oh really, but I am very powerful person
+  - Old Lady~You can try.. Just be careful
+  type: normal
+  next_nodes:
+  - intro_choice
+
+- node_name: intro_choice
+  dialogue_content:
+  - Where should I go to find the boss
+  - I think you are cute
+  - Is there any place I can upgrade my armor
+  type: choice
+  next_nodes:
+  - intro_choice_boss
+  - intro_choice_flirt
+  - intro_choice_armor
+
+- node_name: intro_choice_boss
+  dialogue_content:
+  - Old Lady~If you go all the way to north you will find him
+  - Player~Got it. Thanks!
+  - Old Lady~He is so young
+  type: normal
+  next_nodes:
+  - intro_choice_end
+
+- node_name: intro_choice_flirt
+  dialogue_content:
+  - Old Lady~Thank you, but you should not say that!
+  - Player~My bad. Sorry
+  - Old Lady~(angry)
+  type: normal
+  next_nodes:
+  - intro_choice_angry_exit
+
+- node_name: intro_choice_armor
+  dialogue_content:
+  - Old Lady~We have a nice armor shop there. Help yourself.
+  - Player~Thanks, is there any discount?
+  - Old Lady~I know if you buy one can get another one for 50% off.
+  type: normal
+  next_nodes:
+  - intro_choice_end
+
+- node_name: intro_choice_end
+  dialogue_content:
+  - System~Now you can freely explore this world!
+  type: normal
+  next_nodes:
+  - intro_choice_exit
+
+- node_name: intro_choice_exit
+  type: end 
+  next_nodes:
+  - intro_choice_end
+
+- node_name: intro_choice_angry_exit
+  type: end 

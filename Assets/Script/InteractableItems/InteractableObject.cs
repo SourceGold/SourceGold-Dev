@@ -40,7 +40,8 @@ public abstract class InteractableObject : MonoBehaviour {
     public abstract void closestDeactivation();
     /// <summary>
     /// This function is called whenever the player interaction is pressed.
+    /// Return if the object disappeared.
     /// </summary>
-    public abstract void playerInteract();
+    public abstract bool playerInteract();
 
 }
