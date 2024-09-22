@@ -1,4 +1,5 @@
 using Assets.Script.Backend;
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -19,6 +20,8 @@ public class GameItemSensationHandler : MonoBehaviour
     float forceActivationRange = 0.35f;
     private float relativeZDistance;
     private Camera MainCamera;
+    private InteractableObject activated_item;
+
     private void Start()
     {
         relativeZDistance = transform.localPosition.z;
@@ -59,9 +62,6 @@ public class GameItemSensationHandler : MonoBehaviour
             // check distance with the object
             RaycastHit hit;
             int layerMask = LayerMask.GetMask("Default", "Environment");
-
-            // Turn off all activation
-            in_range_interactable.closestDeactivation();
 
             if (Physics.Raycast(ray_start, direction, out hit, camera_to_object_distance, (int)layerMask))
             {
@@ -111,7 +111,17 @@ public class GameItemSensationHandler : MonoBehaviour
                 }
             }
         }
-        if (item_should_be_active != null) { item_should_be_active.closestActivation(); }
+        if (item_should_be_active != null) {
+            if (item_should_be_active != activated_item)
+            {
+                if (activated_item != null)
+                {
+                    activated_item.closestDeactivation();
+                }
+                activated_item = item_should_be_active;
+            }
+            activated_item.closestActivation(); 
+        }
         Invoke("computeClosestObject", stickyTime);
     }
     public void OnTriggerEnter(Collider other)
@@ -129,7 +139,11 @@ public class GameItemSensationHandler : MonoBehaviour
         InteractableObject gameItem = other.GetComponent<InteractableObject>();
         if (gameItem != null)
         {
-            gameItem.closestDeactivation();
+            if (gameItem == activated_item)
+            {
+                gameItem.closestDeactivation();
+                activated_item=null;
+            }
             gameItem.outRange();
             inRangeItems.Remove(other.gameObject);
             closest = null;
@@ -143,11 +157,14 @@ public class GameItemSensationHandler : MonoBehaviour
         if (closest != null)
         {
             InteractableObject gameItem = closest.GetComponent<InteractableObject>();
-            gameItem.playerInteract();
+            var gameItemRemoved = gameItem.playerInteract();
 
-            // TODO: double check how it is been deleted
-            inRangeItems.Remove(closest);
-            closest = null;
+            if (gameItemRemoved)
+            {
+                inRangeItems.Remove(closest);
+                closest = null;
+            }
+            
         }
     }
 
