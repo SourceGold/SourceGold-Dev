@@ -1,3 +1,4 @@
+using Assets.Script.Loggers;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -43,7 +44,7 @@ namespace Assets.Script.Backend
 
         public static void StartListening(GameEventType eventType, UnityAction listener)
         {
-             if (TryGetEvent(eventType, out UnityEvent thisEvent))
+            if (TryGetEvent(eventType, out UnityEvent thisEvent))
             {
                 thisEvent.AddListener(listener);
             }
@@ -53,7 +54,7 @@ namespace Assets.Script.Backend
                 thisEvent.AddListener(listener);
                 instance.eventDictionary.Add(eventType.ToString(), thisEvent);
             }
-            GameEventLogger.LogEvent($"Listener: {listener} started listening event: {eventType}", EventLogType.GameEvent);
+            GameEventLogger.LogEvent($"Listener: {listener} started listening event: {eventType}", EventLogLevel.GameEvent);
         }
 
         public static void StopListening(GameEventType eventType, UnityAction listener)
@@ -63,12 +64,12 @@ namespace Assets.Script.Backend
             {
                 thisEvent.RemoveListener(listener);
             }
-            GameEventLogger.LogEvent($"Listener: {listener} stopped listening event: {eventType}", EventLogType.GameEvent);
+            GameEventLogger.LogEvent($"Listener: {listener} stopped listening event: {eventType}", EventLogLevel.GameEvent);
         }
 
         public static void TriggerEvent(GameEventType eventType)
         {
-            GameEventLogger.LogEvent($"Event Triggered: {eventType}");
+            GameEventLogger.LogEvent($"Event Triggered: {eventType}", EventLogLevel.GameEvent);
             if (TryGetEvent(eventType, out UnityEvent thisEvent))
             {
                 thisEvent.Invoke();

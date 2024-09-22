@@ -1,4 +1,6 @@
-﻿namespace Assets.Script.Backend
+﻿using Assets.Script.Loggers;
+
+namespace Assets.Script.Backend
 {
     public class Backend : Singleton<Backend>
     {
@@ -12,7 +14,7 @@
 
         public new void Awake()
         {
-            GameEventLogger.LogEvent("Game Backend Awaken", EventLogType.SystemEvent);
+            GameEventLogger.LogEvent("Game Backend Awaken", EventLogLevel.SystemEvent);
             WeaponProvidor = new WeaponProvidor();
             PlayerAttackProvidor = new PlayerAttackProvidor();
             // TODO: this is called when scene reload, in future need other ways to restart this object
