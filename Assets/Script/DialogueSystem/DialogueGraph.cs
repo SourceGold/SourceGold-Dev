@@ -351,7 +351,7 @@ public class DialogueGraph
 
 public class DialogueGraphEventNode : DialogueGraphBaseNode
 {
-    public List<string> eventNames;
+    public List<string> eventNames = new List<string>();
     public DialogueGraphBaseNode nextNode = null;
     public string nextNodeString;
 
