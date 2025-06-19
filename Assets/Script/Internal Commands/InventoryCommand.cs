@@ -12,7 +12,7 @@ public class InventoryCommand
 {
     [MenuItem("Internal Controll/Read all Game Item")]
     public static void readGameItem() {
-        AllGameItems allGameItems = Resources.Load<AllGameItems>("GameItems/AvaliableItems");
+        AllGameItems allGameItems = Resources.Load<AllGameItems>("GameItems/AvailableItems");
         Debug.Log(allGameItems);
         foreach (GameItem item in allGameItems.gameItems)
         {

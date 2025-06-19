@@ -9,7 +9,7 @@ public class GameItemsStaticManager : Singleton<GameItemsStaticManager>
     // Start is called before the first frame update
     void OnEnable()
     {
-        AllGameItems allGameItems = Resources.Load<AllGameItems>("GameItems/AvaliableItems");
+        AllGameItems allGameItems = Resources.Load<AllGameItems>("GameItems/AvailableItems");
         foreach (GameItem item in allGameItems.gameItems)
         {
             gameItemsStatic[item.itemName] = item;
